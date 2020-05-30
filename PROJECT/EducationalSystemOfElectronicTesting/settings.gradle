@@ -1,0 +1,2 @@
+rootProject.name='Educational System Of Electronic Testing'
+include ':app'
