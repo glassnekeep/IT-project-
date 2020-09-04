@@ -16,4 +16,14 @@
         <item name="actionMenuTextColor">@android:color/white</item>
     </style>
 
+    <!-- Button primary style. -->
+    <style name="Button.Primary" parent="Base.Widget.AppCompat.Button">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/custom_button</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

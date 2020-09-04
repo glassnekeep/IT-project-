@@ -1,5 +1,7 @@
 package com.example.it_project
 
+import android.app.Activity
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +15,10 @@ import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
-
+    private lateinit var activity: Activity
+    private var context: Context? = null
     private var toolbar: Toolbar? = null
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
@@ -59,35 +62,40 @@ class MainActivity : AppCompatActivity() {
             .addDrawerItems(
                 PrimaryDrawerItem().withIdentifier(100)
                     .withIconTintingEnabled(true)
+                    .withName("О приложении")
+                    .withSelectable(false)
+                    .withIcon(R.drawable.ic_baseline_info_24),
+                PrimaryDrawerItem().withIdentifier(101)
+                    .withIconTintingEnabled(true)
                     .withName("Создать тест")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_add_24),
-                PrimaryDrawerItem().withIdentifier(101)
+                PrimaryDrawerItem().withIdentifier(102)
                     .withIconTintingEnabled(true)
                     .withName("Пройти тест")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_check_24),
-                PrimaryDrawerItem().withIdentifier(102)
+                PrimaryDrawerItem().withIdentifier(103)
                     .withIconTintingEnabled(true)
                     .withName("История")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_history_24),
-                PrimaryDrawerItem().withIdentifier(103)
+                PrimaryDrawerItem().withIdentifier(104)
                     .withIconTintingEnabled(true)
                     .withName("Мои комнаты")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_group_24),
-                PrimaryDrawerItem().withIdentifier(104)
+                PrimaryDrawerItem().withIdentifier(105)
                     .withIconTintingEnabled(true)
                     .withName("Создать комнату")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_group_add_24),
-                PrimaryDrawerItem().withIdentifier(105)
+                PrimaryDrawerItem().withIdentifier(106)
                     .withIconTintingEnabled(true)
                     .withName("Статистика")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_bar_chart_24),
-                PrimaryDrawerItem().withIdentifier(106)
+                PrimaryDrawerItem().withIdentifier(107)
                     .withIconTintingEnabled(true)
                     .withName("Настройки")
                     .withSelectable(false)
@@ -101,7 +109,12 @@ class MainActivity : AppCompatActivity() {
                     when (position) {
                         1 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
-                            SplashActivity::class.java,
+                            AboutDevActivity::class.java,
+                            true
+                        )
+                        2 -> ActivityUtilities.getInstance().invokeNewActivity(
+                            this@MainActivity,
+                            RegisterActivity::class.java,
                             true
                         )
                     }
@@ -125,25 +138,30 @@ class MainActivity : AppCompatActivity() {
             .addDrawerItems(
                 PrimaryDrawerItem().withIdentifier(100)
                     .withIconTintingEnabled(true)
+                    .withName("О приложении")
+                    .withSelectable(false)
+                    .withIcon(R.drawable.ic_baseline_info_24),
+                PrimaryDrawerItem().withIdentifier(101)
+                    .withIconTintingEnabled(true)
                     .withName("Пройти тест")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_check_24),
-                PrimaryDrawerItem().withIdentifier(101)
+                PrimaryDrawerItem().withIdentifier(102)
                     .withIconTintingEnabled(true)
                     .withName("История")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_history_24),
-                PrimaryDrawerItem().withIdentifier(102)
+                PrimaryDrawerItem().withIdentifier(103)
                     .withIconTintingEnabled(true)
                     .withName("Мои комнаты")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_group_24),
-                PrimaryDrawerItem().withIdentifier(103)
+                PrimaryDrawerItem().withIdentifier(104)
                     .withIconTintingEnabled(true)
                     .withName("Статистика")
                     .withSelectable(false)
                     .withIcon(R.drawable.ic_baseline_bar_chart_24),
-                PrimaryDrawerItem().withIdentifier(104)
+                PrimaryDrawerItem().withIdentifier(105)
                     .withIconTintingEnabled(true)
                     .withName("Настройки")
                     .withSelectable(false)
@@ -160,7 +178,14 @@ class MainActivity : AppCompatActivity() {
                             SplashActivity::class.java,
                             true
                         )*/
-                        1 -> invokeNewActivity(this@MainActivity, SplashActivity::class.java, true)
+                        1 -> invokeNewActivity(
+                            this@MainActivity,
+                            AboutDevActivity::class.java,
+                            true)
+                        2 -> invokeNewActivity(
+                            this@MainActivity,
+                            RegisterActivity::class.java,
+                            true)
                     }
                     return false
                 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
-    <color name="colorHeaderBlue">#2676F2</color>
+    <color name="colorPrimary">#00BCD4</color>
+    <color name="colorPrimaryDark">#0097A7</color>
+    <color name="colorAccent">#ffe082</color>
+    <color name="colorLightPrimary">#B2EBF2</color>
+    <color name="colorHeaderBlue">#0097a7</color>
 
     <!--Common colors-->
     <color name="bg_splash">#FFFFFF</color>
@@ -28,14 +29,13 @@
     <color name="light_gray">#E0E0E0</color>
 
     <color name="default_background">#EEEEEE</color>
-
-
     <color name="trans">#80000000</color>
     <color name="tran">#50000000</color>
     <color name="detailsToolbar">#55000000</color>
-
     <color name="notification_card_bg">#EFEFEF</color>
-
     <color name="title_color">#818181</color>
     <color name="toolbar_boarder">#e5e6ea</color>
+    <color name="colorPrimaryText">#212121</color>
+    <color name="colorSecondaryText">#757575</color>
+    <color name="colorDivider">#BDBDBD</color>
 </resources>
