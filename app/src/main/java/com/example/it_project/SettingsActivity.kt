@@ -5,11 +5,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
+import com.google.firebase.auth.FirebaseAuth
 
 
 class SettingsActivity : BaseActivity() {
 
     private lateinit var exitButton: ImageView
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,6 +24,7 @@ class SettingsActivity : BaseActivity() {
 
     private fun init() {
         exitButton = findViewById(R.id.exit_button)
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun onBackPressed() {
@@ -40,6 +43,7 @@ class SettingsActivity : BaseActivity() {
         quitDialog.setPositiveButton("Да!"
         ) { dialog, which ->
             startActivity(Intent(this@SettingsActivity, SignInActivity::class.java))
+            auth.signOut()
             finish()
         }
 
