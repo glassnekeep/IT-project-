@@ -38,7 +38,6 @@ class RegisterActivity : BaseActivity() {
         registrationButton.setOnClickListener {
             if(!TextUtils.isEmpty(registrationEmail.text.toString()) && !TextUtils.isEmpty(registrationPassword.text.toString()))
             {
-                //auth.createUserWithEmailAndPassword(registrationEmail.text.toString(),registrationPassword.text.toString()).addOnCompleteListener
                 auth.createUserWithEmailAndPassword(registrationEmail.text.toString(), registrationPassword.text.toString())
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
@@ -60,7 +59,7 @@ class RegisterActivity : BaseActivity() {
             }
             else
             {
-                Toast.makeText(getApplicationContext(), "Please enter Email and Password", Toast.LENGTH_SHORT).show();
+                Toast.makeText(applicationContext, "Please enter Email and Password", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -70,7 +69,7 @@ class RegisterActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                ActivityUtilities.getInstance().invokeNewActivity(this@RegisterActivity, MainActivity::class.java, true)
+                ActivityUtilities.getInstance().invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
                 return true
             }
         }

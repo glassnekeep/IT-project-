@@ -117,6 +117,11 @@ class MainActivity : BaseActivity() {
                             RegisterActivity::class.java,
                             true
                         )
+                        8 -> ActivityUtilities.getInstance().invokeNewActivity(
+                            this@MainActivity,
+                            SettingsActivity::class.java,
+                            true
+                        )
                     }
                     return false
                 }
@@ -196,11 +201,20 @@ class MainActivity : BaseActivity() {
             */.build()
     }
 
+    private var backPressed: Long = 0
+
     override fun onBackPressed() {
         if (drawer != null && drawer!!.isDrawerOpen) {
             drawer!!.closeDrawer()
         } else {
-            tapPromtToExit(this)
+            //tapPromtToExit(this)
+            if (backPressed + 2500 > System.currentTimeMillis()) {
+                //activity.finish()
+                super.onBackPressed()
+            } else {
+                showToast(activity.applicationContext, activity.resources.getString(R.string.tap_again))
+            }
+            backPressed = System.currentTimeMillis()
         }
     }
 }

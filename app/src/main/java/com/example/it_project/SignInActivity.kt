@@ -41,6 +41,8 @@ class SignInActivity : BaseActivity() {
         val user: FirebaseUser? = auth.currentUser
         if (user != null) {
             Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show()
+            var intentToMain = Intent(this@SignInActivity, MainActivity::class.java)
+            startActivity(intentToMain)
         } else {
             Toast.makeText(this, "User null", Toast.LENGTH_SHORT).show()
         }

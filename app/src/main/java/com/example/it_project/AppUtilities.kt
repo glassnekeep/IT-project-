@@ -13,6 +13,7 @@ fun showToast(context: Context?, message: String?) {
 fun tapPromtToExit(activity: Activity) {
     if (backPressed + 2500 > System.currentTimeMillis()) {
         activity.finish()
+        //super.onBackPressed()
     } else {
         showToast(activity.applicationContext, activity.resources.getString(R.string.tap_again))
     }
