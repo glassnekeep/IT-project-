@@ -4,8 +4,8 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.google.firebase.database.*
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
 import com.mikepenz.materialdrawer.Drawer
@@ -17,17 +17,35 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
 class MainActivity : BaseActivity() {
 
+    private var email: String? = null
+    private lateinit var user: User
     private lateinit var activity: Activity
     private var context: Context? = null
     private var toolbar: Toolbar? = null
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
+    private var USER_KEY: String = "User"
+    private lateinit var database: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        database = FirebaseDatabase.getInstance().getReference(USER_KEY)
+
+        var listener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                var ds = dataSnapshot
+                user = ds.getValue() as User
+                email = user.email.toString()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+
 
         var admin = true
 
@@ -48,7 +66,7 @@ class MainActivity : BaseActivity() {
             .withTranslucentStatusBar(true)
             .addProfiles(
                 ProfileDrawerItem().withName("Kirill Legkodukh")
-                    .withEmail("glassnekeep@yandex.ru")
+                    .withEmail(email)
             ).build()
     }
 
@@ -186,11 +204,13 @@ class MainActivity : BaseActivity() {
                         1 -> invokeNewActivity(
                             this@MainActivity,
                             AboutDevActivity::class.java,
-                            true)
+                            true
+                        )
                         2 -> invokeNewActivity(
                             this@MainActivity,
                             RegisterActivity::class.java,
-                            true)
+                            true
+                        )
                     }
                     return false
                 }
@@ -212,7 +232,10 @@ class MainActivity : BaseActivity() {
                 //activity.finish()
                 super.onBackPressed()
             } else {
-                showToast(activity.applicationContext, activity.resources.getString(R.string.tap_again))
+                showToast(
+                    activity.applicationContext,
+                    activity.resources.getString(R.string.tap_again)
+                )
             }
             backPressed = System.currentTimeMillis()
         }
