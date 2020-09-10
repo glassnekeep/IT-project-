@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="5dp"
-            android:text="Kirill Legkodukh"
+            android:text=""
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -40,7 +40,7 @@
             app:layout_constraintTop_toTopOf="@id/settings_user_photo" />
 
         <TextView
-            android:id="@+id/status"
+            android:id="@+id/status_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"

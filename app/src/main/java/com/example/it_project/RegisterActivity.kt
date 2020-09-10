@@ -50,39 +50,31 @@ class RegisterActivity : BaseActivity() {
                         user?.sendEmailVerification()
                             ?.addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
-                                    var id: String? = database.key
-                                    var name: String? = registrationFirstName.text.toString()
-                                    var secName: String? = registrationSecondName.text.toString()
-                                    var email: String? = registrationEmail.text.toString()
-                                    var userInfo: User = User(id, name, secName, email)
+                                    //var id: String? = database.key
+                                    var name: String = registrationFirstName.text.toString()
+                                    var secName: String = registrationSecondName.text.toString()
+                                    var email: String = registrationEmail.text.toString()
+                                    //var userInfo: User = User(name, secName, email)
                                     if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(secName) && !TextUtils.isEmpty(email)
                                     ) {
                                         //database.push().setValue(userInfo)
                                         //database.child("users").child(id!!).setValue(userInfo)
-                                        database.child("user").push().setValue(userInfo)
-                                        Toast.makeText(this, "Сохранено", Toast.LENGTH_SHORT)
-                                            .show();
+                                        CURRENT_UID = FirebaseAuth.getInstance().uid.toString()
+                                        createUserInDatabase(name, secName, email)
+                                        Toast.makeText(this, "Аккаунт создан", Toast.LENGTH_SHORT).show()
                                     } else {
-                                        Toast.makeText(this, "Пустое поле", Toast.LENGTH_SHORT)
-                                            .show();
+                                        Toast.makeText(this, "Не все поля заполнены", Toast.LENGTH_SHORT).show()
                                     }
                                     startActivity(Intent(this, SignInActivity::class.java))
                                     finish()
                                 }
                             }
                     } else {
-                        Toast.makeText(
-                            baseContext, "Sign Up failed. Try again after some time.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(baseContext, "Sign Up failed. Try again after some time.", Toast.LENGTH_SHORT).show()
                     }
                 }
         } else {
-            Toast.makeText(
-                applicationContext,
-                "Please enter Email and Password",
-                Toast.LENGTH_SHORT
-            ).show();
+            Toast.makeText(applicationContext, "Please enter Email and Password", Toast.LENGTH_SHORT).show()
         }
     }
 }
@@ -94,7 +86,7 @@ class RegisterActivity : BaseActivity() {
         registrationFirstName = findViewById(R.id.registration_name_form)
         registrationSecondName = findViewById(R.id.registration_surname_form)
         auth = FirebaseAuth.getInstance()
-        database = FirebaseDatabase.getInstance().getReference(USER_KEY)
+        //database = FirebaseDatabase.getInstance().getReference(USER_KEY)
     }
 
 

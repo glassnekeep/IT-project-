@@ -3,7 +3,10 @@ package com.example.it_project
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
 import com.google.firebase.database.*
 import com.mikepenz.materialdrawer.AccountHeader
@@ -17,41 +20,56 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
 class MainActivity : BaseActivity() {
 
-    private var email: String? = null
     private lateinit var user: User
     private lateinit var activity: Activity
     private var context: Context? = null
     private var toolbar: Toolbar? = null
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
-    private var USER_KEY: String = "User"
-    private lateinit var database: DatabaseReference
+    private lateinit var mCurrentProfile: ProfileDrawerItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        toolbar = findViewById(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        database = FirebaseDatabase.getInstance().getReference(USER_KEY)
-
-        var listener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                var ds = dataSnapshot
-                user = ds.getValue() as User
-                email = user.email.toString()
+        initFirebase()
+        createHeader()
+        //user = User("1", "2", "3")
+        //initUser {  }
+        val postListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                USER = snapshot.getValue(User::class.java)
+                mCurrentProfile
+                    .withName("${USER?.name} ${USER?.secName}")
+                    .withEmail(USER?.email)
+                header?.updateProfile(mCurrentProfile)
             }
 
             override fun onCancelled(error: DatabaseError) {
-
             }
         }
+        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).addValueEventListener(postListener)
+        //Log.d("TAG", textview.text.toString())
+        //Toast.makeText(this, "${USER?.email}", Toast.LENGTH_SHORT).show()
+        /*var userNameEmailListener = object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                USER = dataSnapshot.getValue(User::class.java)
+                //Toast.makeText(this@MainActivity, "${USER?.email}", Toast.LENGTH_SHORT).show()
+                //Toast.makeText(this@MainActivity, "${CURRENT_UID}", Toast.LENGTH_SHORT).show()
+            }
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+        var node = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+        node.addValueEventListener(userNameEmailListener)
+        Log.d("TAG", "${USER?.email}")*/
 
+        toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         var admin = true
 
         var profile = ProfileDrawerItem().withIcon(R.drawable.ic_dev)
 
-        createHeader()
         if(admin) {
             createAdministrationDrawer()
         } else {
@@ -60,13 +78,18 @@ class MainActivity : BaseActivity() {
     }
 
     private fun createHeader() {
+        mCurrentProfile = ProfileDrawerItem()
+            .withName(USER?.name)
+            .withEmail(USER?.email)
+            .withIdentifier(200)
         header = AccountHeaderBuilder()
             .withActivity(this)
             .withHeaderBackground(R.drawable.header)
-            .withTranslucentStatusBar(true)
+            //.withTranslucentStatusBar(true)
             .addProfiles(
-                ProfileDrawerItem().withName("Kirill Legkodukh")
-                    .withEmail(email)
+                mCurrentProfile
+                //ProfileDrawerItem().withName("${name} ${secName}")
+                    //.withEmail(email)
             ).build()
     }
 

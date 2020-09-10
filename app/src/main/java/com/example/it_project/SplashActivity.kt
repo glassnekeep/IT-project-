@@ -8,9 +8,13 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.ProgressBar
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 
 class SplashActivity : AppCompatActivity() {
 
@@ -24,6 +28,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+        initFirebase()
         auth = FirebaseAuth.getInstance()
         layout = findViewById<View>(R.id.splashLayout) as ConstraintLayout
         imageView = findViewById<View>(R.id.ivSplashIcon) as ImageView
