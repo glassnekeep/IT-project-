@@ -1,7 +1,9 @@
-package com.example.it_project
+package com.example.it_project.activities
 
 import android.os.Bundle
 import android.view.MenuItem
+import com.example.it_project.ActivityUtilities
+import com.example.it_project.R
 
 class AboutDevActivity : BaseActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +17,8 @@ class AboutDevActivity : BaseActivity()  {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                ActivityUtilities.getInstance().invokeNewActivity(this@AboutDevActivity, MainActivity::class.java, true)
+                ActivityUtilities.getInstance()
+                    .invokeNewActivity(this@AboutDevActivity, MainActivity::class.java, true)
                 return true
             }
         }

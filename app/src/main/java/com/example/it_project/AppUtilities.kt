@@ -2,15 +2,14 @@ package com.example.it_project
 
 import android.app.Activity
 import android.content.Context
-import android.renderscript.Sampler
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.example.it_project.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.mikepenz.materialdrawer.AccountHeaderBuilder
-import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 
 private var backPressed: Long = 0
 
@@ -21,8 +20,14 @@ fun showToast(context: Context?, message: String?) {
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
-    USER = User()
     CURRENT_UID = AUTH.uid.toString()
+    DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+    DATABASE_ROOT_NEW_QUESTION = REF_DATABASE_ROOT.child(NODE_TEST)
+    USER = User()
+}
+
+fun createTestWithName(testName: String) {
+    DATABASE_ROOT_NEW_QUESTION.child(testName)
 }
 
 fun createUserInDatabase(name: String, secName: String, email: String) {
@@ -52,21 +57,5 @@ fun getUserName(){
     }
 }
 
-/*inline fun initUser(crossinline function: () -> Unit) {
-    /* Функция высшего порядка, инициализация текущей модели USER */
-    REF_DATABASE_ROOT.child(NODE_USERS).child(
-        CURRENT_UID
-    )
-        .addListenerForSingleValueEvent(AppValueEventListener {
-            USER =
-                it.getValue(User::class.java)
-                    ?: User()
-            if (USER.name.isEmpty()) {
-                USER.name =
-                    CURRENT_UID
-            }
-            function()
-        })
-}*/
 
 

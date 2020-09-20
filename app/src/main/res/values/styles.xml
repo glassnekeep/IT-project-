@@ -26,4 +26,29 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Button.Positive.Variant" parent="Base.Widget.AppCompat.Button">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/custom_button_variant2</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Button.Negative.Variant" parent="Base.Widget.AppCompat.Button">
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/custom_button_variant3</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="separator">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_height">5dp</item>
+    </style>
+
 </resources>

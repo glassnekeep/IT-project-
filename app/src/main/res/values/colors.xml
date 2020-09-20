@@ -5,6 +5,7 @@
     <color name="colorAccent">#ffe082</color>
     <color name="colorAccentDark">#ffc107</color>
     <color name="colorLightPrimary">#B2EBF2</color>
+    <color name="colorSuperLightPrimary">#DFFDFF</color>
     <color name="colorHeaderBlue">#0097a7</color>
 
     <!--Common colors-->
@@ -39,4 +40,7 @@
     <color name="colorPrimaryText">#212121</color>
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
+
+    <!--More colors-->
+    <color name="colorEditTextLight">#F1F1F1</color>
 </resources>

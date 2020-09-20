@@ -1,10 +1,11 @@
-package com.example.it_project
+package com.example.it_project.activities
 
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import com.example.it_project.R
 
 open class BaseActivity : AppCompatActivity() {
 

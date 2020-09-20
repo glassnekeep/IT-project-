@@ -4,12 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".activities.MainActivity">
 
     <include
         android:id="@+id/toolbarTop"
         layout="@layout/toolbar_main"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+
+    <RelativeLayout
+        app:layout_constraintTop_toBottomOf="@+id/toolbarTop"
+        android:layout_width="match_parent"
+        android:layout_height="670dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_tests"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="true"
+            android:elevation="2dp"
+            android:layout_marginStart="14dp" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,13 +1,15 @@
-package com.example.it_project
+package com.example.it_project.activities
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
+import com.example.it_project.*
+import com.example.it_project.R
+import com.example.it_project.models.User
 import com.google.firebase.database.*
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -47,7 +49,7 @@ class MainActivity : BaseActivity() {
             override fun onCancelled(error: DatabaseError) {
             }
         }
-        REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).addValueEventListener(postListener)
+        DATABASE_ROOT_USER.addValueEventListener(postListener)
         //Log.d("TAG", textview.text.toString())
         //Toast.makeText(this, "${USER?.email}", Toast.LENGTH_SHORT).show()
         /*var userNameEmailListener = object : ValueEventListener {
@@ -153,7 +155,23 @@ class MainActivity : BaseActivity() {
                             AboutDevActivity::class.java,
                             true
                         )
-                        2 -> ActivityUtilities.getInstance().invokeNewActivity(
+                        2 -> /*ActivityUtilities.getInstance().invokeNewActivity(
+                            this@MainActivity,
+                            CreateTestActivity::class.java,
+                            true
+                        )*/
+                        {var fragmentManager = this@MainActivity.supportFragmentManager
+                            //val transaction = fragmentManager.beginTransaction()
+                            //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
+                            val dialogFragment = CreateTestNameFragment()
+                            val manager = supportFragmentManager
+                            dialogFragment.show(fragmentManager, "MyFirstDialog")
+                            //ActivityUtilities.getInstance().invokeNewActivity(
+                            //this@MainActivity,
+                            //CreateTestActivity::class.java,
+                            //true
+                        }
+                        3 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
                             RegisterActivity::class.java,
                             true
@@ -229,7 +247,19 @@ class MainActivity : BaseActivity() {
                             AboutDevActivity::class.java,
                             true
                         )
-                        2 -> invokeNewActivity(
+                        2 -> {var fragmentManager = this@MainActivity.supportFragmentManager
+                            //val transaction = fragmentManager.beginTransaction()
+                            //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
+                            val dialogFragment = CreateTestNameFragment()
+                            val manager = supportFragmentManager
+                            dialogFragment.show(fragmentManager, "MyFirstDialog")
+                        //ActivityUtilities.getInstance().invokeNewActivity(
+                            //this@MainActivity,
+                            //CreateTestActivity::class.java,
+                            //true
+                        }
+                        //)
+                        3 -> invokeNewActivity(
                             this@MainActivity,
                             RegisterActivity::class.java,
                             true
