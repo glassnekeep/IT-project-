@@ -15,6 +15,7 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initFirebase()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -28,6 +29,7 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
             intentCreateTest.putExtra("TestName", edit_text_test_name.text.toString())
             startActivity(intentCreateTest)
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()
+            createTestIDWithName(edit_text_test_name.text.toString())
         }
         button_exit_create_test_name.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()

@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.example.it_project.models.IdModel
 import com.example.it_project.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -22,12 +23,24 @@ fun initFirebase() {
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     CURRENT_UID = AUTH.uid.toString()
     DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-    DATABASE_ROOT_NEW_QUESTION = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_NEW_TEST = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
     USER = User()
 }
 
-fun createTestWithName(testName: String) {
-    DATABASE_ROOT_NEW_QUESTION.child(testName)
+
+fun createTestIDWithName(testName: String) {
+    //DATABASE_ROOT_NEW_TEST.child(NODE_ID).push().setValue(testName)
+    /*DATABASE_ROOT_NEW_TEST.push().child(NODE_ID).setValue(testName)*/
+    //var id = DATABASE_ROOT_NEW_TEST.child(NODE_ID).push().key
+    /*var id = DATABASE_ROOT_NEW_TEST.push().child(NODE_ID).key*/
+    //DATABASE_ROOT_NEW_TEST.child(NODE_ID).push().setValue(id)
+    /*DATABASE_ROOT_NEW_TEST.push().child(NODE_ID).setValue(id)*/
+    var id = DATABASE_ROOT_TEST_IDS.push().key
+    /**DATABASE_ROOT_NEW_TEST.child(id!!).child(NODE_ID).setValue(id)
+    DATABASE_ROOT_NEW_TEST.child(id!!).child(NODE_ID).setValue(testName)**/
+    var idName: IdModel = IdModel(id!!, testName)
+    DATABASE_ROOT_TEST_IDS.child(id!!).child(NODE_ID).setValue(idName)
 }
 
 fun createUserInDatabase(name: String, secName: String, email: String) {
