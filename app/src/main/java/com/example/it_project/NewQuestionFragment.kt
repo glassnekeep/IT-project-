@@ -51,6 +51,7 @@ class NewQuestionFragment : AppCompatDialogFragment() {
                 }
                 intent.putExtra("AnswerNumber", spinner_answer_number.selectedItem.toString())
                 intent.putExtra("QuestionName", edit_text_question_name.text.toString())
+                intent.putExtra("TestThisName", TEST_NAME)
                 //val intent = Intent(activity, MainActivity::class.java)
                 startActivity(intent)
                 fragmentManager?.beginTransaction()?.remove(this@NewQuestionFragment)?.commit()

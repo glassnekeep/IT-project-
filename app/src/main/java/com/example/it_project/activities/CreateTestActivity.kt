@@ -23,6 +23,7 @@ class CreateTestActivity : BaseActivity() {
     private lateinit var categoryList: ArrayList<CategoryModel>
     private lateinit var fragmentManager : FragmentManager
     private lateinit var adapter: CategoryAdapter
+    //private var testName: String? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_test)
@@ -47,6 +48,7 @@ class CreateTestActivity : BaseActivity() {
         super.onStart()
         val extras: Bundle? = intent.extras
         if(extras != null) {setToolbarTitle(extras.getString("TestName").toString())}
+        if(extras != null) {TEST_NAME = extras.getString("TestName").toString()}
     }
 
     private fun init() {

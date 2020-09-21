@@ -10,6 +10,9 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.R
+import com.example.it_project.createQuestionInTest
+import com.example.it_project.initFirebase
+import com.example.it_project.models.QuestionModel
 import kotlinx.android.synthetic.main.activity_create_termin_answers.*
 
 class CreateComparisonQuestionActivity : BaseActivity() {
@@ -27,7 +30,11 @@ class CreateComparisonQuestionActivity : BaseActivity() {
     private lateinit var editText4: EditText
     private lateinit var editText5: EditText
     private lateinit var editText6: EditText
+
     private lateinit var exitButton: Button
+    private lateinit var createQuestionButton: Button
+
+    private lateinit var arrayOfAnswers: ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +42,7 @@ class CreateComparisonQuestionActivity : BaseActivity() {
         setContentView(R.layout.activity_create_comparison_question)
         initToolbar(true)
         init()
+        initFirebase()
     }
 
     override fun onStart() {
@@ -67,6 +75,20 @@ class CreateComparisonQuestionActivity : BaseActivity() {
         exitButton.setOnClickListener {
             openQuitDialog()
         }
+        createQuestionButton.setOnClickListener {
+            arrayOfAnswers = ArrayList()
+            arrayOfAnswers.add(editText1.text.toString())
+            arrayOfAnswers.add(editText2.text.toString())
+            if(editText3.visibility != View.GONE) {arrayOfAnswers.add(editText3.text.toString())}
+            if(editText4.visibility != View.GONE) {arrayOfAnswers.add(editText4.text.toString())}
+            if(editText5.visibility != View.GONE) {arrayOfAnswers.add(editText5.text.toString())}
+            if(editText6.visibility != View.GONE) {arrayOfAnswers.add(editText6.text.toString())}
+            val questionName = extras?.getString("QuestionName")
+            val answerNumber = extras?.getString("AnswerNumber")
+            createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
+            val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
+            startActivity(intent)
+        }
         enableUpButton()
     }
 
@@ -86,6 +108,7 @@ class CreateComparisonQuestionActivity : BaseActivity() {
         editText6 = findViewById(R.id.secondPartSix)
 
         exitButton = findViewById(R.id.button_exit)
+        createQuestionButton = findViewById(R.id.button_create_question)
     }
 
     private fun hide3() {
