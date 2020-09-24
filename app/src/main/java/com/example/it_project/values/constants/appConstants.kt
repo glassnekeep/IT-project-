@@ -1,4 +1,4 @@
-package com.example.it_project
+package com.example.it_project.values.constants
 
 import com.example.it_project.activities.MainActivity
 

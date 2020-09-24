@@ -1,4 +1,4 @@
-package com.example.it_project
+package com.example.it_project.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -8,8 +8,9 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.core.view.iterator
+import com.example.it_project.R
 import com.example.it_project.activities.*
+import com.example.it_project.values.TEST_NAME
 import kotlinx.android.synthetic.main.fragment_new_question.*
 
 class NewQuestionFragment : AppCompatDialogFragment() {

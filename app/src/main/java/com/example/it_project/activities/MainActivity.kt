@@ -2,14 +2,18 @@ package com.example.it_project.activities
 
 import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.Toolbar
-import com.example.it_project.*
 import com.example.it_project.R
+import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.User
+import com.example.it_project.utilities.ActivityUtilities
+import com.example.it_project.utilities.initFirebase
+import com.example.it_project.utilities.invokeNewActivity
+import com.example.it_project.utilities.showToast
+import com.example.it_project.values.DATABASE_ROOT_USER
+import com.example.it_project.values.USER
 import com.google.firebase.database.*
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder

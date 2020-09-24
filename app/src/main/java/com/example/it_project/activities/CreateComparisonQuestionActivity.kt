@@ -1,7 +1,6 @@
 package com.example.it_project.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
@@ -10,10 +9,9 @@ import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.R
-import com.example.it_project.createQuestionInTest
-import com.example.it_project.initFirebase
+import com.example.it_project.utilities.createQuestionInTest
+import com.example.it_project.utilities.initFirebase
 import com.example.it_project.models.QuestionModel
-import kotlinx.android.synthetic.main.activity_create_termin_answers.*
 
 class CreateComparisonQuestionActivity : BaseActivity() {
 

@@ -1,4 +1,4 @@
-package com.example.it_project
+package com.example.it_project.adapters
 
 import android.app.Activity
 import android.content.Context
@@ -6,11 +6,14 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.example.it_project.ListItemClickListener
+import com.example.it_project.QuestionHolder
+import com.example.it_project.R
 import com.example.it_project.models.CategoryModel
 import java.util.*
 
 
-class CategoryAdapter(var mContext: Context, var mActivity: Activity,var categoryList: ArrayList<CategoryModel>): RecyclerView.Adapter<QuestionHolder>() {
+class  CategoryAdapter(var mContext: Context, var mActivity: Activity,var categoryList: ArrayList<CategoryModel>): RecyclerView.Adapter<QuestionHolder>() {
 
     //private lateinit var mContext: Context
     //private lateinit var mActivity: Activity

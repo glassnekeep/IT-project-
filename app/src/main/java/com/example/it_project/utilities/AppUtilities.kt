@@ -1,17 +1,19 @@
-package com.example.it_project
+package com.example.it_project.utilities
 
 import android.app.Activity
 import android.content.Context
 import android.widget.Toast
-import androidx.fragment.app.Fragment
+import com.example.it_project.*
 import com.example.it_project.models.IdModel
 import com.example.it_project.models.QuestionModel
 import com.example.it_project.models.User
+import com.example.it_project.values.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.lang.NullPointerException
 
 private var backPressed: Long = 0
 
@@ -37,11 +39,15 @@ fun createTestIDWithName(testName: String) {
     DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_ID).setValue(id)
 }
 
+fun deleteTestWithName(testName: String) {
+    DATABASE_ROOT_NEW_TEST.child(testName).removeValue()
+}
+
 fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers: ArrayList<String>) {
-    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).setValue(questionInfo)
+    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
     var questionOrder = 1
     for (answer in answers) {
-        DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).child(NODE_ANSWERS).child("Answer №${questionOrder}").setValue(answer)
+        DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child(NODE_ANSWERS).child("Answer №${questionOrder}").setValue(answer)
         questionOrder++
     }
 }

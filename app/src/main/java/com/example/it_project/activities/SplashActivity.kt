@@ -10,8 +10,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.it_project.R
-import com.example.it_project.SPLASH_DURATION
-import com.example.it_project.initFirebase
+import com.example.it_project.values.constants.SPLASH_DURATION
+import com.example.it_project.utilities.initFirebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 

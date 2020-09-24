@@ -1,4 +1,4 @@
-package com.example.it_project
+package com.example.it_project.values
 
 import com.example.it_project.models.User
 import com.google.firebase.auth.FirebaseAuth

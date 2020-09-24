@@ -7,6 +7,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.*
 import com.example.it_project.models.User
+import com.example.it_project.utilities.initFirebase
+import com.example.it_project.values.DATABASE_ROOT_USER
+import com.example.it_project.values.USER
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

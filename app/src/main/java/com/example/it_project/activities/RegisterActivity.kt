@@ -8,6 +8,9 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.it_project.*
+import com.example.it_project.utilities.ActivityUtilities
+import com.example.it_project.utilities.createUserInDatabase
+import com.example.it_project.values.CURRENT_UID
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 

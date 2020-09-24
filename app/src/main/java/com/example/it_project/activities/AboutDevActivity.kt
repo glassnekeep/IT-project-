@@ -2,7 +2,7 @@ package com.example.it_project.activities
 
 import android.os.Bundle
 import android.view.MenuItem
-import com.example.it_project.ActivityUtilities
+import com.example.it_project.utilities.ActivityUtilities
 import com.example.it_project.R
 
 class AboutDevActivity : BaseActivity()  {

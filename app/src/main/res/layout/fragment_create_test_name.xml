@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:id="@+id/create_test_name_fragment"
     android:orientation="vertical"
-    tools:context=".CreateTestNameFragment">
+    tools:context=".fragments.CreateTestNameFragment">
 
     <EditText
         android:id="@+id/edit_text_test_name"
