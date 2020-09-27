@@ -36,6 +36,8 @@ class CreateComparisonQuestionActivity : BaseActivity() {
 
     private lateinit var arrayOfAnswers: ArrayList<String>
 
+    private lateinit var correctAnswer: EditText
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +88,7 @@ class CreateComparisonQuestionActivity : BaseActivity() {
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswer.text.toString()), arrayOfAnswers)
             val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)
@@ -111,6 +113,8 @@ class CreateComparisonQuestionActivity : BaseActivity() {
 
         exitButton = findViewById(R.id.button_exit)
         createQuestionButton = findViewById(R.id.button_create_question)
+
+        correctAnswer = findViewById(R.id.question_answer)
     }
 
     private fun hide3() {

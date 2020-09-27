@@ -41,13 +41,19 @@ class NewQuestionFragment : AppCompatDialogFragment() {
             if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Сопоставление")) {
                 Toast.makeText(activity?.applicationContext, "Сопоставляться должны 2 и более элемента!", Toast.LENGTH_SHORT).show()
             }
+            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Один вариант ответа")) {
+                Toast.makeText(activity?.applicationContext, "Вариантов ответа должно быть 2 и более!", Toast.LENGTH_SHORT).show()
+            }
+            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Несколько вариантов ответа")) {
+                Toast.makeText(activity?.applicationContext, "Вариантов ответа должно быть 2 и более!", Toast.LENGTH_SHORT).show()
+            }
             else {
                 when (spinner_answer_type.selectedItem.toString()) {
                     "Сопоставление" -> intent =
                         Intent(activity, CreateComparisonQuestionActivity::class.java)
                     "Термин" -> intent = Intent(activity, CreateTerminAnswerActivity::class.java)
                     "Один вариант ответа" -> intent =
-                        Intent(activity, CreateOneAnswerActivity::class.java)
+                        Intent(activity, CreateOneAnswerQuestionActivity::class.java)
                     "Несколько вариантов ответа" -> intent =
                         Intent(activity, CreateManyAnswersActivity::class.java)
                 }
