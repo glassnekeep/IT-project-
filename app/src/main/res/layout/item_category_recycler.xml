@@ -24,6 +24,7 @@
         app:layout_constraintStart_toEndOf="@id/question_number"
         android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
+        android:paddingBottom="5dp"
         android:textSize="26dp"
         android:text="Вопрос" />
 

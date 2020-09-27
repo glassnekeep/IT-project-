@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.it_project.R
 import com.example.it_project.activities.*
+import com.example.it_project.values.NEW_QUESTION
 import com.example.it_project.values.TEST_NAME
 import kotlinx.android.synthetic.main.fragment_new_question.*
 
@@ -54,6 +55,7 @@ class NewQuestionFragment : AppCompatDialogFragment() {
                 intent.putExtra("QuestionName", edit_text_question_name.text.toString())
                 intent.putExtra("TestThisName", TEST_NAME)
                 //val intent = Intent(activity, MainActivity::class.java)
+                NEW_QUESTION = edit_text_question_name.text.toString()
                 startActivity(intent)
                 fragmentManager?.beginTransaction()?.remove(this@NewQuestionFragment)?.commit()
             }

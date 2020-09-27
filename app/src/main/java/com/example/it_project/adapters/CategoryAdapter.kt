@@ -18,24 +18,23 @@ class  CategoryAdapter(var mContext: Context, var mActivity: Activity,var catego
     //private lateinit var mContext: Context
     //private lateinit var mActivity: Activity
     //private lateinit var categoryList: ArrayList<CategoryModel>
-    private lateinit var itemClickListener: ListItemClickListener
+    //var itemClickListener: ListItemClickListener
 
-    fun setItemClickListener(itemClickListener: ListItemClickListener) {
+    /*fun setItemClickListener(itemClickListener: ListItemClickListener) {
         this.itemClickListener = itemClickListener
-    }
+    }*/
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_category_recycler, parent, false)
-        return QuestionHolder(itemView, viewType, itemClickListener)
+        return QuestionHolder(itemView)
     }
 
     override fun onBindViewHolder(holder: QuestionHolder, position: Int) {
-        val model: CategoryModel = categoryList!![position]
-        val categoryName: String = model.categoryId
-        holder.tvCategoryTitle.text = "тут будет текст из базы данных"
+        val model: CategoryModel = categoryList[position]
+        holder.tvCategoryTitle.text = "${model.categoryName}"
         holder.tvCategoryId.text = (position + 1).toString()
-        holder.lytContainer.background = ContextCompat.getDrawable(mContext, R.drawable.ic_dev)
+        holder.lytContainer.background = ContextCompat.getDrawable(mContext, R.drawable.category_item_background)
     }
 
     override fun getItemCount(): Int {

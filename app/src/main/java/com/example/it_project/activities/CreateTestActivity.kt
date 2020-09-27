@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -15,7 +16,9 @@ import com.example.it_project.fragments.NewQuestionFragment
 import com.example.it_project.models.CategoryModel
 import com.example.it_project.utilities.deleteTestWithName
 import com.example.it_project.utilities.initFirebase
+import com.example.it_project.values.CATEGORY_LIST
 import com.example.it_project.values.CURRENT_TEST_NAME
+import com.example.it_project.values.NEW_QUESTION
 import com.example.it_project.values.TEST_NAME
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -25,10 +28,11 @@ class CreateTestActivity : BaseActivity() {
     private lateinit var questionsRecyclerView: RecyclerView
     private lateinit var activity: Activity
     private lateinit var context: Context
-    private lateinit var categoryList: ArrayList<CategoryModel>
+    //private lateinit var categoryList: ArrayList<CategoryModel>
     private lateinit var fragmentManager : FragmentManager
     private lateinit var adapter: CategoryAdapter
     //private var testName: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_test)
@@ -37,8 +41,8 @@ class CreateTestActivity : BaseActivity() {
         initFirebase()
         init()
         enableUpButton()
-        questionsRecyclerView.layoutManager = LinearLayoutManager(this)
-        questionsRecyclerView.adapter = adapter
+        /*questionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        questionsRecyclerView.adapter = adapter*/
         fragmentManager = this@CreateTestActivity.supportFragmentManager
         createNewQuestionButton.setOnClickListener {
             //val transaction = fragmentManager.beginTransaction()
@@ -47,6 +51,16 @@ class CreateTestActivity : BaseActivity() {
             val manager = supportFragmentManager
             dialogFragment.show(manager, "MyDialog")
             }
+        /*val extras: Bundle? = intent.extras
+        if(extras != null) {
+            var newCategory: String? = extras.getString("NewQuestionName")
+            if(extras.getString("NewQuestionName") != null) {
+                var newCategoryListItem: CategoryModel? = CategoryModel(newCategory!!)
+                if (newCategoryListItem != null) {
+                    categoryList.add(newCategoryListItem)
+                }
+            }
+        }*/
         }
 
     override fun onStart() {
@@ -59,7 +73,30 @@ class CreateTestActivity : BaseActivity() {
 
     override fun onResume() {
         super.onResume()
-        setToolbarTitle(CURRENT_TEST_NAME!!)
+        if(CURRENT_TEST_NAME != null) {setToolbarTitle(CURRENT_TEST_NAME!!)}
+        val extras: Bundle? = intent.extras
+        /*if(extras != null) {
+            var newCategory: String? = extras.getString("NewQuestionName")
+            if(extras.getString("NewQuestionName") != null) {
+                var newCategoryListItem: CategoryModel? = CategoryModel(newCategory!!)
+                if (newCategoryListItem != null) {
+                    categoryList.add(newCategoryListItem)
+                }
+            }
+        }*/
+        if(NEW_QUESTION != null) {
+            var newCategory: String? = NEW_QUESTION
+            //categoryList.add(CategoryModel(newCategory!!))
+            CATEGORY_LIST.add(CategoryModel(newCategory!!))
+            Toast.makeText(this@CreateTestActivity, "${CATEGORY_LIST.size}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this@CreateTestActivity, "${CATEGORY_LIST[0]}", Toast.LENGTH_SHORT).show()
+        }
+
+        questionsRecyclerView.layoutManager = LinearLayoutManager(this)
+        questionsRecyclerView.adapter = adapter
+        //adapter.notifyItemInserted(categoryList.size - 1)
+        adapter.notifyItemInserted(CATEGORY_LIST.size - 1)
+        adapter.notifyDataSetChanged()
     }
 
     private fun init() {
@@ -67,8 +104,9 @@ class CreateTestActivity : BaseActivity() {
         questionsRecyclerView = findViewById(R.id.list_of_questions)
         context = applicationContext
         activity = this@CreateTestActivity
-        categoryList = ArrayList()
-        adapter = CategoryAdapter(context, activity, categoryList)
+        //categoryList = ArrayList<CategoryModel>()
+        //adapter = CategoryAdapter(context, activity, categoryList)
+        adapter = CategoryAdapter(context, activity, CATEGORY_LIST)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -91,7 +129,7 @@ class CreateTestActivity : BaseActivity() {
         quitDialog.setPositiveButton("Да!"
         ) { dialog, which ->
             startActivity(Intent(this@CreateTestActivity, MainActivity::class.java))
-            deleteTestWithName(CURRENT_TEST_NAME!!)
+            if(CURRENT_TEST_NAME != null) {deleteTestWithName(CURRENT_TEST_NAME!!)}
             finish()
         }
 
