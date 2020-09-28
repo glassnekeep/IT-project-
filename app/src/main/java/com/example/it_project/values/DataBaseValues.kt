@@ -15,6 +15,7 @@ lateinit var DATABASE_ROOT_USER: DatabaseReference
 lateinit var DATABASE_ROOT_NEW_TEST: DatabaseReference
 lateinit var DATABASE_ROOT_TEST_IDS: DatabaseReference
 lateinit var TEST_NAME: String
+var ADMIN_STATUS: String? = ""
 var USER: User? = null
 lateinit var header: AccountHeader
 const val NODE_USERS = "users"

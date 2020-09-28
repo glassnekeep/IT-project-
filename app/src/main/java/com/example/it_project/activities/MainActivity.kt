@@ -12,6 +12,7 @@ import com.example.it_project.utilities.ActivityUtilities
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.utilities.invokeNewActivity
 import com.example.it_project.utilities.showToast
+import com.example.it_project.values.ADMIN_STATUS
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.example.it_project.values.USER
 import com.google.firebase.database.*
@@ -54,33 +55,31 @@ class MainActivity : BaseActivity() {
             }
         }
         DATABASE_ROOT_USER.addValueEventListener(postListener)
-        //Log.d("TAG", textview.text.toString())
-        //Toast.makeText(this, "${USER?.email}", Toast.LENGTH_SHORT).show()
-        /*var userNameEmailListener = object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                USER = dataSnapshot.getValue(User::class.java)
-                //Toast.makeText(this@MainActivity, "${USER?.email}", Toast.LENGTH_SHORT).show()
-                //Toast.makeText(this@MainActivity, "${CURRENT_UID}", Toast.LENGTH_SHORT).show()
-            }
-            override fun onCancelled(error: DatabaseError) {
-            }
-        }
-        var node = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-        node.addValueEventListener(userNameEmailListener)
-        Log.d("TAG", "${USER?.email}")*/
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        var admin = true
+        val adminListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                ADMIN_STATUS = snapshot.getValue(String::class.java)
+                if(ADMIN_STATUS == "admin") {
+                    createAdministrationDrawer()
+                } else {
+                    createUserDrawer()
+                }
+            }
 
-        var profile = ProfileDrawerItem().withIcon(R.drawable.ic_dev)
+            override fun onCancelled(error: DatabaseError) {
 
-        if(admin) {
+            }
+        }
+
+        DATABASE_ROOT_USER.child("admin").addValueEventListener(adminListener)
+        /*if(ADMIN_STATUS == "admin") {
             createAdministrationDrawer()
         } else {
             createUserDrawer()
-        }
+        }*/
     }
 
     private fun createHeader() {
