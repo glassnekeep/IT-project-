@@ -5,6 +5,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.mikepenz.materialdrawer.AccountHeader
 
+var administrator: Long? = 12344545
+
 lateinit var NEW_USER: User
 lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String

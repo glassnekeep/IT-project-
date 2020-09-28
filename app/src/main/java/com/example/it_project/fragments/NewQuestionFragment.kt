@@ -38,50 +38,8 @@ class NewQuestionFragment : AppCompatDialogFragment() {
             }
         }
         button_create_question.setOnClickListener {
-            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Сопоставление")) {
-                Toast.makeText(activity?.applicationContext, "Сопоставляться должны 2 и более элемента!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                when (spinner_answer_type.selectedItem.toString()) {
-                    "Сопоставление" -> intent =
-                        Intent(activity, CreateComparisonQuestionActivity::class.java)
-                    "Термин" -> intent = Intent(activity, CreateTerminAnswerActivity::class.java)
-                    "Один вариант ответа" -> intent =
-                        Intent(activity, CreateOneAnswerQuestionActivity::class.java)
-                    "Несколько вариантов ответа" -> intent =
-                        Intent(activity, CreateManyAnswersActivity::class.java)
-                }
-                intent.putExtra("AnswerNumber", spinner_answer_number.selectedItem.toString())
-                intent.putExtra("QuestionName", edit_text_question_name.text.toString())
-                intent.putExtra("TestThisName", TEST_NAME)
-                //val intent = Intent(activity, MainActivity::class.java)
-                NEW_QUESTION = edit_text_question_name.text.toString()
-                startActivity(intent)
-                fragmentManager?.beginTransaction()?.remove(this@NewQuestionFragment)?.commit()
-            }
-            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Один вариант ответа")) {
-                Toast.makeText(activity?.applicationContext, "Вариантов ответа должно быть 2 и более!", Toast.LENGTH_SHORT).show()
-            }
-            else {
-                when (spinner_answer_type.selectedItem.toString()) {
-                    "Сопоставление" -> intent =
-                        Intent(activity, CreateComparisonQuestionActivity::class.java)
-                    "Термин" -> intent = Intent(activity, CreateTerminAnswerActivity::class.java)
-                    "Один вариант ответа" -> intent =
-                        Intent(activity, CreateOneAnswerQuestionActivity::class.java)
-                    "Несколько вариантов ответа" -> intent =
-                        Intent(activity, CreateManyAnswersActivity::class.java)
-                }
-                intent.putExtra("AnswerNumber", spinner_answer_number.selectedItem.toString())
-                intent.putExtra("QuestionName", edit_text_question_name.text.toString())
-                intent.putExtra("TestThisName", TEST_NAME)
-                //val intent = Intent(activity, MainActivity::class.java)
-                NEW_QUESTION = edit_text_question_name.text.toString()
-                startActivity(intent)
-                fragmentManager?.beginTransaction()?.remove(this@NewQuestionFragment)?.commit()
-            }
-            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() == "Несколько вариантов ответа")) {
-                Toast.makeText(activity?.applicationContext, "Вариантов ответа должно быть 2 и более!", Toast.LENGTH_SHORT).show()
+            if((spinner_answer_number.selectedItem.toString() == "1") && (spinner_answer_type.selectedItem.toString() != "Термин")) {
+                Toast.makeText(activity?.applicationContext, "Должно быть 2 и более ответов!", Toast.LENGTH_SHORT).show()
             }
             else {
                 when (spinner_answer_type.selectedItem.toString()) {

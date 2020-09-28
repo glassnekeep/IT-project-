@@ -52,10 +52,12 @@ fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers
     }
 }
 
-fun createUserInDatabase(name: String, secName: String, email: String) {
-    NEW_USER = User(name, secName, email)
+fun createUserInDatabase(name: String, secName: String, email: String, admin: String) {
+    NEW_USER = User(name, secName, email, admin)
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(NEW_USER)
 }
+
+
 
 fun tapPromtToExit(activity: Activity) {
     if (backPressed + 2500 > System.currentTimeMillis()) {
