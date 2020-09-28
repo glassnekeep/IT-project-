@@ -85,6 +85,12 @@ class RegisterActivity : BaseActivity() {
                                                     }
                                                     else {
                                                         Toast.makeText(this@RegisterActivity, "Код преподавателя неверен", Toast.LENGTH_SHORT).show()
+                                                        val currentUser = FirebaseAuth.getInstance().currentUser
+                                                        user.delete().addOnCompleteListener { task ->
+                                                            if(task.isSuccessful) {
+                                                                Log.d("TAG", "Account deleted")
+                                                            }
+                                                        }
                                                     }
                                                 }
                                                 override fun onCancelled(error: DatabaseError) {
