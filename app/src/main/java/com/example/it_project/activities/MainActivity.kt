@@ -40,8 +40,6 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         initFirebase()
         createHeader()
-        //user = User("1", "2", "3")
-        //initUser {  }
         val postListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 USER = snapshot.getValue(User::class.java)
