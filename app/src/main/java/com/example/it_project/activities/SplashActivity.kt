@@ -10,6 +10,8 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.it_project.R
+import com.example.it_project.utilities.getCurrentUserName
+import com.example.it_project.utilities.getCurrentUserSecName
 import com.example.it_project.values.constants.SPLASH_DURATION
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.utilities.initFirebaseVariant2
@@ -29,6 +31,8 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         initFirebaseVariant2()
+        getCurrentUserName()
+        getCurrentUserSecName()
         auth = FirebaseAuth.getInstance()
         layout = findViewById<View>(R.id.splashLayout) as ConstraintLayout
         imageView = findViewById<View>(R.id.ivSplashIcon) as ImageView

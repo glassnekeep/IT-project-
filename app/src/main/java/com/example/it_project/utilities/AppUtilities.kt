@@ -23,7 +23,7 @@ fun showToast(context: Context?, message: String?) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
-private fun addNewGroupToList(newGroup: GroupModel) {
+fun addNewGroupToList(newGroup: GroupModel) {
     GROUP_LIST.add(newGroup)
 }
 
@@ -73,6 +73,38 @@ fun initFirebaseVariant2() {
     initGroupList()
 }
 
+fun getCurrentUserName() {
+    var nameListener = object: ValueEventListener {
+        var name: String? = null
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var user: User? = snapshot.getValue(User::class.java)
+            name = user?.name
+            pushUserName(name)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_USER.addValueEventListener(nameListener)
+}
+
+fun getCurrentUserSecName() {
+    var secNameListener = object: ValueEventListener {
+        var secName: String? = null
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var user: User? = snapshot.getValue(User::class.java)
+            secName = user?.secName
+            pushUserSecName(secName)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_USER.addValueEventListener(secNameListener)
+}
+
 fun createTestIDWithName(testName: String) {
     var id = DATABASE_ROOT_TEST_IDS.push().key
     var idName: IdModel = IdModel(id!!, testName)
@@ -80,12 +112,17 @@ fun createTestIDWithName(testName: String) {
     DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_ID).setValue(id)
 }
 
-fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorID: String) {
+fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: String) {
     var id = DATABASE_ROOT_GROUP_IDS.push().key
     var idName = IdModel(id!!, groupName)
-    var newGroup = GroupModel(groupName, numberUsers, creatorID)
+    var newGroup = GroupModel(groupName, numberUsers, creatorName)
     DATABASE_ROOT_GROUP_IDS.child(id!!).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).setValue(idName)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
+}
+
+fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {
+    var newGroup = GroupModel(groupName, numberUsers, creatorName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
 }
 
@@ -119,16 +156,12 @@ fun tapPromtToExit(activity: Activity) {
     backPressed = System.currentTimeMillis()
 }
 
-fun getUserName(){
-    var userNameEmailListener = object : ValueEventListener {
-        override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val user = dataSnapshot.getValue(User::class.java)
-            val name = user?.name
-        }
-        override fun onCancelled(error: DatabaseError) {
+fun pushUserName(name: String?) {
+    CURRENT_USER_NAME = name
+}
 
-        }
-    }
+fun pushUserSecName(secName: String?) {
+    CURRENT_USER_SECNAME = secName
 }
 
 

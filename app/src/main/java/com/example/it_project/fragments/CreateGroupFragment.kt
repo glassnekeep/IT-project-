@@ -34,13 +34,13 @@ class CreateGroupFragment : AppCompatDialogFragment() {
         super.onStart()
         //initFirebase()
         button_commit_create_group_name.setOnClickListener {
-            CURRENT_GROUP_NAME = edit_text_group_name.text.toString()
+            NEW_GROUP = edit_text_group_name.text.toString()
             val intentCreateGroup = Intent(activity, GroupsActivity::class.java)
             intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString())
             startActivity(intentCreateGroup)
             fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
             var groupName = edit_text_group_name.text.toString()
-            val creatorNameLListener = object: ValueEventListener {
+            val creatorNameListener = object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     USER = snapshot.getValue(User::class.java)
                     var name = USER?.name
@@ -53,7 +53,7 @@ class CreateGroupFragment : AppCompatDialogFragment() {
 
                 }
             }
-            DATABASE_ROOT_USER.addValueEventListener(creatorNameLListener)
+            DATABASE_ROOT_USER.addValueEventListener(creatorNameListener)
             //createGroupIDWithName(groupName, 0, CURRENT_UID)
         }
         button_exit_create_group_name.setOnClickListener {
