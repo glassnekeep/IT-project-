@@ -28,10 +28,8 @@ class CreateTestActivity : BaseActivity() {
     private lateinit var questionsRecyclerView: RecyclerView
     private lateinit var activity: Activity
     private lateinit var context: Context
-    //private lateinit var categoryList: ArrayList<CategoryModel>
     private lateinit var fragmentManager : FragmentManager
     private lateinit var adapter: CategoryAdapter
-    //private var testName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,26 +39,12 @@ class CreateTestActivity : BaseActivity() {
         initFirebase()
         init()
         enableUpButton()
-        /*questionsRecyclerView.layoutManager = LinearLayoutManager(this)
-        questionsRecyclerView.adapter = adapter*/
         fragmentManager = this@CreateTestActivity.supportFragmentManager
         createNewQuestionButton.setOnClickListener {
-            //val transaction = fragmentManager.beginTransaction()
-            //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
             val dialogFragment = NewQuestionFragment()
             val manager = supportFragmentManager
             dialogFragment.show(manager, "MyDialog")
             }
-        /*val extras: Bundle? = intent.extras
-        if(extras != null) {
-            var newCategory: String? = extras.getString("NewQuestionName")
-            if(extras.getString("NewQuestionName") != null) {
-                var newCategoryListItem: CategoryModel? = CategoryModel(newCategory!!)
-                if (newCategoryListItem != null) {
-                    categoryList.add(newCategoryListItem)
-                }
-            }
-        }*/
         }
 
     override fun onStart() {
@@ -75,15 +59,6 @@ class CreateTestActivity : BaseActivity() {
         super.onResume()
         if(CURRENT_TEST_NAME != null) {setToolbarTitle(CURRENT_TEST_NAME!!)}
         val extras: Bundle? = intent.extras
-        /*if(extras != null) {
-            var newCategory: String? = extras.getString("NewQuestionName")
-            if(extras.getString("NewQuestionName") != null) {
-                var newCategoryListItem: CategoryModel? = CategoryModel(newCategory!!)
-                if (newCategoryListItem != null) {
-                    categoryList.add(newCategoryListItem)
-                }
-            }
-        }*/
         if(NEW_QUESTION != null) {
             var newCategory: String? = NEW_QUESTION
             //categoryList.add(CategoryModel(newCategory!!))
@@ -104,8 +79,6 @@ class CreateTestActivity : BaseActivity() {
         questionsRecyclerView = findViewById(R.id.list_of_questions)
         context = applicationContext
         activity = this@CreateTestActivity
-        //categoryList = ArrayList<CategoryModel>()
-        //adapter = CategoryAdapter(context, activity, categoryList)
         adapter = CategoryAdapter(context, activity, CATEGORY_LIST)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -128,6 +101,7 @@ class CreateTestActivity : BaseActivity() {
 
         quitDialog.setPositiveButton("Да!"
         ) { dialog, which ->
+            CATEGORY_LIST = ArrayList()
             startActivity(Intent(this@CreateTestActivity, MainActivity::class.java))
             if(CURRENT_TEST_NAME != null) {deleteTestWithName(CURRENT_TEST_NAME!!)}
             finish()

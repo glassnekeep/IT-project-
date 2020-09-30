@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.Toolbar
 import com.example.it_project.R
+import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.User
 import com.example.it_project.utilities.ActivityUtilities
@@ -177,6 +178,13 @@ class MainActivity : BaseActivity() {
                             RegisterActivity::class.java,
                             true
                         )
+                        5 -> invokeNewActivity(this@MainActivity, GroupsActivity::class.java, true)
+                        6 -> {var fragmentManager = this@MainActivity.supportFragmentManager
+                        //val transaction = fragmentManager.beginTransaction()
+                        //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
+                            val dialogFragment = CreateGroupFragment()
+                            val manager = supportFragmentManager
+                            dialogFragment.show(fragmentManager, "MyFirstDialog")}
                         8 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
                             SettingsActivity::class.java,
@@ -263,6 +271,11 @@ class MainActivity : BaseActivity() {
                         3 -> invokeNewActivity(
                             this@MainActivity,
                             RegisterActivity::class.java,
+                            true
+                        )
+                        6 -> ActivityUtilities.getInstance().invokeNewActivity(
+                            this@MainActivity,
+                            SettingsActivity::class.java,
                             true
                         )
                     }

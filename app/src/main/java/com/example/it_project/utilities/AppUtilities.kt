@@ -2,8 +2,10 @@ package com.example.it_project.utilities
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.widget.Toast
 import com.example.it_project.*
+import com.example.it_project.models.GroupModel
 import com.example.it_project.models.IdModel
 import com.example.it_project.models.QuestionModel
 import com.example.it_project.models.User
@@ -21,22 +23,70 @@ fun showToast(context: Context?, message: String?) {
     Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 }
 
+private fun addNewGroupToList(newGroup: GroupModel) {
+    GROUP_LIST.add(newGroup)
+}
+
+fun initGroupList() {
+    val groupListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(groupSnapshot: DataSnapshot in snapshot.children) {
+                var groupInfo: GroupModel? = groupSnapshot.child(NODE_GROUP_INFO).getValue(GroupModel::class.java)
+                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
+                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
+                //adapter.notifyDataSetChanged()
+                //GROUP_LIST = ArrayList()
+                addNewGroupToList(groupInfo!!)
+                Log.d("TAG", "${GROUP_LIST.size}")
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.addListenerForSingleValueEvent(groupListener)
+}
+
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     CURRENT_UID = AUTH.uid.toString()
     DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
     DATABASE_ROOT_NEW_TEST = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_NEW_GROUP = REF_DATABASE_ROOT.child(NODE_GROUP)
+    DATABASE_ROOT_GROUP_IDS = REF_DATABASE_ROOT.child(NODE_GROUP_IDS)
     DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
     USER = User()
 }
 
+fun initFirebaseVariant2() {
+    AUTH = FirebaseAuth.getInstance()
+    REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
+    CURRENT_UID = AUTH.uid.toString()
+    DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
+    DATABASE_ROOT_NEW_TEST = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_NEW_GROUP = REF_DATABASE_ROOT.child(NODE_GROUP)
+    DATABASE_ROOT_GROUP_IDS = REF_DATABASE_ROOT.child(NODE_GROUP_IDS)
+    DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
+    USER = User()
+    initGroupList()
+}
 
 fun createTestIDWithName(testName: String) {
     var id = DATABASE_ROOT_TEST_IDS.push().key
     var idName: IdModel = IdModel(id!!, testName)
     DATABASE_ROOT_TEST_IDS.child(id!!).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_ID).setValue(id)
+}
+
+fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorID: String) {
+    var id = DATABASE_ROOT_GROUP_IDS.push().key
+    var idName = IdModel(id!!, groupName)
+    var newGroup = GroupModel(groupName, numberUsers, creatorID)
+    DATABASE_ROOT_GROUP_IDS.child(id!!).child(NODE_ID).setValue(idName)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).setValue(idName)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
 }
 
 fun deleteTestWithName(testName: String) {

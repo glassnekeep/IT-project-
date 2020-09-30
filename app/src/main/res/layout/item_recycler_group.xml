@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/groupContainer"
+    android:layout_width="match_parent"
+    android:layout_height="160dp">
+
+    <TextView
+        android:id="@+id/groupName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingStart="20dp"
+        android:text="Название группы"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/groupCreator"
+        app:layout_constraintTop_toBottomOf="@id/groupName"
+        app:layout_constraintStart_toStartOf="@id/groupName"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Имя создателя группы" />
+
+    <TextView
+        android:id="@+id/userNumber"
+        app:layout_constraintTop_toTopOf="@id/groupCreator"
+        app:layout_constraintStart_toEndOf="@id/groupCreator"
+        android:layout_marginStart="30dp"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Кол-во" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

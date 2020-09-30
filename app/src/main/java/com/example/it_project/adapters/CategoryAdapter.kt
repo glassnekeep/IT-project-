@@ -15,16 +15,6 @@ import java.util.*
 
 class  CategoryAdapter(var mContext: Context, var mActivity: Activity,var categoryList: ArrayList<CategoryModel>): RecyclerView.Adapter<QuestionHolder>() {
 
-    //private lateinit var mContext: Context
-    //private lateinit var mActivity: Activity
-    //private lateinit var categoryList: ArrayList<CategoryModel>
-    //var itemClickListener: ListItemClickListener
-
-    /*fun setItemClickListener(itemClickListener: ListItemClickListener) {
-        this.itemClickListener = itemClickListener
-    }*/
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuestionHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_category_recycler, parent, false)
         return QuestionHolder(itemView)

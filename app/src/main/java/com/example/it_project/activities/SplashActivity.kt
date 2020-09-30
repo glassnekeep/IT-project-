@@ -12,6 +12,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.example.it_project.R
 import com.example.it_project.values.constants.SPLASH_DURATION
 import com.example.it_project.utilities.initFirebase
+import com.example.it_project.utilities.initFirebaseVariant2
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 
@@ -27,7 +28,7 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
-        initFirebase()
+        initFirebaseVariant2()
         auth = FirebaseAuth.getInstance()
         layout = findViewById<View>(R.id.splashLayout) as ConstraintLayout
         imageView = findViewById<View>(R.id.ivSplashIcon) as ImageView
