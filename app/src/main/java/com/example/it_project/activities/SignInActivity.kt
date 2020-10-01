@@ -7,6 +7,7 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.it_project.R
+import com.example.it_project.utilities.showToast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
@@ -40,12 +41,12 @@ class SignInActivity : BaseActivity() {
     override fun onStart() {
         super.onStart()
         val user: FirebaseUser? = auth.currentUser
-        if (user != null) {
+        if (user != null && user.isEmailVerified) {
             Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show()
             var intentToMain = Intent(this@SignInActivity, MainActivity::class.java)
             startActivity(intentToMain)
         } else {
-            Toast.makeText(this, "User null", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Подтвердите Email", Toast.LENGTH_SHORT).show()
         }
 
         signInButton.setOnClickListener {
@@ -59,13 +60,19 @@ class SignInActivity : BaseActivity() {
                 ).addOnCompleteListener(this,
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
-                            Toast.makeText(
-                                applicationContext,
-                                "User SignIn Successful",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                            val intentMain = Intent(this, MainActivity::class.java)
-                            startActivity(intentMain)
+                            var currenUser = auth.currentUser
+                            if(currenUser!!.isEmailVerified) {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "User SignIn Successful",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intentMain = Intent(this, MainActivity::class.java)
+                                startActivity(intentMain)
+                            }
+                            else {
+                                showToast(this, "Подтвердите ваш Email")
+                            }
                         } else {
                             Toast.makeText(
                                 applicationContext,

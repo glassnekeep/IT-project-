@@ -102,6 +102,7 @@ class GroupsActivity : BaseActivity() {
             android.R.id.home -> {
                 startActivity(Intent(this@GroupsActivity, MainActivity::class.java))
                 finish()
+                GROUP_LIST = ArrayList()
                 return true
             }
         }
@@ -128,6 +129,7 @@ class GroupsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         startActivity(Intent(this@GroupsActivity, MainActivity::class.java))
+        GROUP_LIST = ArrayList()
         finish()
     }
 

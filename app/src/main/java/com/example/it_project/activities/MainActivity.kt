@@ -9,10 +9,7 @@ import com.example.it_project.R
 import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.User
-import com.example.it_project.utilities.ActivityUtilities
-import com.example.it_project.utilities.initFirebase
-import com.example.it_project.utilities.invokeNewActivity
-import com.example.it_project.utilities.showToast
+import com.example.it_project.utilities.*
 import com.example.it_project.values.ADMIN_STATUS
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.example.it_project.values.USER
@@ -41,6 +38,9 @@ class MainActivity : BaseActivity() {
         setContentView(R.layout.activity_main)
         initFirebase()
         createHeader()
+        initFirebaseVariant2()
+        getCurrentUserName()
+        getCurrentUserSecName()
         val postListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 USER = snapshot.getValue(User::class.java)

@@ -61,6 +61,13 @@ class RegisterActivity : BaseActivity() {
                         user?.sendEmailVerification()
                             ?.addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
+                                    /*val user1 = auth.currentUser
+                                    user1?.sendEmailVerification()
+                                        ?.addOnCompleteListener { task ->
+                                            if(task.isSuccessful) {
+
+                                            }
+                                        }*/
                                     //var id: String? = database.key
                                     var name: String = registrationFirstName.text.toString()
                                     var secName: String = registrationSecondName.text.toString()
@@ -80,7 +87,7 @@ class RegisterActivity : BaseActivity() {
                                                     if(code == trueCode) {
                                                         adminStatus = "admin"
                                                         createUserInDatabase(name, secName, email, adminStatus)
-                                                        invokeNewActivity(this@RegisterActivity, MainActivity::class.java, true)
+                                                        invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
                                                         showToast(this@RegisterActivity, "Аккаунт создан")
                                                     }
                                                     else {
@@ -101,7 +108,7 @@ class RegisterActivity : BaseActivity() {
                                         }
                                         else {
                                             createUserInDatabase(name, secName, email, adminStatus)
-                                            invokeNewActivity(this@RegisterActivity, MainActivity::class.java, true)
+                                            invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
                                             Toast.makeText(this, "Аккаунт создан", Toast.LENGTH_SHORT).show()
                                         }
                                         //createUserInDatabase(name, secName, email, false)

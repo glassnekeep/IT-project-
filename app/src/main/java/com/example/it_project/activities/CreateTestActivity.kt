@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
@@ -30,6 +31,7 @@ class CreateTestActivity : BaseActivity() {
     private lateinit var context: Context
     private lateinit var fragmentManager : FragmentManager
     private lateinit var adapter: CategoryAdapter
+    private lateinit var commit: Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,10 @@ class CreateTestActivity : BaseActivity() {
             val manager = supportFragmentManager
             dialogFragment.show(manager, "MyDialog")
             }
+
+        commit.setOnClickListener {
+            startActivity(Intent(this, MainActivity::class.java))
+        }
         }
 
     override fun onStart() {
@@ -80,6 +86,7 @@ class CreateTestActivity : BaseActivity() {
         context = applicationContext
         activity = this@CreateTestActivity
         adapter = CategoryAdapter(context, activity, CATEGORY_LIST)
+        commit = findViewById(R.id.button_commit_create_test)
     }
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
