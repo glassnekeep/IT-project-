@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.GroupsActivity"></activity>
+        <activity android:name=".activities.CurrentGroupActivity"></activity>
+        <activity android:name=".activities.GroupsActivity" />
         <activity android:name=".activities.CreateOneAnswerQuestionActivity" />
         <activity android:name=".activities.CreateComparisonQuestionActivity" />
         <activity android:name=".activities.CreateManyAnswersActivity" />
