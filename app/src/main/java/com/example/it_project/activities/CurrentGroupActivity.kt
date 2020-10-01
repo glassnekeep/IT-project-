@@ -66,6 +66,7 @@ class CurrentGroupActivity : BaseActivity() {
         when (item.itemId) {
             android.R.id.home -> {
                 intent()
+                PARTICIPANT_LIST = ArrayList()
                 return true
             }
         }
@@ -74,6 +75,7 @@ class CurrentGroupActivity : BaseActivity() {
 
     override fun onBackPressed() {
         intent()
+        PARTICIPANT_LIST = ArrayList()
     }
 
     private fun intent() {

@@ -42,8 +42,35 @@ fun initFirebaseVariant2() {
     initGroupList()
 }
 
+fun initParticipantList(group: String) {
+    val participantListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(groupSnapshot: DataSnapshot in snapshot.children) {
+                var participantInfo: ParticipantModel? = groupSnapshot.child(NODE_PARTICIPANT_INFO).getValue(ParticipantModel::class.java)
+                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
+                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
+                //adapter.notifyDataSetChanged()
+                //GROUP_LIST = ArrayList()
+                if(participantInfo != null) {
+                    addNewParticipantToList(participantInfo!!)
+                }
+                Log.d("PARTICIPANT", "${PARTICIPANT_LIST.size}")
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.child(group).child(NODE_PARTICIPANTS).addListenerForSingleValueEvent(participantListener)
+}
+
+fun addNewParticipantToList(newParticipant: ParticipantModel) {
+    PARTICIPANT_LIST.add(newParticipant)
+}
+
 fun addParticipantToGroup(participant: ParticipantModel, participantID: String, groupName: String) {
-    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_PARTICIPANTS).child(participantID).setValue(participant)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_PARTICIPANTS).child(participantID).child(NODE_PARTICIPANT_INFO).setValue(participant)
 }
 
 fun showToast(context: Context?, message: String?) {
@@ -52,19 +79,6 @@ fun showToast(context: Context?, message: String?) {
 
 fun addNewGroupToList(newGroup: GroupModel) {
     GROUP_LIST.add(newGroup)
-}
-
-
-fun getUserWithID() {
-    val userListener = object: ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-
-        }
-    }
 }
 
 fun initGroupList() {
@@ -77,7 +91,7 @@ fun initGroupList() {
                 //adapter.notifyDataSetChanged()
                 //GROUP_LIST = ArrayList()
                 addNewGroupToList(groupInfo!!)
-                Log.d("TAG", "${GROUP_LIST.size}")
+                Log.d("GROUP", "${GROUP_LIST.size}")
             }
         }
 

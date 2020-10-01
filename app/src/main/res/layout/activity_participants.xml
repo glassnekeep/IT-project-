@@ -64,7 +64,7 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_of_participants"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="590dp" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

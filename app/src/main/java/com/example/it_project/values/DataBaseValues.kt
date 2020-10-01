@@ -20,6 +20,7 @@ lateinit var TEST_NAME: String
 var ADMIN_STATUS: String? = ""
 var USER: User? = null
 lateinit var header: AccountHeader
+const val NODE_PARTICIPANT_INFO = "participant info"
 const val NODE_PARTICIPANTS = "participants"
 const val NODE_GROUP_INFO = "group info"
 const val NODE_GROUP_IDS = "group IDs"

@@ -90,6 +90,7 @@ class ParticipantsActivity : BaseActivity() {
             android.R.id.home -> {
                 //ActivityUtilities.getInstance()
                 invokeNewActivity(this@ParticipantsActivity, CurrentGroupActivity::class.java, true)
+                //PARTICIPANT_LIST = ArrayList()
                 return true
             }
         }
@@ -98,5 +99,6 @@ class ParticipantsActivity : BaseActivity() {
 
     override fun onBackPressed() {
         invokeNewActivity(this, CurrentGroupActivity::class.java, true)
+        //PARTICIPANT_LIST = ArrayList()
     }
 }

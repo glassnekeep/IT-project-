@@ -16,6 +16,7 @@ import com.example.it_project.activities.CurrentGroupActivity
 import com.example.it_project.activities.GroupsActivity
 import com.example.it_project.models.CategoryModel
 import com.example.it_project.models.GroupModel
+import com.example.it_project.utilities.initParticipantList
 import com.example.it_project.utilities.invokeNewActivity
 import com.example.it_project.values.ADAPTER_GROUP_NAME
 import com.example.it_project.values.CURRENT_GROUP_NAME
@@ -39,6 +40,9 @@ class GroupAdapter(var mContext: Context, var mActivity: Activity, var groupList
         holder.itemView.setOnClickListener {
             ADAPTER_GROUP_NAME = holder.itemView.groupName.text.toString()
             CURRENT_GROUP_NAME = ADAPTER_GROUP_NAME
+            if(CURRENT_GROUP_NAME != null) {
+                initParticipantList(CURRENT_GROUP_NAME!!)
+            }
             //var adapterGroupName = ADAPTER_GROUP_NAME
             //getAdapterGroupID(adapterGroupName!!)
             var intent: Intent = Intent(mActivity, CurrentGroupActivity::class.java)

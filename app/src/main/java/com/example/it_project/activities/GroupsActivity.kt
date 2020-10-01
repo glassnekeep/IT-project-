@@ -100,7 +100,8 @@ class GroupsActivity : BaseActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                openQuitDialog()
+                startActivity(Intent(this@GroupsActivity, MainActivity::class.java))
+                finish()
                 return true
             }
         }
@@ -126,7 +127,8 @@ class GroupsActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        openQuitDialog()
+        startActivity(Intent(this@GroupsActivity, MainActivity::class.java))
+        finish()
     }
 
     /*private fun addVeryNewGroupToList(newGroup: GroupModel) {
