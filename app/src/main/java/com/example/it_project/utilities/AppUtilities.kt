@@ -5,10 +5,7 @@ import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import com.example.it_project.*
-import com.example.it_project.models.GroupModel
-import com.example.it_project.models.IdModel
-import com.example.it_project.models.QuestionModel
-import com.example.it_project.models.User
+import com.example.it_project.models.*
 import com.example.it_project.values.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -16,37 +13,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.lang.NullPointerException
+import java.lang.reflect.Array
 
 private var backPressed: Long = 0
-
-fun showToast(context: Context?, message: String?) {
-    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
-}
-
-fun addNewGroupToList(newGroup: GroupModel) {
-    GROUP_LIST.add(newGroup)
-}
-
-fun initGroupList() {
-    val groupListener = object: ValueEventListener {
-        override fun onDataChange(snapshot: DataSnapshot) {
-            for(groupSnapshot: DataSnapshot in snapshot.children) {
-                var groupInfo: GroupModel? = groupSnapshot.child(NODE_GROUP_INFO).getValue(GroupModel::class.java)
-                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
-                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
-                //adapter.notifyDataSetChanged()
-                //GROUP_LIST = ArrayList()
-                addNewGroupToList(groupInfo!!)
-                Log.d("TAG", "${GROUP_LIST.size}")
-            }
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-
-        }
-    }
-    DATABASE_ROOT_NEW_GROUP.addListenerForSingleValueEvent(groupListener)
-}
 
 fun initFirebase() {
     AUTH = FirebaseAuth.getInstance()
@@ -71,6 +40,52 @@ fun initFirebaseVariant2() {
     DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
     USER = User()
     initGroupList()
+}
+
+fun addParticipantToGroup(participant: ParticipantModel, participantID: String, groupName: String) {
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_PARTICIPANTS).child(participantID).setValue(participant)
+}
+
+fun showToast(context: Context?, message: String?) {
+    Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+}
+
+fun addNewGroupToList(newGroup: GroupModel) {
+    GROUP_LIST.add(newGroup)
+}
+
+
+fun getUserWithID() {
+    val userListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+}
+
+fun initGroupList() {
+    val groupListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(groupSnapshot: DataSnapshot in snapshot.children) {
+                var groupInfo: GroupModel? = groupSnapshot.child(NODE_GROUP_INFO).getValue(GroupModel::class.java)
+                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
+                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
+                //adapter.notifyDataSetChanged()
+                //GROUP_LIST = ArrayList()
+                addNewGroupToList(groupInfo!!)
+                Log.d("TAG", "${GROUP_LIST.size}")
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.addListenerForSingleValueEvent(groupListener)
 }
 
 fun getCurrentUserName() {
@@ -155,25 +170,6 @@ fun tapPromtToExit(activity: Activity) {
     }
     backPressed = System.currentTimeMillis()
 }
-
-/*fun getAdapterGroupID(groupName: String) {
-    var IDListener = object: ValueEventListener {
-        var ID: String? = null
-        override fun onDataChange(snapshot: DataSnapshot) {
-            ID = snapshot.getValue(String::class.java)
-            setAdapterGroupID(ID)
-        }
-
-        override fun onCancelled(error: DatabaseError) {
-
-        }
-    }
-    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).child("id").addValueEventListener(IDListener)
-}
-
-fun setAdapterGroupID(adapterGroupID: String?) {
-    ADAPTER_GROUP_ID = adapterGroupID
-}*/
 
 fun pushUserName(name: String?) {
     CURRENT_USER_NAME = name

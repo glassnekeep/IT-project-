@@ -38,6 +38,7 @@ class GroupAdapter(var mContext: Context, var mActivity: Activity, var groupList
         val model: GroupModel = groupList[position]
         holder.itemView.setOnClickListener {
             ADAPTER_GROUP_NAME = holder.itemView.groupName.text.toString()
+            CURRENT_GROUP_NAME = ADAPTER_GROUP_NAME
             //var adapterGroupName = ADAPTER_GROUP_NAME
             //getAdapterGroupID(adapterGroupName!!)
             var intent: Intent = Intent(mActivity, CurrentGroupActivity::class.java)

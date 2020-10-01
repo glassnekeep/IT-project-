@@ -3,15 +3,12 @@ package com.example.it_project.activities
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
+import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentManager
 import com.example.it_project.R
-import com.example.it_project.models.User
-import com.example.it_project.utilities.pushUserName
 import com.example.it_project.values.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -20,6 +17,7 @@ import com.google.firebase.database.ValueEventListener
 class CurrentGroupActivity : BaseActivity() {
 
     private lateinit var groupId: TextView
+    private lateinit var participantsLayout: LinearLayout
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +49,17 @@ class CurrentGroupActivity : BaseActivity() {
             var clipData = ClipData.newPlainText("text", text)
             clipboardManager.setPrimaryClip(clipData)
         }
+
+
+        participantsLayout.setOnClickListener {
+            var intent: Intent = Intent(this, ParticipantsActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun init() {
         groupId = findViewById(R.id.groupId)
+        participantsLayout = findViewById(R.id.participantsLayout)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

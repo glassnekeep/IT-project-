@@ -3,6 +3,7 @@ package com.example.it_project.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
@@ -33,6 +34,7 @@ class SplashActivity : AppCompatActivity() {
         initFirebaseVariant2()
         getCurrentUserName()
         getCurrentUserSecName()
+        //Log.d("USERS", ALL_USER_IDS.size.toString())
         auth = FirebaseAuth.getInstance()
         layout = findViewById<View>(R.id.splashLayout) as ConstraintLayout
         imageView = findViewById<View>(R.id.ivSplashIcon) as ImageView
