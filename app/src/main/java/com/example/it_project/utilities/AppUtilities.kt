@@ -156,6 +156,25 @@ fun tapPromtToExit(activity: Activity) {
     backPressed = System.currentTimeMillis()
 }
 
+/*fun getAdapterGroupID(groupName: String) {
+    var IDListener = object: ValueEventListener {
+        var ID: String? = null
+        override fun onDataChange(snapshot: DataSnapshot) {
+            ID = snapshot.getValue(String::class.java)
+            setAdapterGroupID(ID)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).child("id").addValueEventListener(IDListener)
+}
+
+fun setAdapterGroupID(adapterGroupID: String?) {
+    ADAPTER_GROUP_ID = adapterGroupID
+}*/
+
 fun pushUserName(name: String?) {
     CURRENT_USER_NAME = name
 }

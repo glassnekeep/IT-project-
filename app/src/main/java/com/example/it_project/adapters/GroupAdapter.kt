@@ -17,6 +17,10 @@ import com.example.it_project.activities.GroupsActivity
 import com.example.it_project.models.CategoryModel
 import com.example.it_project.models.GroupModel
 import com.example.it_project.utilities.invokeNewActivity
+import com.example.it_project.values.ADAPTER_GROUP_NAME
+import com.example.it_project.values.CURRENT_GROUP_NAME
+import kotlinx.android.synthetic.main.item_recycler_group.view.*
+import kotlinx.coroutines.delay
 import java.util.ArrayList
 
 class GroupAdapter(var mContext: Context, var mActivity: Activity, var groupList: ArrayList<GroupModel>): RecyclerView.Adapter<GroupHolder>(), View.OnClickListener {
@@ -33,6 +37,9 @@ class GroupAdapter(var mContext: Context, var mActivity: Activity, var groupList
     override fun onBindViewHolder(holder: GroupHolder, position: Int) {
         val model: GroupModel = groupList[position]
         holder.itemView.setOnClickListener {
+            ADAPTER_GROUP_NAME = holder.itemView.groupName.text.toString()
+            //var adapterGroupName = ADAPTER_GROUP_NAME
+            //getAdapterGroupID(adapterGroupName!!)
             var intent: Intent = Intent(mActivity, CurrentGroupActivity::class.java)
             mActivity.startActivity(intent)
         }

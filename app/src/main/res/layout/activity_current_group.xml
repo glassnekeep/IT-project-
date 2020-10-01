@@ -35,9 +35,12 @@
             android:layout_width="200dp"
             android:layout_height="50dp"
             android:paddingTop="10dp"
+            android:textIsSelectable="true"
+            android:focusable="true"
+            android:clickable="true"
             android:paddingEnd="0dp"
             android:text="Id группы"
-            android:textSize="20dp" />
+            android:textSize="16dp" />
         <View
             android:layout_width="2dp"
             android:background="@color/gray"
