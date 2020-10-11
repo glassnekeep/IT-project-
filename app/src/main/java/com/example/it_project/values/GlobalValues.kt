@@ -8,6 +8,7 @@ var ADAPTER_GROUP_ID: String? = null
 var ADAPTER_GROUP_NAME: String? = null
 var CURRENT_GROUP_NAME: String? = null
 var CURRENT_TEST_NAME: String? = null
+var CURRENT_TEST_ID: String? = null
 var NEW_QUESTION: String? = null
 var NEW_GROUP: String? = null
 var NEW_PARTICIPANT_ID: String? = null

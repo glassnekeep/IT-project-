@@ -15,12 +15,10 @@ import com.example.it_project.*
 import com.example.it_project.adapters.CategoryAdapter
 import com.example.it_project.fragments.NewQuestionFragment
 import com.example.it_project.models.CategoryModel
+import com.example.it_project.utilities.deleteTestIdWithName
 import com.example.it_project.utilities.deleteTestWithName
 import com.example.it_project.utilities.initFirebase
-import com.example.it_project.values.CATEGORY_LIST
-import com.example.it_project.values.CURRENT_TEST_NAME
-import com.example.it_project.values.NEW_QUESTION
-import com.example.it_project.values.TEST_NAME
+import com.example.it_project.values.*
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class CreateTestActivity : BaseActivity() {
@@ -111,6 +109,7 @@ class CreateTestActivity : BaseActivity() {
             CATEGORY_LIST = ArrayList()
             startActivity(Intent(this@CreateTestActivity, MainActivity::class.java))
             if(CURRENT_TEST_NAME != null) {deleteTestWithName(CURRENT_TEST_NAME!!)}
+            if(CURRENT_TEST_ID != null) {deleteTestIdWithName(CURRENT_TEST_ID!!)}
             finish()
         }
 

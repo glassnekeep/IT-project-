@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/testContainer"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/testName"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:paddingTop="10dp"
+        android:paddingStart="20dp"
+        android:text="Название теста"
+        android:textSize="32dp" />
+
+    <TextView
+        android:id="@+id/testCreator"
+        app:layout_constraintTop_toBottomOf="@id/testName"
+        app:layout_constraintStart_toStartOf="@id/testName"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Имя создателя теста" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

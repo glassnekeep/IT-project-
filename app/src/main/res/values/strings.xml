@@ -19,4 +19,23 @@
         <item>5</item>
         <item>6</item>
     </string-array>
+
+    <string-array name="privacyStatus">
+        <item>Публичный</item>
+        <item>Приватный</item>
+    </string-array>
+
+    <string-array name="subject">
+        <item>История</item>
+        <item>Биология</item>
+        <item>География</item>
+        <item>Англ. Яз.</item>
+        <item>Рус. Яз.</item>
+        <item>Алгебра</item>
+        <item>Геометрия</item>
+        <item>Физика</item>
+        <item>Литература</item>
+        <item>Химия</item>
+        <item>Информатика</item>
+    </string-array>
 </resources>

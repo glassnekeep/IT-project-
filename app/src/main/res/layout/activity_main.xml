@@ -8,14 +8,20 @@
 
     <include
         android:id="@+id/toolbarTop"
-        layout="@layout/toolbar_main"
+        layout="@layout/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <RelativeLayout
+    <LinearLayout
         app:layout_constraintTop_toBottomOf="@+id/toolbarTop"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="670dp">
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_tests"
@@ -24,6 +30,6 @@
             android:nestedScrollingEnabled="true"
             android:elevation="2dp"
             android:layout_marginStart="14dp" />
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -134,11 +134,18 @@ fun getCurrentUserSecName() {
     DATABASE_ROOT_USER.addValueEventListener(secNameListener)
 }
 
-fun createTestIDWithName(testName: String) {
+fun createTestIDWithName(testName: String): String? {
     var id = DATABASE_ROOT_TEST_IDS.push().key
     var idName: IdModel = IdModel(id!!, testName)
     DATABASE_ROOT_TEST_IDS.child(id!!).child(NODE_ID).setValue(idName)
+    return id
+}
+
+fun createTestWithName(testName: String, subject: String, privacy: String) {
+    var id = DATABASE_ROOT_TEST_IDS.push().key
+    var testInfo: TestInfoModel = TestInfoModel(subject, privacy)
     DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_ID).setValue(id)
+    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
 }
 
 fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: String) {
@@ -157,6 +164,10 @@ fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {
 
 fun deleteTestWithName(testName: String) {
     DATABASE_ROOT_NEW_TEST.child(testName).removeValue()
+}
+
+fun deleteTestIdWithName(testId: String) {
+    DATABASE_ROOT_TEST_IDS.child(testId).removeValue()
 }
 
 fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers: ArrayList<String>) {

@@ -1,18 +1,12 @@
-package com.example.it_project
+package com.example.it_project.holders
 
 import android.view.View
 import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
-import com.example.it_project.activities.CurrentGroupActivity
-import com.example.it_project.activities.GroupsActivity
-import com.example.it_project.utilities.invokeNewActivity
+import com.example.it_project.R
 
-open class GroupHolder(itemView: View) : RecyclerView.ViewHolder(itemView)/*, View.OnClickListener*/ {
-
-    /*override fun onClick(v: View?) {
-        invokeNewActivity(GroupsActivity(), CurrentGroupActivity::class.java, true)
-    }*/
+open class GroupHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     var container: ConstraintLayout
     var groupName : TextView

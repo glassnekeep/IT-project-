@@ -6,8 +6,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.example.it_project.ListItemClickListener
-import com.example.it_project.QuestionHolder
+import com.example.it_project.holders.QuestionHolder
 import com.example.it_project.R
 import com.example.it_project.models.CategoryModel
 import java.util.*

@@ -9,7 +9,9 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.it_project.R
 import com.example.it_project.activities.CreateTestActivity
 import com.example.it_project.utilities.createTestIDWithName
+import com.example.it_project.utilities.createTestWithName
 import com.example.it_project.utilities.initFirebase
+import com.example.it_project.values.CURRENT_TEST_ID
 import com.example.it_project.values.CURRENT_TEST_NAME
 import kotlinx.android.synthetic.main.fragment_create_test_name.*
 
@@ -29,11 +31,15 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
         super.onResume()
         button_commit_create_test_name.setOnClickListener {
             CURRENT_TEST_NAME = edit_text_test_name.text.toString()
+            var testName = edit_text_test_name.text.toString()
+            var subject = spinner_subject.selectedItem.toString()
+            var privacy = spinner_privacy.selectedItem.toString()
             val intentCreateTest = Intent(activity, CreateTestActivity::class.java)
             intentCreateTest.putExtra("TestName", edit_text_test_name.text.toString())
             startActivity(intentCreateTest)
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()
-            createTestIDWithName(edit_text_test_name.text.toString())
+            CURRENT_TEST_ID = createTestIDWithName(testName)
+            createTestWithName(testName, subject, privacy)
         }
         button_exit_create_test_name.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()

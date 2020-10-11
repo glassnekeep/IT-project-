@@ -4,13 +4,17 @@ import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
+import com.example.it_project.adapters.CategoryAdapter
 import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.User
 import com.example.it_project.utilities.*
 import com.example.it_project.values.ADMIN_STATUS
+import com.example.it_project.values.CATEGORY_LIST
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.example.it_project.values.USER
 import com.google.firebase.database.*
@@ -22,7 +26,6 @@ import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
-
 class MainActivity : BaseActivity() {
 
     private lateinit var user: User
@@ -31,11 +34,14 @@ class MainActivity : BaseActivity() {
     private var toolbar: Toolbar? = null
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
+    private lateinit var listTests: RecyclerView
+    private lateinit var search: SearchView
     private lateinit var mCurrentProfile: ProfileDrawerItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        init()
         initFirebase()
         createHeader()
         initFirebaseVariant2()
@@ -200,7 +206,6 @@ class MainActivity : BaseActivity() {
             */.build()
     }
 
-
     private fun createUserDrawer() {
         drawer = DrawerBuilder()
             .withActivity(this)
@@ -246,11 +251,6 @@ class MainActivity : BaseActivity() {
                     drawerItem: IDrawerItem<*>
                 ): Boolean {
                     when (position) {
-                        /*1 -> ActivityUtilities.getInstance().invokeNewActivity(
-                            this@MainActivity,
-                            SplashActivity::class.java,
-                            true
-                        )*/
                         1 -> invokeNewActivity(
                             this@MainActivity,
                             AboutDevActivity::class.java,
@@ -262,12 +262,7 @@ class MainActivity : BaseActivity() {
                             val dialogFragment = CreateTestNameFragment()
                             val manager = supportFragmentManager
                             dialogFragment.show(fragmentManager, "MyFirstDialog")
-                        //ActivityUtilities.getInstance().invokeNewActivity(
-                            //this@MainActivity,
-                            //CreateTestActivity::class.java,
-                            //true
                         }
-                        //)
                         3 -> invokeNewActivity(
                             this@MainActivity,
                             RegisterActivity::class.java,
@@ -282,10 +277,13 @@ class MainActivity : BaseActivity() {
                     return false
                 }
             })
-            /*.withSavedInstance(savedInstanceState)
-            *.withShowDrawerOnFirstLaunch(true)
-            *.withShowDrawerUntilDraggedOpened(true)
-            */.build()
+            .build()
+    }
+
+    private fun init() {
+        listTests = findViewById(R.id.list_tests)
+        search = findViewById(R.id.searchView)
+        activity = this
     }
 
     private var backPressed: Long = 0
