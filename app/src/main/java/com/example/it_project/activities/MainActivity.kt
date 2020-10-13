@@ -3,6 +3,7 @@ package com.example.it_project.activities
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
@@ -13,6 +14,8 @@ import com.example.it_project.adapters.CategoryAdapter
 import com.example.it_project.adapters.TestAdapter
 import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
+import com.example.it_project.models.TestInfoModel
+import com.example.it_project.models.TestModel
 import com.example.it_project.models.User
 import com.example.it_project.utilities.*
 import com.example.it_project.values.*
@@ -37,6 +40,7 @@ class MainActivity : BaseActivity() {
     private lateinit var testsRecyclerView: RecyclerView
     private lateinit var search: SearchView
     private lateinit var mCurrentProfile: ProfileDrawerItem
+    private lateinit var listData: ArrayList<TestModel>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,14 +90,15 @@ class MainActivity : BaseActivity() {
             createUserDrawer()
         }*/
 
-        testsRecyclerView.layoutManager = LinearLayoutManager(this)
+        ///////////////////testsRecyclerView.layoutManager = LinearLayoutManager(this)
         //testsRecyclerView.adapter = adapter
 
         //adapter.notifyDataSetChanged()
-        testsRecyclerView.adapter = adapter
-        adapter.notifyDataSetChanged()
+        ///////////////////testsRecyclerView.adapter = adapter
+        ///////////////////adapter.notifyDataSetChanged()
         //adapter.notifyItemInserted(PUBLIC_TESTS_LIST.size - 1)
-        PUBLIC_TESTS_LIST = ArrayList()
+        ///////////////////PUBLIC_TESTS_LIST = ArrayList()
+        getDataFromDb()
     }
 
     private fun createHeader() {
@@ -294,7 +299,39 @@ class MainActivity : BaseActivity() {
         search = findViewById(R.id.searchView)
         activity = this
         context = applicationContext
-        adapter = TestAdapter(context, activity, PUBLIC_TESTS_LIST)
+        //adapter = TestAdapter(context, activity, PUBLIC_TESTS_LIST)
+        listData = ArrayList()
+        adapter = TestAdapter(context, activity, listData)
+        testsRecyclerView.layoutManager = LinearLayoutManager(this)
+        testsRecyclerView.adapter = adapter
+    }
+
+    private fun getDataFromDb() {
+            val publicTestListener = object: ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if(listData.size > 0) {listData.clear()}
+                    for(testInfoSnapshot: DataSnapshot in snapshot.children) {
+                        var testInfo: TestInfoModel? = testInfoSnapshot.child(NODE_TEST_INFO).getValue(
+                            TestInfoModel::class.java)
+                        var testName: String? = testInfoSnapshot.child(NODE_TEST_NAME).getValue(String::class.java)
+                        var creatorName: String? = testInfo?.creatorName
+                        var privacy: String? = testInfo?.privacy
+                        var subject: String? = testInfo?.subject
+                        var testId: String? = testInfoSnapshot.child(NODE_ID).getValue(String::class.java)
+                        var testModel: TestModel = TestModel(testName!!, creatorName!!, privacy!!, subject!!, testId!!)
+                        //addNewPublicTestToList(testModel)
+                        listData.add(testModel)
+                        //Log.d("TEST", "${PUBLIC_TESTS_LIST.size}")
+                    }
+                    adapter.notifyDataSetChanged()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            }
+            DATABASE_ROOT_NEW_PUBLIC_TEST.addListenerForSingleValueEvent(publicTestListener)
     }
 
     private var backPressed: Long = 0
