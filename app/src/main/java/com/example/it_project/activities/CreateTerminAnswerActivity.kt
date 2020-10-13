@@ -14,6 +14,7 @@ import com.example.it_project.models.QuestionModel
 import com.example.it_project.utilities.createQuestionInTest
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.values.CURRENT_TEST_NAME
+import com.example.it_project.values.CURRENT_TEST_PRIVACY
 import kotlinx.android.synthetic.main.activity_create_termin_answers.*
 
 class CreateTerminAnswerActivity : BaseActivity() {
@@ -44,6 +45,13 @@ class CreateTerminAnswerActivity : BaseActivity() {
         if(extras != null) {setToolbarTitle(extras.getString("QuestionName").toString())}
         if(extras != null) {
             when(extras.getString("AnswerNumber")) {
+                "1" -> {
+                    hide2()
+                    hide3()
+                    hide4()
+                    hide5()
+                    hide6()
+                }
                 "2" -> {
                     hide3()
                     hide4()
@@ -81,7 +89,7 @@ class CreateTerminAnswerActivity : BaseActivity() {
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Termin", answerNumber!!, "1"), arrayOfAnswers)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Termin", answerNumber!!, "1"), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateTerminAnswerActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)
@@ -99,6 +107,10 @@ class CreateTerminAnswerActivity : BaseActivity() {
 
         exitButton = findViewById(R.id.button_exit)
         createQuestionButton = findViewById(R.id.button_create_question)
+    }
+
+    private fun hide2() {
+        answer2.visibility = View.GONE
     }
 
     private fun hide3() {

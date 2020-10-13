@@ -7,6 +7,8 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import com.example.it_project.R
+import com.example.it_project.utilities.getCurrentUser
+import com.example.it_project.utilities.initFirebase
 import com.example.it_project.utilities.showToast
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
@@ -67,6 +69,7 @@ class SignInActivity : BaseActivity() {
                                     "User SignIn Successful",
                                     Toast.LENGTH_SHORT
                                 ).show()
+                                initFirebase()
                                 val intentMain = Intent(this, MainActivity::class.java)
                                 startActivity(intentMain)
                             }

@@ -13,6 +13,7 @@ import com.example.it_project.models.QuestionModel
 import com.example.it_project.utilities.createQuestionInTest
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.values.CURRENT_TEST_NAME
+import com.example.it_project.values.CURRENT_TEST_PRIVACY
 
 class CreateOneAnswerQuestionActivity : BaseActivity() {
 
@@ -81,7 +82,7 @@ class CreateOneAnswerQuestionActivity : BaseActivity() {
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswer.text.toString()), arrayOfAnswers)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswer.text.toString()), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateOneAnswerQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)

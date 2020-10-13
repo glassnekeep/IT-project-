@@ -108,8 +108,9 @@ class CreateTestActivity : BaseActivity() {
         ) { dialog, which ->
             CATEGORY_LIST = ArrayList()
             startActivity(Intent(this@CreateTestActivity, MainActivity::class.java))
-            if(CURRENT_TEST_NAME != null) {deleteTestWithName(CURRENT_TEST_NAME!!)}
+            if(CURRENT_TEST_NAME != null) {deleteTestWithName(CURRENT_TEST_NAME!!, CURRENT_TEST_PRIVACY!!)}
             if(CURRENT_TEST_ID != null) {deleteTestIdWithName(CURRENT_TEST_ID!!)}
+            CURRENT_TEST_PRIVACY = null
             finish()
         }
 

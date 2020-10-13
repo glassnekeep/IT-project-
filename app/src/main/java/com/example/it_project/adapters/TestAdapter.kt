@@ -11,6 +11,7 @@ import com.example.it_project.R
 import com.example.it_project.holders.GroupHolder
 import com.example.it_project.holders.TestHolder
 import com.example.it_project.models.GroupModel
+import com.example.it_project.models.TestInfoModel
 import com.example.it_project.models.TestModel
 import java.util.ArrayList
 
@@ -27,6 +28,9 @@ class TestAdapter(var mContext: Context,
         val model: TestModel = testsList[position]
         holder.testName.text = "${model.testName}"
         holder.creatorName.text = "${model.creatorName}"
+        holder.privacy.text = "${model.privacy}"
+        holder.subject.text = "${model.subject}"
+        holder.testId.text = "${model.testId}"
         holder.container.background = ContextCompat.getDrawable(mContext, R.drawable.category_item_background)
     }
 

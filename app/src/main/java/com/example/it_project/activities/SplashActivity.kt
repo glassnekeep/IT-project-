@@ -51,12 +51,12 @@ class SplashActivity : AppCompatActivity() {
                 override fun onAnimationEnd(animation: Animation) {
                     //ActivityUtilities.getInstance().invokeNewActivity(this@SplashActivity, RegisterActivity::class.java, true)
                     //startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
-                    if(currentUser != null) {
-                        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-                    }
-                    else {
+                    //if(currentUser != null) {
+                        //startActivity(Intent(this@SplashActivity, MainActivity::class.java))
+                    //}
+                    /*else*/ //{
                         startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
-                    }
+                    //}
                 }
 
                 override fun onAnimationRepeat(animation: Animation) {}

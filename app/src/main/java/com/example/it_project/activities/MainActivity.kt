@@ -6,17 +6,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
 import com.example.it_project.adapters.CategoryAdapter
+import com.example.it_project.adapters.TestAdapter
 import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.User
 import com.example.it_project.utilities.*
-import com.example.it_project.values.ADMIN_STATUS
-import com.example.it_project.values.CATEGORY_LIST
-import com.example.it_project.values.DATABASE_ROOT_USER
-import com.example.it_project.values.USER
+import com.example.it_project.values.*
 import com.google.firebase.database.*
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -29,12 +28,13 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 class MainActivity : BaseActivity() {
 
     private lateinit var user: User
+    private lateinit var adapter: TestAdapter
     private lateinit var activity: Activity
-    private var context: Context? = null
+    private lateinit var context: Context
     private var toolbar: Toolbar? = null
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
-    private lateinit var listTests: RecyclerView
+    private lateinit var testsRecyclerView: RecyclerView
     private lateinit var search: SearchView
     private lateinit var mCurrentProfile: ProfileDrawerItem
 
@@ -44,7 +44,7 @@ class MainActivity : BaseActivity() {
         init()
         initFirebase()
         createHeader()
-        initFirebaseVariant2()
+        //initFirebaseVariant2()
         getCurrentUserName()
         getCurrentUserSecName()
         val postListener = object: ValueEventListener {
@@ -85,6 +85,15 @@ class MainActivity : BaseActivity() {
         } else {
             createUserDrawer()
         }*/
+
+        testsRecyclerView.layoutManager = LinearLayoutManager(this)
+        //testsRecyclerView.adapter = adapter
+
+        //adapter.notifyDataSetChanged()
+        testsRecyclerView.adapter = adapter
+        adapter.notifyDataSetChanged()
+        //adapter.notifyItemInserted(PUBLIC_TESTS_LIST.size - 1)
+        PUBLIC_TESTS_LIST = ArrayList()
     }
 
     private fun createHeader() {
@@ -281,9 +290,11 @@ class MainActivity : BaseActivity() {
     }
 
     private fun init() {
-        listTests = findViewById(R.id.list_tests)
+        testsRecyclerView = findViewById(R.id.list_tests)
         search = findViewById(R.id.searchView)
         activity = this
+        context = applicationContext
+        adapter = TestAdapter(context, activity, PUBLIC_TESTS_LIST)
     }
 
     private var backPressed: Long = 0

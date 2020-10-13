@@ -12,7 +12,8 @@ lateinit var AUTH: FirebaseAuth
 lateinit var CURRENT_UID: String
 lateinit var REF_DATABASE_ROOT: DatabaseReference
 lateinit var DATABASE_ROOT_USER: DatabaseReference
-lateinit var DATABASE_ROOT_NEW_TEST: DatabaseReference
+lateinit var DATABASE_ROOT_NEW_PUBLIC_TEST: DatabaseReference
+lateinit var DATABASE_ROOT_NEW_PRIVATE_TEST: DatabaseReference
 lateinit var DATABASE_ROOT_TEST_IDS: DatabaseReference
 lateinit var DATABASE_ROOT_GROUP_IDS: DatabaseReference
 lateinit var DATABASE_ROOT_NEW_GROUP: DatabaseReference
@@ -20,13 +21,16 @@ lateinit var TEST_NAME: String
 var ADMIN_STATUS: String? = ""
 var USER: User? = null
 lateinit var header: AccountHeader
+
 const val NODE_PARTICIPANT_INFO = "participant info"
 const val NODE_PARTICIPANTS = "participants"
 const val NODE_GROUP_INFO = "group info"
 const val NODE_GROUP_IDS = "group IDs"
 const val NODE_USERS = "users"
+const val NODE_TEST_NAME = "test name"
 const val NODE_TEST_INFO = "test info"
-const val NODE_TEST = "tests"
+const val NODE_TEST_PUBLIC = "public tests"
+const val NODE_TEST_PRIVATE = "private tests"
 const val NODE_GROUP = "groups"
 const val NODE_TEST_IDS = "test IDs"
 const val NODE_ID = "ID"

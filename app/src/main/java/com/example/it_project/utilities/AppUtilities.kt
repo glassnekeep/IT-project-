@@ -22,11 +22,33 @@ fun initFirebase() {
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     CURRENT_UID = AUTH.uid.toString()
     DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-    DATABASE_ROOT_NEW_TEST = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_NEW_PUBLIC_TEST = REF_DATABASE_ROOT.child(NODE_TEST_PUBLIC)
+    DATABASE_ROOT_NEW_PRIVATE_TEST = REF_DATABASE_ROOT.child(NODE_TEST_PRIVATE)
     DATABASE_ROOT_NEW_GROUP = REF_DATABASE_ROOT.child(NODE_GROUP)
     DATABASE_ROOT_GROUP_IDS = REF_DATABASE_ROOT.child(NODE_GROUP_IDS)
     DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
     USER = User()
+    initPublicTestsList()
+    getCurrentUser()
+}
+
+fun getCurrentUser() {
+    val currentUserListener = object: ValueEventListener {
+        var currentUser: User? = null
+        override fun onDataChange(snapshot: DataSnapshot) {
+            currentUser= snapshot.getValue(User::class.java)
+            setCurrentUser(currentUser)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_USER.addValueEventListener(currentUserListener)
+}
+
+fun setCurrentUser(user: User?) {
+    CURRENT_USER = user
 }
 
 fun initFirebaseVariant2() {
@@ -34,7 +56,8 @@ fun initFirebaseVariant2() {
     REF_DATABASE_ROOT = FirebaseDatabase.getInstance().reference
     CURRENT_UID = AUTH.uid.toString()
     DATABASE_ROOT_USER = REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID)
-    DATABASE_ROOT_NEW_TEST = REF_DATABASE_ROOT.child(NODE_TEST)
+    DATABASE_ROOT_NEW_PUBLIC_TEST = REF_DATABASE_ROOT.child(NODE_TEST_PUBLIC)
+    DATABASE_ROOT_NEW_PRIVATE_TEST = REF_DATABASE_ROOT.child(NODE_TEST_PRIVATE)
     DATABASE_ROOT_NEW_GROUP = REF_DATABASE_ROOT.child(NODE_GROUP)
     DATABASE_ROOT_GROUP_IDS = REF_DATABASE_ROOT.child(NODE_GROUP_IDS)
     DATABASE_ROOT_TEST_IDS = REF_DATABASE_ROOT.child(NODE_TEST_IDS)
@@ -47,10 +70,6 @@ fun initParticipantList(group: String) {
         override fun onDataChange(snapshot: DataSnapshot) {
             for(groupSnapshot: DataSnapshot in snapshot.children) {
                 var participantInfo: ParticipantModel? = groupSnapshot.child(NODE_PARTICIPANT_INFO).getValue(ParticipantModel::class.java)
-                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
-                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
-                //adapter.notifyDataSetChanged()
-                //GROUP_LIST = ArrayList()
                 if(participantInfo != null) {
                     addNewParticipantToList(participantInfo!!)
                 }
@@ -81,15 +100,19 @@ fun addNewGroupToList(newGroup: GroupModel) {
     GROUP_LIST.add(newGroup)
 }
 
+fun addNewPublicTestToList(newTest: TestModel) {
+    PUBLIC_TESTS_LIST.add(newTest)
+}
+
+fun addNewPrivateTestToList(newTest: TestModel) {
+    PRIVATE_TEST_LIST.add(newTest)
+}
+
 fun initGroupList() {
     val groupListener = object: ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
             for(groupSnapshot: DataSnapshot in snapshot.children) {
                 var groupInfo: GroupModel? = groupSnapshot.child(NODE_GROUP_INFO).getValue(GroupModel::class.java)
-                //if(groupInfo != null) {GROUP_LIST.add(groupInfo)}
-                //adapter.notifyItemInserted(GROUP_LIST.size - 1)
-                //adapter.notifyDataSetChanged()
-                //GROUP_LIST = ArrayList()
                 addNewGroupToList(groupInfo!!)
                 Log.d("GROUP", "${GROUP_LIST.size}")
             }
@@ -100,6 +123,29 @@ fun initGroupList() {
         }
     }
     DATABASE_ROOT_NEW_GROUP.addListenerForSingleValueEvent(groupListener)
+}
+
+fun initPublicTestsList() {
+    val publicTestListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(testInfoSnapshot: DataSnapshot in snapshot.children) {
+                var testInfo: TestInfoModel? = testInfoSnapshot.child(NODE_TEST_INFO).getValue(TestInfoModel::class.java)
+                var testName: String? = testInfoSnapshot.child(NODE_TEST_NAME).getValue(String::class.java)
+                var creatorName: String? = testInfo?.creatorName
+                var privacy: String? = testInfo?.privacy
+                var subject: String? = testInfo?.subject
+                var testId: String? = testInfoSnapshot.child(NODE_ID).getValue(String::class.java)
+                var testModel: TestModel = TestModel(testName!!, creatorName!!, privacy!!, subject!!, testId!!)
+                addNewPublicTestToList(testModel)
+                Log.d("TEST", "${PUBLIC_TESTS_LIST.size}")
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_PUBLIC_TEST.addListenerForSingleValueEvent(publicTestListener)
 }
 
 fun getCurrentUserName() {
@@ -141,11 +187,22 @@ fun createTestIDWithName(testName: String): String? {
     return id
 }
 
-fun createTestWithName(testName: String, subject: String, privacy: String) {
-    var id = DATABASE_ROOT_TEST_IDS.push().key
-    var testInfo: TestInfoModel = TestInfoModel(subject, privacy)
-    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_ID).setValue(id)
-    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+fun createTestWithName(testName: String, subject: String, privacy: String, id: String) {
+    //var id = DATABASE_ROOT_TEST_IDS.push().key
+    var testCreator: User? = null
+    testCreator = CURRENT_USER
+    var creatorName = "${testCreator?.name} ${testCreator?.secName}"
+    var testInfo: TestInfoModel = TestInfoModel(subject, privacy, creatorName)
+    if(privacy == "Публичный") {
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_ID).setValue(id)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_TEST_NAME).setValue(testName)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+    }
+    else {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_ID).setValue(id)
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_TEST_NAME).setValue(testName)
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+    }
 }
 
 fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: String) {
@@ -162,20 +219,35 @@ fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
 }
 
-fun deleteTestWithName(testName: String) {
-    DATABASE_ROOT_NEW_TEST.child(testName).removeValue()
+fun deleteTestWithName(testName: String, privacy: String) {
+    if(privacy == "Публичный") {
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).removeValue()
+    }
+    else {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).removeValue()
+    }
 }
 
 fun deleteTestIdWithName(testId: String) {
     DATABASE_ROOT_TEST_IDS.child(testId).removeValue()
 }
 
-fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers: ArrayList<String>) {
-    DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
-    var questionOrder = 1
-    for (answer in answers) {
-        DATABASE_ROOT_NEW_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child(NODE_ANSWERS).child("Answer №${questionOrder}").setValue(answer)
-        questionOrder++
+fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers: ArrayList<String>, privacy: String) {
+    if(privacy == "Публичный") {
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
+        var questionOrder = 1
+        for (answer in answers) {
+            DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child(NODE_ANSWERS).child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
+    }
+    else {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
+        var questionOrder = 1
+        for (answer in answers) {
+            DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child(NODE_ANSWERS).child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
     }
 }
 

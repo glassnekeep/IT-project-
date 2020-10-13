@@ -13,6 +13,7 @@ import com.example.it_project.utilities.createTestWithName
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.values.CURRENT_TEST_ID
 import com.example.it_project.values.CURRENT_TEST_NAME
+import com.example.it_project.values.CURRENT_TEST_PRIVACY
 import kotlinx.android.synthetic.main.fragment_create_test_name.*
 
 class CreateTestNameFragment : AppCompatDialogFragment() {
@@ -39,7 +40,8 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
             startActivity(intentCreateTest)
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()
             CURRENT_TEST_ID = createTestIDWithName(testName)
-            createTestWithName(testName, subject, privacy)
+            CURRENT_TEST_PRIVACY = privacy
+            createTestWithName(testName, subject, privacy, CURRENT_TEST_ID!!)
         }
         button_exit_create_test_name.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()

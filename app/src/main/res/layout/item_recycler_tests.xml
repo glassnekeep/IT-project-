@@ -27,4 +27,37 @@
         android:textSize="24dp"
         android:text="Имя создателя теста" />
 
+    <TextView
+        android:id="@+id/testPrivacy"
+        app:layout_constraintTop_toBottomOf="@id/testCreator"
+        app:layout_constraintStart_toStartOf="@id/testCreator"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Публичность" />
+
+    <TextView
+        android:id="@+id/testSubject"
+        app:layout_constraintTop_toBottomOf="@id/testPrivacy"
+        app:layout_constraintStart_toStartOf="@id/testPrivacy"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Предмет теста" />
+
+    <TextView
+        android:id="@+id/testId"
+        app:layout_constraintTop_toBottomOf="@id/testSubject"
+        app:layout_constraintStart_toStartOf="@id/testSubject"
+        android:layout_marginTop="10dp"
+        android:layout_width="300dp"
+        android:layout_height="30dp"
+        android:paddingStart="20dp"
+        android:textSize="24dp"
+        android:text="Id теста" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
