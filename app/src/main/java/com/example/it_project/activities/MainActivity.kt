@@ -38,7 +38,7 @@ class MainActivity : BaseActivity() {
     private var header: AccountHeader? = null
     private var drawer: Drawer? = null
     private lateinit var testsRecyclerView: RecyclerView
-    private lateinit var search: SearchView
+    private lateinit var searchView: SearchView
     private lateinit var mCurrentProfile: ProfileDrawerItem
     private lateinit var listData: ArrayList<TestModel>
 
@@ -84,21 +84,19 @@ class MainActivity : BaseActivity() {
         }
 
         DATABASE_ROOT_USER.child("admin").addValueEventListener(adminListener)
-        /*if(ADMIN_STATUS == "admin") {
-            createAdministrationDrawer()
-        } else {
-            createUserDrawer()
-        }*/
-
-        ///////////////////testsRecyclerView.layoutManager = LinearLayoutManager(this)
-        //testsRecyclerView.adapter = adapter
-
-        //adapter.notifyDataSetChanged()
-        ///////////////////testsRecyclerView.adapter = adapter
-        ///////////////////adapter.notifyDataSetChanged()
-        //adapter.notifyItemInserted(PUBLIC_TESTS_LIST.size - 1)
-        ///////////////////PUBLIC_TESTS_LIST = ArrayList()
         getDataFromDb()
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
+
     }
 
     private fun createHeader() {
@@ -296,10 +294,9 @@ class MainActivity : BaseActivity() {
 
     private fun init() {
         testsRecyclerView = findViewById(R.id.list_tests)
-        search = findViewById(R.id.searchView)
+        searchView = findViewById(R.id.searchView)
         activity = this
         context = applicationContext
-        //adapter = TestAdapter(context, activity, PUBLIC_TESTS_LIST)
         listData = ArrayList()
         adapter = TestAdapter(context, activity, listData)
         testsRecyclerView.layoutManager = LinearLayoutManager(this)
