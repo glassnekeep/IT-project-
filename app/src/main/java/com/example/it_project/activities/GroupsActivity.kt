@@ -40,6 +40,8 @@ class GroupsActivity : BaseActivity() {
 
     private lateinit var adapter: GroupAdapter
 
+    private lateinit var listData: ArrayList<GroupModel>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_groups)
@@ -48,6 +50,7 @@ class GroupsActivity : BaseActivity() {
         init()
         initFirebase()
         enableUpButton()
+        getDataFromDb()
         fragmentManager = this@GroupsActivity.supportFragmentManager
         createNewGroupButton.setOnClickListener {
             val dialogFragment = CreateGroupFragment()
@@ -55,25 +58,25 @@ class GroupsActivity : BaseActivity() {
             dialogFragment.show(manager, "MyDialog")
         }
         Log.d("TAG", "${GROUP_LIST.size}")
-        groupsRecyclerView.layoutManager = LinearLayoutManager(this)
-        groupsRecyclerView.adapter = adapter
+        //groupsRecyclerView.layoutManager = LinearLayoutManager(this)
+        //groupsRecyclerView.adapter = adapter
     }
 
-    override fun onStart() {
+    /*override fun onStart() {
         super.onStart()
-        if(NEW_GROUP!= null) {
+        /*if(NEW_GROUP!= null) {
             var currentName = CURRENT_USER_NAME
             var currentSecName = CURRENT_USER_SECNAME
             var groupName = NEW_GROUP
             GROUP_LIST.add(GroupModel(groupName!!, 0, "${currentName} ${currentSecName}"))
             NEW_GROUP = null
-        }
-        adapter.notifyItemInserted(GROUP_LIST.size - 1)
+        }*/
+        //adapter.notifyItemInserted(GROUP_LIST.size - 1)
         adapter.notifyDataSetChanged()
         Log.d("TAG", " FINAL ${GROUP_LIST.size}")
-    }
+    }*/
 
-    override fun onResume() {
+    /*override fun onResume() {
         super.onResume()
         /*Log.d("TAG1", "${GROUP_LIST.size}")
         if(NEW_GROUP!= null) {
@@ -87,14 +90,40 @@ class GroupsActivity : BaseActivity() {
         adapter.notifyItemInserted(GROUP_LIST.size - 1)
         adapter.notifyDataSetChanged()
         Log.d("TAG", " FINAL ${GROUP_LIST.size}")*/
-    }
+    }*/
 
     private fun init() {
         createNewGroupButton = findViewById(R.id.create_new_group_button)
         groupsRecyclerView = findViewById(R.id.groupsRecyclerView)
         context = applicationContext
         activity = this@GroupsActivity
-        adapter = GroupAdapter(context, activity, GROUP_LIST)
+        //adapter = GroupAdapter(context, activity, GROUP_LIST)
+        listData = ArrayList()
+        adapter = GroupAdapter(context, activity, listData)
+        groupsRecyclerView.layoutManager = LinearLayoutManager(this)
+        groupsRecyclerView.adapter = adapter
+    }
+
+    private fun getDataFromDb() {
+        val groupListener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(listData.size >0) {listData.clear()}
+                for(groupSnapshot: DataSnapshot in snapshot.children) {
+                    var groupInfo: GroupModel? = groupSnapshot.child(NODE_GROUP_INFO).getValue(GroupModel::class.java)
+                    //addNewGroupToList(groupInfo!!)
+                    //Log.d("GROUP", "${GROUP_LIST.size}")
+                    if(groupInfo != null) {
+                        listData.add(groupInfo!!)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        DATABASE_ROOT_NEW_GROUP.addListenerForSingleValueEvent(groupListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

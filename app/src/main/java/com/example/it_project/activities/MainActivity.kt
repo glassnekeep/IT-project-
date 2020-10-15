@@ -306,7 +306,6 @@ class MainActivity : BaseActivity() {
     private fun getDataFromDb() {
             val publicTestListener = object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-
                     if(listData.size > 0) {listData.clear()}
                     for(testInfoSnapshot: DataSnapshot in snapshot.children) {
                         var testInfo: TestInfoModel? = testInfoSnapshot.child(NODE_TEST_INFO).getValue(
@@ -328,7 +327,7 @@ class MainActivity : BaseActivity() {
 
                 }
             }
-            DATABASE_ROOT_NEW_PUBLIC_TEST.addListenerForSingleValueEvent(publicTestListener)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.addListenerForSingleValueEvent(publicTestListener)
     }
 
     private var backPressed: Long = 0
