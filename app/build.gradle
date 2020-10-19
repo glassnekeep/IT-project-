@@ -51,4 +51,8 @@ dependencies {
     //Circle Image View
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
+    //ChartsView library from github
+
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
 }

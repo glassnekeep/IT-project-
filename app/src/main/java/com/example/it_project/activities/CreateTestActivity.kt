@@ -51,7 +51,7 @@ class CreateTestActivity : BaseActivity() {
             val dialogFragment = NewQuestionFragment()
             val manager = supportFragmentManager
             dialogFragment.show(manager, "MyDialog")
-            }
+        }
 
         commit.setOnClickListener {
             startActivity(Intent(this, MainActivity::class.java))
@@ -102,7 +102,7 @@ class CreateTestActivity : BaseActivity() {
     private fun getDataFromDb() {
         val categoryListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(listData.size >0) {listData.clear()}
+                if(listData.size > 0) {listData.clear()}
                 for(questionsSnapshot: DataSnapshot in snapshot.children) {
                     var questionName: String? = questionsSnapshot.child(NODE_QUESTION_NAME).getValue(String::class.java)
                     Log.d("QUESTION_NAME", questionName!!)

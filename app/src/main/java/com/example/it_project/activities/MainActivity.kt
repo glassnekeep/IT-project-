@@ -339,7 +339,8 @@ class MainActivity : BaseActivity() {
             //tapPromtToExit(this)
             if (backPressed + 2500 > System.currentTimeMillis()) {
                 //activity.finish()
-                super.onBackPressed()
+                //super.onBackPressed()
+                activity.finish()
             } else {
                 showToast(
                     activity.applicationContext,

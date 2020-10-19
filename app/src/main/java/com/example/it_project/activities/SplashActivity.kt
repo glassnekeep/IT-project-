@@ -56,6 +56,7 @@ class SplashActivity : AppCompatActivity() {
                     //}
                     /*else*/ //{
                         startActivity(Intent(this@SplashActivity, SignInActivity::class.java))
+                        this@SplashActivity.finish()
                     //}
                 }
 

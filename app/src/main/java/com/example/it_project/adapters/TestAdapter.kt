@@ -2,6 +2,7 @@ package com.example.it_project.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Filterable
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
+import com.example.it_project.activities.AttendingTestActivity
 import com.example.it_project.holders.GroupHolder
 import com.example.it_project.holders.TestHolder
 import com.example.it_project.models.GroupModel
@@ -34,6 +36,13 @@ class TestAdapter(var mContext: Context,
     }
 
     override fun onBindViewHolder(holder: TestHolder, position: Int) {
+        holder.itemView.setOnClickListener {
+            var intent = Intent(mActivity, AttendingTestActivity::class.java)
+            intent.putExtra("privacy", testsList[position].privacy)
+            intent.putExtra("testName", testsList[position].testName)
+            mActivity.startActivity(intent)
+        }
+
         val model: TestModel = testsFilterList[position]
         holder.testName.text = "${model.testName}"
         holder.creatorName.text = "${model.creatorName}"

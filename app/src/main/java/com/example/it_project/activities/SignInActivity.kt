@@ -47,6 +47,7 @@ class SignInActivity : BaseActivity() {
             Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show()
             var intentToMain = Intent(this@SignInActivity, MainActivity::class.java)
             startActivity(intentToMain)
+            this@SignInActivity.finish()
         } else {
             Toast.makeText(this, "Подтвердите Email", Toast.LENGTH_SHORT).show()
         }
@@ -72,6 +73,7 @@ class SignInActivity : BaseActivity() {
                                 initFirebase()
                                 val intentMain = Intent(this, MainActivity::class.java)
                                 startActivity(intentMain)
+                                this@SignInActivity.finish()
                             }
                             else {
                                 showToast(this, "Подтвердите ваш Email")
