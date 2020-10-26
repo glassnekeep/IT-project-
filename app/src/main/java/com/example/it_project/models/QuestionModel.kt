@@ -1,4 +1,4 @@
 package com.example.it_project.models
 
-data class QuestionModel(val name: String = "", val type: String ="", val answerNumber: String = "", val correctAnswer: String = "") {
+data class QuestionModel(val name: String = "", val type: String ="", val answerNumber: String = "", val correctAnswer: ArrayList<String> = ArrayList()) {
 }

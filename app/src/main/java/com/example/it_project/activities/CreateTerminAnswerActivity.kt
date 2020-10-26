@@ -89,7 +89,7 @@ class CreateTerminAnswerActivity : BaseActivity() {
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Termin", answerNumber!!, "1"), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Termin", answerNumber!!, arrayOfAnswers), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateTerminAnswerActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)

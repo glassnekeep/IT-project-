@@ -12,9 +12,11 @@ import com.example.it_project.R
 import com.example.it_project.utilities.createQuestionInTest
 import com.example.it_project.utilities.initFirebase
 import com.example.it_project.models.QuestionModel
+import com.example.it_project.utilities.createComparisonQuestionInTest
 import com.example.it_project.values.CURRENT_TEST_NAME
 import com.example.it_project.values.CURRENT_TEST_PRIVACY
 import com.example.it_project.values.NEW_QUESTION
+import kotlinx.android.synthetic.main.activity_create_comparison_question.*
 
 class CreateComparisonQuestionActivity : BaseActivity() {
 
@@ -25,17 +27,25 @@ class CreateComparisonQuestionActivity : BaseActivity() {
     private lateinit var layout5: LinearLayout
     private lateinit var layout6: LinearLayout
 
-    private lateinit var editText1: EditText
-    private lateinit var editText2: EditText
-    private lateinit var editText3: EditText
-    private lateinit var editText4: EditText
-    private lateinit var editText5: EditText
-    private lateinit var editText6: EditText
+    private lateinit var firstPart1: EditText
+    private lateinit var firstPart2: EditText
+    private lateinit var firstPart3: EditText
+    private lateinit var firstPart4: EditText
+    private lateinit var firstPart5: EditText
+    private lateinit var firstPart6: EditText
+
+    private lateinit var secondPart1: EditText
+    private lateinit var secondPart2: EditText
+    private lateinit var secondPart3: EditText
+    private lateinit var secondPart4: EditText
+    private lateinit var secondPart5: EditText
+    private lateinit var secondPart6: EditText
 
     private lateinit var exitButton: Button
     private lateinit var createQuestionButton: Button
 
-    private lateinit var arrayOfAnswers: ArrayList<String>
+    private lateinit var arrayOfFirstParts: ArrayList<String>
+    private lateinit var arrayOfSecondParts: ArrayList<String>
 
     private lateinit var correctAnswer: EditText
 
@@ -79,17 +89,35 @@ class CreateComparisonQuestionActivity : BaseActivity() {
             openQuitDialog()
         }
         createQuestionButton.setOnClickListener {
-            arrayOfAnswers = ArrayList()
-            arrayOfAnswers.add(editText1.text.toString())
-            arrayOfAnswers.add(editText2.text.toString())
-            if(editText3.visibility != View.GONE) {arrayOfAnswers.add(editText3.text.toString())}
-            if(editText4.visibility != View.GONE) {arrayOfAnswers.add(editText4.text.toString())}
-            if(editText5.visibility != View.GONE) {arrayOfAnswers.add(editText5.text.toString())}
-            if(editText6.visibility != View.GONE) {arrayOfAnswers.add(editText6.text.toString())}
+            arrayOfFirstParts = ArrayList()
+            arrayOfSecondParts = ArrayList()
+            arrayOfFirstParts.add(firstPart1.text.toString())
+            arrayOfFirstParts.add(firstPart2.text.toString())
+            arrayOfSecondParts.add(secondPart1.text.toString())
+            arrayOfSecondParts.add(secondPart2.text.toString())
+            if(secondPart3.visibility != View.GONE) {
+                arrayOfFirstParts.add(firstPart3.text.toString())
+                arrayOfSecondParts.add(secondPart3.text.toString())
+            }
+            if(secondPart4.visibility != View.GONE) {
+                arrayOfFirstParts.add(firstPart4.text.toString())
+                arrayOfSecondParts.add(secondPart4.text.toString())
+            }
+            if(secondPart5.visibility != View.GONE) {
+                arrayOfFirstParts.add(firstPart5.text.toString())
+                arrayOfSecondParts.add(secondPart5.text.toString())
+            }
+            if(secondPart6.visibility != View.GONE) {
+                arrayOfFirstParts.add(firstPart6.text.toString())
+                arrayOfSecondParts.add(secondPart6.text.toString())
+            }
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswer.text.toString()), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+            var correctAnswerList = ArrayList<String>()
+            correctAnswerList.add(correctAnswer.text.toString())
+            createComparisonQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfFirstParts, arrayOfSecondParts, CURRENT_TEST_PRIVACY!!)
+            //createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)
@@ -105,12 +133,20 @@ class CreateComparisonQuestionActivity : BaseActivity() {
         layout5 = findViewById(R.id.firstPartFive)
         layout6 = findViewById(R.id.firstPartSix)
 
-        editText1 = findViewById(R.id.secondPartOne)
-        editText2 = findViewById(R.id.secondPartTwo)
-        editText3 = findViewById(R.id.secondPartThree)
-        editText4 = findViewById(R.id.secondPartFour)
-        editText5 = findViewById(R.id.secondPartFive)
-        editText6 = findViewById(R.id.secondPartSix)
+        firstPart1 = findViewById(R.id.textFirstPartOne)
+        firstPart2 = findViewById(R.id.textFirstPartTwo)
+        firstPart3 = findViewById(R.id.textFirstPartThree)
+        firstPart4 = findViewById(R.id.textFirstPartFour)
+        firstPart5 = findViewById(R.id.textFirstPartFive)
+        firstPart6 = findViewById(R.id.textFirstPartSix)
+
+
+        secondPart1 = findViewById(R.id.secondPartOne)
+        secondPart2 = findViewById(R.id.secondPartTwo)
+        secondPart3 = findViewById(R.id.secondPartThree)
+        secondPart4 = findViewById(R.id.secondPartFour)
+        secondPart5 = findViewById(R.id.secondPartFive)
+        secondPart6 = findViewById(R.id.secondPartSix)
 
         exitButton = findViewById(R.id.button_exit)
         createQuestionButton = findViewById(R.id.button_create_question)
@@ -120,19 +156,19 @@ class CreateComparisonQuestionActivity : BaseActivity() {
 
     private fun hide3() {
         layout3.visibility = View.GONE
-        editText3.visibility = View.GONE
+        secondPart3.visibility = View.GONE
     }
     private fun hide4() {
         layout4.visibility = View.GONE
-        editText4.visibility = View.GONE
+        secondPart4.visibility = View.GONE
     }
     private fun hide5() {
         layout5.visibility = View.GONE
-        editText5.visibility = View.GONE
+        secondPart5.visibility = View.GONE
     }
     private fun hide6() {
         layout6.visibility = View.GONE
-        editText6.visibility = View.GONE
+        secondPart6.visibility = View.GONE
     }
     private fun openQuitDialog() {
         var quitDialog = AlertDialog.Builder(

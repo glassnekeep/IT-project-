@@ -251,6 +251,33 @@ fun createQuestionInTest(testName : String, questionInfo: QuestionModel, answers
     }
 }
 
+fun createComparisonQuestionInTest(testName: String, questionInfo: QuestionModel, firstPartList: ArrayList<String>, secondPartList: ArrayList<String>, privacy: String) {
+    if(privacy == "Публичный") {
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
+        var questionOrder = 1
+        for (answer in firstPartList) {
+            DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child("firstParts").child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
+        for (answer in secondPartList) {
+            DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child("secondParts").child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
+    }
+    else {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).setValue(questionInfo)
+        var questionOrder = 1
+        for (answer in firstPartList) {
+            DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child("firstParts").child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
+        for (answer in secondPartList) {
+            DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_QUESTIONS).child(questionInfo.name).child("secondParts").child("Answer №${questionOrder}").setValue(answer)
+            questionOrder++
+        }
+    }
+}
+
 fun createUserInDatabase(name: String, secName: String, email: String, admin: String) {
     NEW_USER = User(name, secName, email, admin)
     REF_DATABASE_ROOT.child(NODE_USERS).child(CURRENT_UID).setValue(NEW_USER)
