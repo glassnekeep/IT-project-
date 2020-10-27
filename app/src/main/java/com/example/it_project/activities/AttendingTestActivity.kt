@@ -1,18 +1,16 @@
 package com.example.it_project.activities
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentTransaction
+import com.example.it_project.Communicator
 import com.example.it_project.R
-import com.example.it_project.StartFragment
+import com.example.it_project.fragments.StartFragment
 import com.example.it_project.fragments.questionFragments.ComparisonAnswerQuestionTestFragment
 import com.example.it_project.fragments.questionFragments.ManyAnswersQuestionTestFragment
 import com.example.it_project.fragments.questionFragments.OneAnswerQuestionTestFragment
@@ -22,9 +20,8 @@ import com.example.it_project.values.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import kotlin.properties.Delegates
 
-class AttendingTestActivity : BaseActivity() {
+class AttendingTestActivity : BaseActivity(), Communicator {
 
     private lateinit var privacy: String
 
@@ -72,11 +69,20 @@ class AttendingTestActivity : BaseActivity() {
         }*/
         //getDataFromDb()
         if(position == 0) {
-            if (savedInstanceState == null) {
+            /*if (savedInstanceState == null) {
                 supportFragmentManager.beginTransaction()
                     .add(R.id.fragmentContainer, StartFragment())
                     .commit()
-            }
+            }*/
+            val fragmentStart = StartFragment()
+            val bundle = Bundle()
+            bundle.putString("input_txt", position.toString())
+            val transaction = this.supportFragmentManager.beginTransaction()
+            fragmentStart.arguments = bundle
+            transaction.replace(R.id.fragmentContainer, fragmentStart)
+            transaction.addToBackStack(null)
+            transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            transaction.commit()
         }
         Log.d("listData.size", listData.size.toString())
 
@@ -139,6 +145,10 @@ class AttendingTestActivity : BaseActivity() {
             }
             observePosition()
         }
+    }
+
+    override fun passData(textInput: String) {
+        Log.d("textInput", textInput)
     }
 
     private fun getDataFromDb() {

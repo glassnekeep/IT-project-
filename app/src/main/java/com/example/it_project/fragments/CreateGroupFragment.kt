@@ -37,6 +37,7 @@ class CreateGroupFragment : AppCompatDialogFragment() {
             val intentCreateGroup = Intent(activity, GroupsActivity::class.java)
             intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString())
             startActivity(intentCreateGroup)
+            //activity?.finish()
             fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
             var groupName = edit_text_group_name.text.toString()
             val creatorNameListener = object: ValueEventListener {
