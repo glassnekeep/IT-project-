@@ -84,7 +84,7 @@ class CreateOneAnswerQuestionActivity : BaseActivity() {
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
             var correctAnswerList = ArrayList<String>()
             correctAnswerList.add(correctAnswer.text.toString())
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "One Answer", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateOneAnswerQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)

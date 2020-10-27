@@ -44,6 +44,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="Button.Test" parent= "Base.Widget.AppCompat.Button" >
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+        <item name="android:clickable">true</item>
+        <item name="android:focusable">true</item>
+        <item name="android:background">@drawable/custom_button_question</item>
+        <item name="android:textColor">#423A3A</item>
+    </style>
+
     <style name="separator">
         <item name="android:layout_width">match_parent</item>
         <item name="android:background">@color/gray</item>

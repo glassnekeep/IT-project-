@@ -6,16 +6,23 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.MenuItem
+import android.view.View
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.R
 import com.example.it_project.StartFragment
+import com.example.it_project.fragments.questionFragments.ComparisonAnswerQuestionTestFragment
+import com.example.it_project.fragments.questionFragments.ManyAnswersQuestionTestFragment
+import com.example.it_project.fragments.questionFragments.OneAnswerQuestionTestFragment
+import com.example.it_project.fragments.questionFragments.TerminAnswerQuestionTestFragment
 import com.example.it_project.models.RepresentModel
 import com.example.it_project.values.*
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import kotlin.properties.Delegates
 
 class AttendingTestActivity : BaseActivity() {
 
@@ -31,12 +38,19 @@ class AttendingTestActivity : BaseActivity() {
 
     private lateinit var correctAnswerList: ArrayList<String>
 
+    private lateinit var nextQuestionButton: Button
+
+    private lateinit var previousQuestionButton: Button
+
+    private lateinit var currentQuestionType: String
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attending_test)
         initToolbar(true)
         init()
         enableUpButton()
+        observePosition()
         val extras: Bundle? = intent.extras
         if(extras != null) {
             privacy = extras.getString("privacy").toString()
@@ -44,12 +58,87 @@ class AttendingTestActivity : BaseActivity() {
             setToolbarTitle(extras.getString("testName").toString())
         }
         getDataFromDb()
-        if(savedInstanceState == null) {
-            supportFragmentManager.beginTransaction()
-                .add(R.id.fragmentContainer, StartFragment())
-                .commit()
+            /*var position: Int by Delegates.observable(0) {property, oldValue, newValue ->
+            if(newValue == 0) {
+                nextQuestionButton.visibility = View.GONE
+                previousQuestionButton.visibility = View.GONE
+            }
+            if((newValue > 1) && (newValue <= listData.size)) {
+                previousQuestionButton.visibility = View.VISIBLE
+            }
+            if((newValue < listData.size) && (newValue > 0)) {
+                nextQuestionButton.visibility = View.VISIBLE
+            }
+        }*/
+        //getDataFromDb()
+        if(position == 0) {
+            if (savedInstanceState == null) {
+                supportFragmentManager.beginTransaction()
+                    .add(R.id.fragmentContainer, StartFragment())
+                    .commit()
+            }
         }
         Log.d("listData.size", listData.size.toString())
+
+        nextQuestionButton.setOnClickListener{
+            if(position < listData.size) {
+                position++
+                currentQuestionType = listData[position-1].type
+                when(currentQuestionType) {
+                    "Comparison" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, ComparisonAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "Termin" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "One Answer" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "Many Answers" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, ManyAnswersQuestionTestFragment())
+                            .commit()
+                    }
+                }
+            }
+            observePosition()
+        }
+
+        previousQuestionButton.setOnClickListener {
+            if(position > 1) {
+                position--
+                currentQuestionType = listData[position-1].type
+                when(currentQuestionType) {
+                    "Comparison" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, ComparisonAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "Termin" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "One Answer" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .commit()
+                    }
+                    "Many Answers" -> if (savedInstanceState == null) {
+                        supportFragmentManager.beginTransaction()
+                            .add(R.id.fragmentContainer, ManyAnswersQuestionTestFragment())
+                            .commit()
+                    }
+                }
+            }
+            observePosition()
+        }
     }
 
     private fun getDataFromDb() {
@@ -126,16 +215,20 @@ class AttendingTestActivity : BaseActivity() {
         listData = ArrayList()
         answerList = ArrayList()
         correctAnswerList = ArrayList()
+        nextQuestionButton = findViewById(R.id.button_next_question)
+        previousQuestionButton = findViewById(R.id.button_previous_question)
         privacy = ""
         testName = ""
+        currentQuestionType = ""
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                startActivity(Intent(this@AttendingTestActivity, MainActivity::class.java))
-                finish()
+                //startActivity(Intent(this@AttendingTestActivity, MainActivity::class.java))
+                //finish()
                 //GROUP_LIST = ArrayList()
+                openQuitDialog()
                 return true
             }
         }
@@ -161,8 +254,22 @@ class AttendingTestActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@AttendingTestActivity, MainActivity::class.java))
+        //startActivity(Intent(this@AttendingTestActivity, MainActivity::class.java))
         //GROUP_LIST = ArrayList()
-        finish()
+        //finish()
+        openQuitDialog()
+    }
+
+    private fun observePosition() {
+        if(position == 0) {
+            nextQuestionButton.visibility = View.GONE
+            previousQuestionButton.visibility = View.GONE
+        }
+        if((position > 1) && (position <= listData.size)) {
+            previousQuestionButton.visibility = View.VISIBLE
+        }
+        if((position < listData.size) && (position > 0)) {
+            nextQuestionButton.visibility = View.VISIBLE
+        }
     }
 }
