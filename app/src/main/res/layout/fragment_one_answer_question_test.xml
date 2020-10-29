@@ -5,10 +5,76 @@
     android:layout_height="match_parent"
     tools:context=".fragments.questionFragments.OneAnswerQuestionTestFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/questionName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Вопрос"
+            android:textSize="24dp"
+            android:paddingStart="14dp"
+            android:textAppearance="?attr/textAppearanceHeadline5" />
+
+        <RadioGroup
+            android:id="@+id/radioGroupOneAnswer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="5dp">
+
+            <RadioButton
+                android:id="@+id/answerRadioButton1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 1" />
+            <RadioButton
+                android:id="@+id/answerRadioButton2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 2" />
+            <RadioButton
+                android:id="@+id/answerRadioButton3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 3" />
+            <RadioButton
+                android:id="@+id/answerRadioButton4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 4" />
+            <RadioButton
+                android:id="@+id/answerRadioButton5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 5" />
+            <RadioButton
+                android:id="@+id/answerRadioButton6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/biggerRadioButton"
+                android:text="Ответ 6" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonSaveOneAnswer"
+            style="@style/Button.Positive.Variant"
+            android:layout_width="120dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="270dp"
+            android:shadowColor="#E3BFE3"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:text="Сохранить"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
+    </LinearLayout>
 
 </FrameLayout>

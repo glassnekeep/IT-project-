@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.fragment_start.view.*
 
 class StartFragment : Fragment() {
 
-    lateinit var communicator: Communicator
+    private lateinit var communicator: Communicator
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +35,9 @@ class StartFragment : Fragment() {
             var intent = Intent(activity, MainActivity::class.java)
             startActivity(intent)
             activity?.finish()
+        }
+        rootView.button_yes.setOnClickListener {
+            communicator.passData(ArrayList<String>())
         }
         return rootView
     }

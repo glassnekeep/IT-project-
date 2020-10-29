@@ -31,9 +31,9 @@ class AttendingTestActivity : BaseActivity(), Communicator {
 
     private lateinit var listData: ArrayList<RepresentModel>
 
-    private lateinit var answerList: ArrayList<String>
+    //private lateinit var answerList: ArrayList<String>
 
-    private lateinit var correctAnswerList: ArrayList<String>
+    //private lateinit var correctAnswerList: ArrayList<String>
 
     private lateinit var nextQuestionButton: Button
 
@@ -92,24 +92,63 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                 currentQuestionType = listData[position-1].type
                 when(currentQuestionType) {
                     "Comparison" -> if (savedInstanceState == null) {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, ComparisonAnswerQuestionTestFragment())
-                            .commit()
+                        val fragmentComparison = ComparisonAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        //Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentComparison.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentComparison)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                     "Termin" -> if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .replace(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
                     }
-                    "One Answer" -> if (savedInstanceState == null) {
+                    "One Answer" -> /*if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .replace(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
+                    }*/
+                    {
+                        val fragmentOneAnswer = OneAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentOneAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                     "Many Answers" -> if (savedInstanceState == null) {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, ManyAnswersQuestionTestFragment())
-                            .commit()
+                        val fragmentOneAnswer = ManyAnswersQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentOneAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                 }
             }
@@ -122,24 +161,63 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                 currentQuestionType = listData[position-1].type
                 when(currentQuestionType) {
                     "Comparison" -> if (savedInstanceState == null) {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, ComparisonAnswerQuestionTestFragment())
-                            .commit()
+                        val fragmentComparison = ComparisonAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        //Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentComparison.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentComparison)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                     "Termin" -> if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .replace(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                            .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
                     }
-                    "One Answer" -> if (savedInstanceState == null) {
+                    "One Answer" -> /*if (savedInstanceState == null) {
                         supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .replace(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                            .addToBackStack(null)
+                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                             .commit()
+                    }*/
+                    {
+                        val fragmentOneAnswer = OneAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentOneAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                     "Many Answers" -> if (savedInstanceState == null) {
-                        supportFragmentManager.beginTransaction()
-                            .add(R.id.fragmentContainer, ManyAnswersQuestionTestFragment())
-                            .commit()
+                        val fragmentOneAnswer = ManyAnswersQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                        bundle.putString("answerNumber", listData[position-1].answerNumber)
+                        bundle.putString("questionName", listData[position-1].name)
+                        Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentOneAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
                     }
                 }
             }
@@ -147,8 +225,77 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         }
     }
 
-    override fun passData(textInput: String) {
-        Log.d("textInput", textInput)
+    override fun passData(arrayList: ArrayList<String>) {
+        if((position < listData.size)/*&&(position != 0)*/) {
+            position++
+            currentQuestionType = listData[position-1].type
+            Log.d("currentQuestionType", currentQuestionType)
+            Log.d("position", position.toString())
+            when(currentQuestionType) {
+                "Comparison" -> /*if (savedInstanceState == null)*/ {
+                    val fragmentComparison = ComparisonAnswerQuestionTestFragment()
+                    val bundle = Bundle()
+                    //listData.reverse()
+                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                    bundle.putString("answerNumber", listData[position-1].answerNumber)
+                    bundle.putString("questionName", listData[position-1].name)
+                    //Log.d("listData[position-2]", listData[position-1].answerList[0])
+                    val transaction = this.supportFragmentManager.beginTransaction()
+                    fragmentComparison.arguments = bundle
+                    transaction.replace(R.id.fragmentContainer, fragmentComparison)
+                    transaction.addToBackStack(null)
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    transaction.commit()
+                }
+                "Termin" -> /*if (savedInstanceState == null)*/ {
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, TerminAnswerQuestionTestFragment())
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit()
+                }
+                "One Answer" -> /*if (savedInstanceState == null)*/ {
+                    val fragmentOneAnswer = OneAnswerQuestionTestFragment()
+                    val bundle = Bundle()
+                    //listData.reverse()
+                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                    bundle.putString("answerNumber", listData[position-1].answerNumber)
+                    bundle.putString("questionName", listData[position-1].name)
+                    Log.d("listData[position-2]", listData[position-1].answerList[0])
+                    val transaction = this.supportFragmentManager.beginTransaction()
+                    fragmentOneAnswer.arguments = bundle
+                    transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                    transaction.addToBackStack(null)
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    transaction.commit()
+                    /*supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
+                        .addToBackStack(null)
+                        .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        .commit()*/
+                }
+                "Many Answers" -> /*if (savedInstanceState == null)*/ {
+                    val fragmentManyAnswers = ManyAnswersQuestionTestFragment()
+                    val bundle = Bundle()
+                    //listData.reverse()
+                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
+                    bundle.putString("answerNumber", listData[position-1].answerNumber)
+                    bundle.putString("questionName", listData[position-1].name)
+                    Log.d("listData[position-2]", listData[position-1].answerList[0])
+                    val transaction = this.supportFragmentManager.beginTransaction()
+                    fragmentManyAnswers.arguments = bundle
+                    transaction.replace(R.id.fragmentContainer, fragmentManyAnswers)
+                    transaction.addToBackStack(null)
+                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                    transaction.commit()
+                }
+            }
+        }
+        /*if(position == 0) {
+
+        }*/
+        if(!arrayList.isEmpty()){Log.d("ArrayList[0]", arrayList[0])}
+        observePosition()
     }
 
     private fun getDataFromDb() {
@@ -156,6 +303,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(listData.size > 0) {listData.clear()}
                 for(questionInfo: DataSnapshot in snapshot.children) {
+                    var correctAnswerList = ArrayList<String>()
+                    var answerList = ArrayList<String>()
                     var name = questionInfo.child("name").getValue(String::class.java)
                     var type = questionInfo.child("type").getValue(String::class.java)
                     var answerNumber =
@@ -203,8 +352,24 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         }
                         var representModel: RepresentModel = RepresentModel(name!!, type!!, answerNumber!!, correctAnswerList, answerList)
                         listData.add(representModel)
+                        Log.d("answerList.size", representModel.answerList.size.toString())
                     }
                     Log.d("list", listData.size.toString())
+//                    Log.d("listData[0].answerList0", listData[0].answerList[0])
+                    if(listData.size>1){Log.d("listData[1].answerList1", listData[1].answerList[0])}
+                    if(listData.size>1){
+                        for(i in listData) {
+                            println(i.name)
+                            println(i.type)
+                            println(i.answerNumber)
+                            for(j in i.correctAnswer) {
+                                println(j)
+                            }
+                            for(k in i.answerList) {
+                                println(k)
+                            }
+                        }
+                    }
                 }
             }
 
@@ -223,8 +388,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
 
     private fun init() {
         listData = ArrayList()
-        answerList = ArrayList()
-        correctAnswerList = ArrayList()
+        //answerList = ArrayList()
+        //correctAnswerList = ArrayList()
         nextQuestionButton = findViewById(R.id.button_next_question)
         previousQuestionButton = findViewById(R.id.button_previous_question)
         privacy = ""
@@ -278,8 +443,14 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         if((position > 1) && (position <= listData.size)) {
             previousQuestionButton.visibility = View.VISIBLE
         }
+        else {
+            previousQuestionButton.visibility = View.GONE
+        }
         if((position < listData.size) && (position > 0)) {
             nextQuestionButton.visibility = View.VISIBLE
+        }
+        else {
+            nextQuestionButton.visibility = View.GONE
         }
     }
 }
