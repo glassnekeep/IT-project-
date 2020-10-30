@@ -4,7 +4,7 @@
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">#E91E63</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -57,6 +57,12 @@
         <item name="android:background">@color/gray</item>
         <item name="android:layout_marginTop">10dp</item>
         <item name="android:layout_height">5dp</item>
+    </style>
+
+    <style name="smallVerticalSeparator">
+        <item name="android:layout_width">2dp</item>
+        <item name="android:background">@color/gray</item>
+        <item name="android:layout_height">50dp</item>
     </style>
 
     <style name="biggerRadioButton">

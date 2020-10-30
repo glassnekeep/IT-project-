@@ -40,6 +40,24 @@
         android:textSize="16dp" />
 
     <Button
+        android:id="@+id/button_finish_test"
+        style="@style/Button.Test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:visibility="gone"
+        android:layout_width="180dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginBottom="40dp"
+        android:layout_marginEnd="15dp"
+        android:shadowColor="#E3BFE3"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:text="Завершить выполнение теста"
+        android:textAllCaps="false"
+        android:textSize="16dp" />
+
+    <Button
         android:id="@+id/button_previous_question"
         style="@style/Button.Test"
         app:layout_constraintBottom_toBottomOf="parent"
