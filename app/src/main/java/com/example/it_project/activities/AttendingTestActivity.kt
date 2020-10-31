@@ -17,6 +17,8 @@ import com.example.it_project.fragments.questionFragments.OneAnswerQuestionTestF
 import com.example.it_project.fragments.questionFragments.TerminAnswerQuestionTestFragment
 import com.example.it_project.models.RepresentModel
 import com.example.it_project.models.TableModel
+import com.example.it_project.models.TotalModel
+import com.example.it_project.utilities.createTestAttendanceByUser
 import com.example.it_project.values.*
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
@@ -252,80 +254,132 @@ class AttendingTestActivity : BaseActivity(), Communicator {
     }
 
     override fun passData(arrayList: ArrayList<String>) {
-        if((position < listData.size)/*&&(position != 0)*/) {
+        if((position <= listData.size)/*&&(position != 0)*/) {
+            if (position in 1..listData.size) {
+                if ((listData[position - 1].type == "Termin") && (listData[position - 1].answerNumber.toInt() > 1)) {
+                    tableData[position - 1].chosenAnswer = arrayList.joinToString(separator = ", ")
+                } else {
+                    tableData[position - 1].chosenAnswer = arrayList.joinToString()
+                }
+                if (tableData[position - 1].chosenAnswer == tableData[position - 1].correctAnswer) {
+                    tableData[position - 1].isCorrect = "1"
+                }
+                //tableData[position-1].chosenAnswer = arrayList
+            }
             position++
-            currentQuestionType = listData[position-1].type
-            Log.d("currentQuestionType", currentQuestionType)
-            Log.d("position", position.toString())
-            when(currentQuestionType) {
-                "Comparison" -> /*if (savedInstanceState == null)*/ {
-                    val fragmentComparison = ComparisonAnswerQuestionTestFragment()
-                    val bundle = Bundle()
-                    //listData.reverse()
-                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
-                    bundle.putString("answerNumber", listData[position-1].answerNumber)
-                    bundle.putString("questionName", "${position}. ${listData[position-1].name}")
-                    //Log.d("listData[position-2]", listData[position-1].answerList[0])
-                    val transaction = this.supportFragmentManager.beginTransaction()
-                    fragmentComparison.arguments = bundle
-                    transaction.replace(R.id.fragmentContainer, fragmentComparison)
-                    transaction.addToBackStack(null)
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    transaction.commit()
+            if (position == listData.size + 1) {
+                if (position in 1..listData.size) {
+                    if ((listData[position - 1].type == "Termin") && (listData[position - 1].answerNumber.toInt() > 1)) {
+                        tableData[position - 1].chosenAnswer =
+                            arrayList.joinToString(separator = ", ")
+                    } else {
+                        tableData[position - 1].chosenAnswer = arrayList.joinToString()
+                    }
+                    if (tableData[position - 1].chosenAnswer == tableData[position - 1].correctAnswer) {
+                        tableData[position - 1].isCorrect = "1"
+                    }
+                    //tableData[position-1].chosenAnswer = arrayList
                 }
-                "Termin" -> /*if (savedInstanceState == null)*/ {
-                    val fragmentTerminAnswer = TerminAnswerQuestionTestFragment()
-                    val bundle = Bundle()
-                    //listData.reverse()
-                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
-                    bundle.putString("answerNumber", listData[position-1].answerNumber)
-                    bundle.putString("questionName", "${position}. ${listData[position-1].name}")
-                    Log.d("listData[position-2]", listData[position-1].answerList[0])
-                    val transaction = this.supportFragmentManager.beginTransaction()
-                    fragmentTerminAnswer.arguments = bundle
-                    transaction.replace(R.id.fragmentContainer, fragmentTerminAnswer)
-                    transaction.addToBackStack(null)
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    transaction.commit()
-                }
-                "One Answer" -> /*if (savedInstanceState == null)*/ {
-                    val fragmentOneAnswer = OneAnswerQuestionTestFragment()
-                    val bundle = Bundle()
-                    //listData.reverse()
-                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
-                    bundle.putString("answerNumber", listData[position-1].answerNumber)
-                    bundle.putString("questionName", "${position}. ${listData[position-1].name}")
-                    Log.d("listData[position-2]", listData[position-1].answerList[0])
-                    val transaction = this.supportFragmentManager.beginTransaction()
-                    fragmentOneAnswer.arguments = bundle
-                    transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
-                    transaction.addToBackStack(null)
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    transaction.commit()
-                    /*supportFragmentManager.beginTransaction()
+                openFinishTestDialog1()
+            } else {
+                currentQuestionType = listData[position - 1].type
+                Log.d("currentQuestionType", currentQuestionType)
+                Log.d("position", position.toString())
+                when (currentQuestionType) {
+                    "Comparison" -> /*if (savedInstanceState == null)*/ {
+                        val fragmentComparison = ComparisonAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position - 1].answerList)
+                        bundle.putString("answerNumber", listData[position - 1].answerNumber)
+                        bundle.putString(
+                            "questionName",
+                            "${position}. ${listData[position - 1].name}"
+                        )
+                        //Log.d("listData[position-2]", listData[position-1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentComparison.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentComparison)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
+                    }
+                    "Termin" -> /*if (savedInstanceState == null)*/ {
+                        val fragmentTerminAnswer = TerminAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position - 1].answerList)
+                        bundle.putString("answerNumber", listData[position - 1].answerNumber)
+                        bundle.putString(
+                            "questionName",
+                            "${position}. ${listData[position - 1].name}"
+                        )
+                        Log.d("listData[position-2]", listData[position - 1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentTerminAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentTerminAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
+                    }
+                    "One Answer" -> /*if (savedInstanceState == null)*/ {
+                        val fragmentOneAnswer = OneAnswerQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position - 1].answerList)
+                        bundle.putString("answerNumber", listData[position - 1].answerNumber)
+                        bundle.putString(
+                            "questionName",
+                            "${position}. ${listData[position - 1].name}"
+                        )
+                        Log.d("listData[position-2]", listData[position - 1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentOneAnswer.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentOneAnswer)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
+                        /*supportFragmentManager.beginTransaction()
                         .replace(R.id.fragmentContainer, OneAnswerQuestionTestFragment())
                         .addToBackStack(null)
                         .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                         .commit()*/
-                }
-                "Many Answers" -> /*if (savedInstanceState == null)*/ {
-                    val fragmentManyAnswers = ManyAnswersQuestionTestFragment()
-                    val bundle = Bundle()
-                    //listData.reverse()
-                    bundle.putStringArrayList("answerList", listData[position-1].answerList)
-                    bundle.putString("answerNumber", listData[position-1].answerNumber)
-                    bundle.putString("questionName", "${position}. ${listData[position-1].name}")
-                    Log.d("listData[position-2]", listData[position-1].answerList[0])
-                    val transaction = this.supportFragmentManager.beginTransaction()
-                    fragmentManyAnswers.arguments = bundle
-                    transaction.replace(R.id.fragmentContainer, fragmentManyAnswers)
-                    transaction.addToBackStack(null)
-                    transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                    transaction.commit()
+                    }
+                    "Many Answers" -> /*if (savedInstanceState == null)*/ {
+                        val fragmentManyAnswers = ManyAnswersQuestionTestFragment()
+                        val bundle = Bundle()
+                        //listData.reverse()
+                        bundle.putStringArrayList("answerList", listData[position - 1].answerList)
+                        bundle.putString("answerNumber", listData[position - 1].answerNumber)
+                        bundle.putString(
+                            "questionName",
+                            "${position}. ${listData[position - 1].name}"
+                        )
+                        Log.d("listData[position-2]", listData[position - 1].answerList[0])
+                        val transaction = this.supportFragmentManager.beginTransaction()
+                        fragmentManyAnswers.arguments = bundle
+                        transaction.replace(R.id.fragmentContainer, fragmentManyAnswers)
+                        transaction.addToBackStack(null)
+                        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+                        transaction.commit()
+                    }
                 }
             }
         }
+        /*if(position == listData.size) {
+            if(position in 1..listData.size) {
+                if((listData[position-1].type == "Termin")&&(listData[position-1].answerNumber.toInt() > 1)) {
+                    tableData[position-1].chosenAnswer = arrayList.joinToString(separator = ", ")
+                } else {
+                    tableData[position-1].chosenAnswer = arrayList.joinToString()
+                }
+                if(tableData[position-1].chosenAnswer == tableData[position-1].correctAnswer) {tableData[position-1].isCorrect = "1"}
+                //tableData[position-1].chosenAnswer = arrayList
+            }
+            openFinishTestDialog()
+        }*/
         /*if(position == 0) {
+
 
         }*/
         if(!arrayList.isEmpty()){Log.d("ArrayList[0]", arrayList[0])}
@@ -389,10 +443,11 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         }
                         var representModel: RepresentModel = RepresentModel(name!!, type!!, answerNumber!!, correctAnswerList, answerList)
                         var tableModel: TableModel
-                        if(type == "Termin") {
+                        if((type == "Termin")&&(answerNumber.toInt() > 1)) {
                             tableModel = TableModel(name!!, type!!, correctAnswerList.joinToString(separator = ", "), "-", "0")
                         } else {
                             tableModel = TableModel(name!!, type!!, correctAnswerList.joinToString(), "-", "0")
+                            Log.d("TYPE", "${answerNumber}  ${type}")
                         }
                         tableData.add(tableModel)
                         listData.add(representModel)
@@ -474,7 +529,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         quitDialog.show()
     }
 
-    private fun openFinishTestDialog() {
+    private fun openFinishTestDialog1() {
         var finishTestDialog = AlertDialog.Builder(
             this@AttendingTestActivity
         )
@@ -483,12 +538,88 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             dialog, which ->
             val intent = Intent(this, TestResultsActivity::class.java)
             intent.putExtra("list", tableData)
+            intent.putExtra("testName", testName)
+            intent.putExtra("privacy", privacy)
             startActivity(intent)
+            var score: Int = 0
+            var userScore: String = ""
+            var answerNumber: String = ""
+            var totalScore: String = ""
+            var grade: String = ""
+            if(tableData != null) {
+                for(data in tableData!!) {
+                    var currentScore = data.isCorrect
+                    if(currentScore != "0") {score++}
+                }
+            }
+            userScore = score.toString()
+            answerNumber = tableData!!.size.toString()
+            var totalRerc = (score*100/tableData!!.size)
+            totalScore = (score*100/tableData!!.size).toString() + "%"
+            when(totalRerc) {
+                in 0..19 -> {grade = "1"}
+                in 20..39 -> {grade = "2"}
+                in 40..59 -> {grade = "3"}
+                in 60..79 -> {grade = "4"}
+                in 80..100 -> {grade = "5"}
+                else -> {grade = "Error"}
+            }
+            var totalModel = TotalModel(userScore, answerNumber, totalScore, grade)
+            createTestAttendanceByUser(testName, privacy, totalModel, tableData)
             this.finish()
         }
 
         finishTestDialog.setNegativeButton("Нет") {
             dialog, which ->
+            position--
+            observePosition()
+        }
+        finishTestDialog.show()
+    }
+
+    private fun openFinishTestDialog() {
+        var finishTestDialog = AlertDialog.Builder(
+            this@AttendingTestActivity
+        )
+        finishTestDialog.setTitle("Вы уверены, что хотите завершить выполнение теста?")
+        finishTestDialog.setPositiveButton("Да!") {
+                dialog, which ->
+            val intent = Intent(this, TestResultsActivity::class.java)
+            intent.putExtra("list", tableData)
+            intent.putExtra("testName", testName)
+            intent.putExtra("privacy", privacy)
+            startActivity(intent)
+            var score: Int = 0
+            var userScore: String = ""
+            var answerNumber: String = ""
+            var totalScore: String = ""
+            var grade: String = ""
+            if(tableData != null) {
+                for(data in tableData!!) {
+                    var currentScore = data.isCorrect
+                    if(currentScore != "0") {score++}
+                }
+            }
+            userScore = score.toString()
+            answerNumber = tableData!!.size.toString()
+            var totalRerc = (score*100/tableData!!.size)
+            totalScore = (score*100/tableData!!.size).toString() + "%"
+            when(totalRerc) {
+                in 0..19 -> {grade = "1"}
+                in 20..39 -> {grade = "2"}
+                in 40..59 -> {grade = "3"}
+                in 60..79 -> {grade = "4"}
+                in 80..100 -> {grade = "5"}
+                else -> {grade = "Error"}
+            }
+            var totalModel = TotalModel(userScore, answerNumber, totalScore, grade)
+            createTestAttendanceByUser(testName, privacy, totalModel, tableData)
+            this.finish()
+        }
+
+        finishTestDialog.setNegativeButton("Нет") {
+                dialog, which ->
+            observePosition()
         }
         finishTestDialog.show()
     }

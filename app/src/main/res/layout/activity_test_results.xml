@@ -45,7 +45,7 @@
         android:id="@+id/correctAnswer"
         app:layout_constraintTop_toTopOf="@id/questionNumber"
         app:layout_constraintStart_toEndOf="@id/view2"
-        android:text="Ответ польз."
+        android:text="Верный ответ"
         android:textSize="20dp"
         android:gravity="center"
         android:layout_width="160dp"
@@ -78,4 +78,180 @@
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
+    <View
+        android:id="@+id/view5current"
+        app:layout_constraintBottom_toTopOf="@id/totalCurrent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:background ="@color/gray"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/totalCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Итого:"
+        android:textSize="26dp"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view6current"
+        app:layout_constraintStart_toEndOf="@id/totalCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        style="@style/smallVerticalSeparator" />
+
+    <TextView
+        android:id="@+id/userScoreCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/view6current"
+        android:text="Баллы польз."
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view7current"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/userScoreCurrent"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/answerNumberCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/view7current"
+        android:text="Верный ответ"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view8current"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/answerNumberCurrent"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/totalScoreCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/view8current"
+        android:text="Процент"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view9current"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/totalScoreCurrent"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/gradeCurrent"
+        app:layout_constraintBottom_toTopOf="@id/view10current"
+        app:layout_constraintStart_toEndOf="@id/view9current"
+        android:text="Оценка"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view10current"
+        app:layout_constraintBottom_toTopOf="@id/view5"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:background ="@color/gray"
+        android:layout_height="2dp" />
+
+    <View
+        android:id="@+id/view5"
+        app:layout_constraintBottom_toTopOf="@id/total"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:background ="@color/gray"
+        android:layout_height="2dp" />
+
+    <TextView
+        android:id="@+id/total"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Итого:"
+        android:textSize="26dp"
+        android:gravity="center"
+        android:layout_width="100dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view6"
+        app:layout_constraintStart_toEndOf="@id/total"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        style="@style/smallVerticalSeparator" />
+
+    <TextView
+        android:id="@+id/userScore"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/view6"
+        android:text="Баллы польз."
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view7"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/userScore"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/answerNumber"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/view7"
+        android:text="Верный ответ"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="80dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view8"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/answerNumber"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/totalScore"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/view8"
+        android:text="Процент"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view9"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/totalScore"
+        style="@style/smallVerticalSeparator" />
+    <TextView
+        android:id="@+id/grade"
+        app:layout_constraintBottom_toTopOf="@id/view10"
+        app:layout_constraintStart_toEndOf="@id/view9"
+        android:text="Оценка"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_width="70dp"
+        android:layout_height="50dp" />
+    <View
+        android:id="@+id/view10"
+        app:layout_constraintBottom_toTopOf="@id/button_finish_test"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_width="match_parent"
+        android:background ="@color/gray"
+        android:layout_height="2dp" />
+    <Button
+        android:id="@+id/button_finish_test"
+        style="@style/Button.Test"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:shadowColor="#E3BFE3"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:text="Завершить выполнение теста"
+        android:textAllCaps="false"
+        android:textSize="16dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

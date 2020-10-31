@@ -47,6 +47,16 @@ fun getCurrentUser() {
     DATABASE_ROOT_USER.addValueEventListener(currentUserListener)
 }
 
+fun createTestAttendanceByUser(testName: String, privacy: String, total: TotalModel, tableList: ArrayList<TableModel>) {
+    if(privacy == "Публичный") {
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("answerInfo").setValue(tableList)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("total").setValue(total)
+    } else {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("answerInfo").setValue(tableList)
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("total").setValue(total)
+    }
+}
+
 fun setCurrentUser(user: User?) {
     CURRENT_USER = user
 }

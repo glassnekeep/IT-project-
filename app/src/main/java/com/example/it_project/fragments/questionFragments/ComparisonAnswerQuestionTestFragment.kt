@@ -180,7 +180,7 @@ class ComparisonAnswerQuestionTestFragment : Fragment() {
             rootView.buttonSaveOneAnswer.setOnClickListener {
                 if(!rootView.question_answer.text.isEmpty()) {
                     chosenAnswer = rootView.question_answer.text.toString()
-                    if(chosenAnswer!!.length == (answerNumber!!.toInt()/2)) {
+                    if(chosenAnswer!!.length == (answerNumber!!.toInt()/*/2*/)) {
                         chosenAnswerList.add(chosenAnswer!!)
                         communicator.passData(chosenAnswerList)
                     } else {
