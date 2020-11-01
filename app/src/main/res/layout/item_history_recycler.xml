@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/historyContainer"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/testContainer"
     app:cardCornerRadius="12dp"
     app:contentPadding="6dp"
     app:cardBackgroundColor="@color/colorAccent"
-    android:layout_margin="3dp">
+    android:layout_margin="3dp" >
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp" >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:padding="10dp">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
             <TextView
                 android:id="@+id/testName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Название теста"
                 android:textSize="14dp" />
-
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
             <TextView
                 android:id="@+id/testCreator"
                 android:layout_width="300dp"
@@ -30,31 +39,31 @@
 
             <TextView
                 android:id="@+id/testPrivacy"
-                android:layout_marginTop="10dp"
-                android:layout_width="300dp"
+                android:layout_width="70dp"
+                android:layout_marginStart="10dp"
                 android:layout_height="wrap_content"
                 android:textSize="10dp"
                 android:text="Публичность" />
-
-            <TextView
-                android:id="@+id/testSubject"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:textSize="10dp"
-                android:text="Предмет теста" />
-
-            <TextView
-                android:id="@+id/testId"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:textSize="10dp"
-                android:text="Id теста" />
-
-            <TextView
-                android:id="@+id/testTime"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:textSize="10dp"
-                android:text="Время на выполнение теста" />
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/perCent"
+                android:layout_width="290dp"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:text="Верно выполненных заданий: " />
+            <TextView
+                android:id="@+id/grade"
+                android:layout_width="wrap_content"
+                android:layout_marginStart="40dp"
+                android:layout_height="wrap_content"
+                android:textSize="10dp"
+                android:text="Оценка: " />
+        </LinearLayout>
+    </LinearLayout>
+
 </androidx.cardview.widget.CardView>

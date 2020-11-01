@@ -35,13 +35,14 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
             var testName = edit_text_test_name.text.toString()
             var subject = spinner_subject.selectedItem.toString()
             var privacy = spinner_privacy.selectedItem.toString()
+            var time = edit_text_time.text.toString()
             val intentCreateTest = Intent(activity, CreateTestActivity::class.java)
             intentCreateTest.putExtra("TestName", edit_text_test_name.text.toString())
             startActivity(intentCreateTest)
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()
             CURRENT_TEST_ID = createTestIDWithName(testName)
             CURRENT_TEST_PRIVACY = privacy
-            createTestWithName(testName, subject, privacy, CURRENT_TEST_ID!!)
+            createTestWithName(testName, subject, privacy, CURRENT_TEST_ID!!, time)
         }
         button_exit_create_test_name.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()

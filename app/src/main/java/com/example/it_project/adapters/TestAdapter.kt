@@ -40,6 +40,9 @@ class TestAdapter(var mContext: Context,
             var intent = Intent(mActivity, AttendingTestActivity::class.java)
             intent.putExtra("privacy", testsList[position].privacy)
             intent.putExtra("testName", testsList[position].testName)
+            intent.putExtra("subject", testsList[position].subject)
+            intent.putExtra("testCreator", testsList[position].creatorName)
+            intent.putExtra("time", testsList[position].time)
             mActivity.startActivity(intent)
         }
 
@@ -49,6 +52,7 @@ class TestAdapter(var mContext: Context,
         holder.privacy.text = "${model.privacy}"
         holder.subject.text = "${model.subject}"
         holder.testId.text = "${model.testId}"
+        holder.testTime.text = "${model.time}"
         holder.container.background = ContextCompat.getDrawable(mContext, R.drawable.category_item_background)
     }
 

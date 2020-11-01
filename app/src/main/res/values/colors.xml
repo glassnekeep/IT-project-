@@ -41,6 +41,8 @@
     <color name="colorSecondaryText">#757575</color>
     <color name="colorDivider">#BDBDBD</color>
 
+    <color name="superRed">#DC0E0A</color>
+
     <!--More colors-->
     <color name="colorEditTextLight">#F1F1F1</color>
 </resources>

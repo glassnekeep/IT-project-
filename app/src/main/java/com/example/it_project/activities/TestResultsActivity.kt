@@ -33,6 +33,8 @@ class TestResultsActivity : BaseActivity() {
 
     private var privacy: String? = null
 
+    private var testCreator: String? = null
+
     private lateinit var total: TextView
     private lateinit var userScore: TextView
     private lateinit var answerNumber: TextView
@@ -54,6 +56,7 @@ class TestResultsActivity : BaseActivity() {
             tableList = extras.getParcelableArrayList<TableModel>("list")
             testName = extras.getString("testName")
             privacy = extras.getString("privacy")
+            //testCreator = extras.getString("testCreator")
             Log.d("table", tableList?.size.toString())
         }
         adapter = TableAdapter(context, activity, tableList!!)

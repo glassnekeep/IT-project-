@@ -2,10 +2,12 @@ package com.example.it_project.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.widget.Button
+import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentTransaction
 import com.example.it_project.Communicator
@@ -18,24 +20,37 @@ import com.example.it_project.fragments.questionFragments.TerminAnswerQuestionTe
 import com.example.it_project.models.RepresentModel
 import com.example.it_project.models.TableModel
 import com.example.it_project.models.TotalModel
-import com.example.it_project.utilities.createTestAttendanceByUser
+import com.example.it_project.utilities.createTestAttendanceByUserInTestNode
+import com.example.it_project.utilities.createTestAttendanceByUserInUserNode
 import com.example.it_project.values.*
 import com.google.android.material.tabs.TabLayout
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AttendingTestActivity : BaseActivity(), Communicator {
 
     private lateinit var privacy: String
 
+    private lateinit var subject: String
+
     private lateinit var testName: String
+
+    private lateinit var testCreator: String
+
+    private lateinit var time: String
 
     private var position: Int = 0
 
     private lateinit var listData: ArrayList<RepresentModel>
 
     private lateinit var tableData: ArrayList<TableModel>
+
+    private var usedTime: Int = 0
+
+    private lateinit var currentTime: TextView
 
     //private lateinit var answerList: ArrayList<String>
 
@@ -49,6 +64,16 @@ class AttendingTestActivity : BaseActivity(), Communicator {
 
     private lateinit var currentQuestionType: String
 
+    private var seconds: Int = 0
+
+    private var minutes: Int = 0
+
+    private var hours: Int = 0
+
+    private val handler = Handler()
+
+    private var timeFinish: String = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attending_test)
@@ -58,30 +83,39 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         observePosition()
         val extras: Bundle? = intent.extras
         if(extras != null) {
+            subject = extras.getString("subject").toString()
             privacy = extras.getString("privacy").toString()
             testName = extras.getString("testName").toString()
+            testCreator = extras.getString("testCreator").toString()
+            time = extras.getString("time").toString()
+            usedTime = time.toInt()*60
             setToolbarTitle(extras.getString("testName").toString())
         }
+        //var calendar = Calendar.getInstance()
+        //val year = calendar.get(Calendar.YEAR)
+        //val month = calendar.get(Calendar.MONTH)
+        //val day = calendar.get(Calendar.DAY_OF_MONTH)
+        //val hour = calendar.get(Calendar.HOUR_OF_DAY)
+        //val minute = calendar.get(Calendar.MINUTE)
+        //currentTime =
         getDataFromDb()
-            /*var position: Int by Delegates.observable(0) {property, oldValue, newValue ->
-            if(newValue == 0) {
-                nextQuestionButton.visibility = View.GONE
-                previousQuestionButton.visibility = View.GONE
+        //hours = (usedTime / (60*60))
+        //minutes = ((usedTime / 60) % 60)
+        //seconds = (usedTime % 60)
+
+        //currentTime.text = ("${hours}:${minutes}:${seconds}")
+
+        //updateTime()
+
+        /*handler.post(object: Runnable {
+            override fun run() {
+                handler.postDelayed(this, 1000)
+                updateTime()
             }
-            if((newValue > 1) && (newValue <= listData.size)) {
-                previousQuestionButton.visibility = View.VISIBLE
-            }
-            if((newValue < listData.size) && (newValue > 0)) {
-                nextQuestionButton.visibility = View.VISIBLE
-            }
-        }*/
+        })*/
+
         //getDataFromDb()
         if(position == 0) {
-            /*if (savedInstanceState == null) {
-                supportFragmentManager.beginTransaction()
-                    .add(R.id.fragmentContainer, StartFragment())
-                    .commit()
-            }*/
             val fragmentStart = StartFragment()
             val bundle = Bundle()
             bundle.putString("input_txt", position.toString())
@@ -254,6 +288,14 @@ class AttendingTestActivity : BaseActivity(), Communicator {
     }
 
     override fun passData(arrayList: ArrayList<String>) {
+        if(position == 0) {
+            handler.post(object: Runnable {
+                override fun run() {
+                    handler.postDelayed(this, 1000)
+                    updateTime()
+                }
+            })
+        }
         if((position <= listData.size)/*&&(position != 0)*/) {
             if (position in 1..listData.size) {
                 if ((listData[position - 1].type == "Termin") && (listData[position - 1].answerNumber.toInt() > 1)) {
@@ -396,8 +438,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                     var answerList = ArrayList<String>()
                     var name = questionInfo.child("name").getValue(String::class.java)
                     var type = questionInfo.child("type").getValue(String::class.java)
-                    var answerNumber =
-                        questionInfo.child("answerNumber").getValue(String::class.java)
+                    var answerNumber = questionInfo.child("answerNumber").getValue(String::class.java)
                     //var correctAnswer = questionInfo.child("correctAnswer").getValue(ArrayList::class.java)
                     if (correctAnswerList.size > 0) {
                         correctAnswerList.clear()
@@ -493,6 +534,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         nextQuestionButton = findViewById(R.id.button_next_question)
         previousQuestionButton = findViewById(R.id.button_previous_question)
         finishTestButton = findViewById(R.id.button_finish_test)
+        currentTime = findViewById(R.id.currentTestTime)
         privacy = ""
         testName = ""
         currentQuestionType = ""
@@ -529,6 +571,17 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         quitDialog.show()
     }
 
+    private fun openTimeOutDialog() {
+        var quitDialog = AlertDialog.Builder(
+            this@AttendingTestActivity
+        )
+        quitDialog.setTitle("Время вышло!")
+
+        quitDialog.setPositiveButton("Ок"
+        ) { dialog, which ->
+        }
+    }
+
     private fun openFinishTestDialog1() {
         var finishTestDialog = AlertDialog.Builder(
             this@AttendingTestActivity
@@ -540,6 +593,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             intent.putExtra("list", tableData)
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
+            intent.putExtra("testCreator", testCreator)
             startActivity(intent)
             var score: Int = 0
             var userScore: String = ""
@@ -552,6 +606,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                     if(currentScore != "0") {score++}
                 }
             }
+            getCurrentTime()
             userScore = score.toString()
             answerNumber = tableData!!.size.toString()
             var totalRerc = (score*100/tableData!!.size)
@@ -565,7 +620,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                 else -> {grade = "Error"}
             }
             var totalModel = TotalModel(userScore, answerNumber, totalScore, grade)
-            createTestAttendanceByUser(testName, privacy, totalModel, tableData)
+            createTestAttendanceByUserInTestNode(testName, privacy, timeFinish, totalModel, tableData)
+            createTestAttendanceByUserInUserNode(testName, privacy, subject, testCreator, timeFinish, totalModel, tableData)
             this.finish()
         }
 
@@ -588,6 +644,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             intent.putExtra("list", tableData)
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
+            intent.putExtra("testCreator", testCreator)
             startActivity(intent)
             var score: Int = 0
             var userScore: String = ""
@@ -612,8 +669,10 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                 in 80..100 -> {grade = "5"}
                 else -> {grade = "Error"}
             }
+            getCurrentTime()
             var totalModel = TotalModel(userScore, answerNumber, totalScore, grade)
-            createTestAttendanceByUser(testName, privacy, totalModel, tableData)
+            createTestAttendanceByUserInTestNode(testName, privacy, timeFinish, totalModel, tableData)
+            createTestAttendanceByUserInUserNode(testName, privacy, subject, testCreator, timeFinish, totalModel, tableData)
             this.finish()
         }
 
@@ -635,6 +694,9 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         if(position == 0) {
             nextQuestionButton.visibility = View.GONE
             previousQuestionButton.visibility = View.GONE
+            currentTime.visibility = View.GONE
+        } else {
+            currentTime.visibility = View.VISIBLE
         }
         if((position > 1) && (position <= listData.size)) {
             previousQuestionButton.visibility = View.VISIBLE
@@ -652,5 +714,73 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         } else {
             finishTestButton.visibility = View.GONE
         }
+    }
+
+    private fun updateTime() {
+        usedTime--
+        hours = (usedTime / (60*60))
+        minutes = ((usedTime / 60) % 60)
+        seconds = (usedTime % 60)
+        currentTime.text = ("Осталось ${hours} часов ${minutes} минут(ы) ${seconds} секунд(ы)")
+        if((hours == 0) && (minutes < 10)) {
+            currentTime.setTextColor(resources.getColor(R.color.orange))
+        } else if ((hours == 0)&&(minutes < 5)) {
+            currentTime.setTextColor(resources.getColor(R.color.superRed))
+        }
+        if(usedTime == 0) {
+            openTimeOutDialog()
+            /*var calendar = Calendar.getInstance()
+            var year = calendar.get(Calendar.YEAR)
+            var month = calendar.get(Calendar.MONTH)
+            var day = calendar.get(Calendar.DAY_OF_MONTH)
+            var hour = calendar.get(Calendar.HOUR_OF_DAY)
+            var minute = calendar.get(Calendar.MINUTE)
+            var second = calendar.get(Calendar.SECOND)
+            hour = hour + 3
+            day = day + (hour / 24)
+            hour = hour % 24
+            timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day/10}${day%10}/${month/10}${month%10}/${year/1000}${year/100}${year/10}${year%10}"*/
+            getCurrentTime()
+            var score: Int = 0
+            var userScore: String = ""
+            var answerNumber: String = ""
+            var totalScore: String = ""
+            var grade: String = ""
+            if(tableData != null) {
+                for(data in tableData!!) {
+                    var currentScore = data.isCorrect
+                    if(currentScore != "0") {score++}
+                }
+            }
+            userScore = score.toString()
+            answerNumber = tableData!!.size.toString()
+            var totalRerc = (score*100/tableData!!.size)
+            totalScore = (score*100/tableData!!.size).toString() + "%"
+            when(totalRerc) {
+                in 0..19 -> {grade = "1"}
+                in 20..39 -> {grade = "2"}
+                in 40..59 -> {grade = "3"}
+                in 60..79 -> {grade = "4"}
+                in 80..100 -> {grade = "5"}
+                else -> {grade = "Error"}
+            }
+            var totalModel = TotalModel(userScore, answerNumber, totalScore, grade)
+            createTestAttendanceByUserInTestNode(testName, privacy, timeFinish, totalModel, tableData)
+            createTestAttendanceByUserInUserNode(testName, privacy, subject, testCreator, timeFinish, totalModel, tableData)
+        }
+    }
+
+    private fun getCurrentTime() {
+        var calendar = Calendar.getInstance()
+        var year = calendar.get(Calendar.YEAR)
+        var month = calendar.get(Calendar.MONTH)
+        var day = calendar.get(Calendar.DAY_OF_MONTH)
+        var hour = calendar.get(Calendar.HOUR_OF_DAY)
+        var minute = calendar.get(Calendar.MINUTE)
+        var second = calendar.get(Calendar.SECOND)
+        hour = hour + 3
+        day = day + (hour / 24)
+        hour = hour % 24
+        timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day/10}${day%10}|${month/10}${month%10}|${year}"
     }
 }

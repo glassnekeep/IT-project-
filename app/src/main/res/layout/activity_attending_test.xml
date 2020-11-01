@@ -12,9 +12,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 
+    <TextView
+        android:id="@+id/currentTestTime"
+        android:layout_width="match_parent"
+        android:text="Времени осталось: "
+        android:textSize="22dp"
+        android:padding="10dp"
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@id/toolbarTop"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/fragmentContainer"
-        app:layout_constraintTop_toBottomOf="@id/toolbarTop"
+        app:layout_constraintTop_toBottomOf="@id/currentTestTime"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_width="match_parent"
         android:layout_height="550dp" >

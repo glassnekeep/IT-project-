@@ -37,6 +37,17 @@
         android:entries="@array/privacyStatus"
         android:background="@drawable/spinner_background" />
 
+    <EditText
+        android:id="@+id/edit_text_time"
+        android:layout_width="100dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="140dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="40dp"
+        android:paddingStart="10dp"
+        android:hint="Время"
+        android:background="@drawable/edit_text_background"/>
+
     <Button
         android:id="@+id/button_commit_create_test_name"
         style="@style/Button.Positive.Variant"

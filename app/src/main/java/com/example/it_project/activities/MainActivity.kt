@@ -315,7 +315,8 @@ class MainActivity : BaseActivity() {
                         var privacy: String? = testInfo?.privacy
                         var subject: String? = testInfo?.subject
                         var testId: String? = testInfoSnapshot.child(NODE_ID).getValue(String::class.java)
-                        var testModel: TestModel = TestModel(testName!!, creatorName!!, privacy!!, subject!!, testId!!)
+                        var time: String? = testInfo?.time
+                        var testModel: TestModel = TestModel(testName!!, creatorName!!, privacy!!, subject!!, testId!!, time!!)
                         //addNewPublicTestToList(testModel)
                         listData.add(testModel)
                         //Log.d("TEST", "${PUBLIC_TESTS_LIST.size}")

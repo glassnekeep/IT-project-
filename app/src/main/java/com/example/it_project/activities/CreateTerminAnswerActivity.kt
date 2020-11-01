@@ -81,7 +81,8 @@ class CreateTerminAnswerActivity : BaseActivity() {
         createQuestionButton.setOnClickListener {
             arrayOfAnswers = ArrayList()
             arrayOfAnswers.add(answer1.text.toString())
-            arrayOfAnswers.add(answer2.text.toString())
+            //arrayOfAnswers.add(answer2.text.toString())
+            if(answer2.visibility != View.GONE) {arrayOfAnswers.add(answer2.text.toString())}
             if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString())}
             if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString())}
             if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString())}

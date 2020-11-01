@@ -15,6 +15,7 @@ class TestHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     var privacy: TextView
     var subject: TextView
     var testId: TextView
+    var testTime: TextView
 
     init {
         container = itemView.findViewById(R.id.testContainer)
@@ -23,5 +24,6 @@ class TestHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         privacy = itemView.findViewById(R.id.testPrivacy)
         subject = itemView.findViewById(R.id.testSubject)
         testId = itemView.findViewById(R.id.testId)
+        testTime = itemView.findViewById(R.id.testTime)
     }
 }

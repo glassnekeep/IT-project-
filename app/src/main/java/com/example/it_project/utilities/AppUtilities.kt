@@ -47,14 +47,22 @@ fun getCurrentUser() {
     DATABASE_ROOT_USER.addValueEventListener(currentUserListener)
 }
 
-fun createTestAttendanceByUser(testName: String, privacy: String, total: TotalModel, tableList: ArrayList<TableModel>) {
+fun createTestAttendanceByUserInTestNode(testName: String, privacy: String, time: String, total: TotalModel, tableList: ArrayList<TableModel>) {
     if(privacy == "Публичный") {
-        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("answerInfo").setValue(tableList)
-        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("total").setValue(total)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("answerInfo").setValue(tableList)
+        DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("total").setValue(total)
     } else {
-        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("answerInfo").setValue(tableList)
-        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child("total").setValue(total)
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("answerInfo").setValue(tableList)
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("total").setValue(total)
     }
+}
+
+fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subject: String, testCreator: String, time: String, total: TotalModel, tableList: ArrayList<TableModel>) {
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("answerInfo").setValue(tableList)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("privacy").setValue(privacy)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("subject").setValue(subject)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("testCreator").setValue(testCreator)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("total").setValue(total)
 }
 
 fun setCurrentUser(user: User?) {
@@ -197,12 +205,12 @@ fun createTestIDWithName(testName: String): String? {
     return id
 }
 
-fun createTestWithName(testName: String, subject: String, privacy: String, id: String) {
+fun createTestWithName(testName: String, subject: String, privacy: String, id: String, time: String) {
     //var id = DATABASE_ROOT_TEST_IDS.push().key
     var testCreator: User? = null
     testCreator = CURRENT_USER
     var creatorName = "${testCreator?.name} ${testCreator?.secName}"
-    var testInfo: TestInfoModel = TestInfoModel(subject, privacy, creatorName)
+    var testInfo: TestInfoModel = TestInfoModel(subject, privacy, creatorName, time)
     if(privacy == "Публичный") {
         DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_ID).setValue(id)
         DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_TEST_NAME).setValue(testName)
