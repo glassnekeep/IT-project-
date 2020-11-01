@@ -62,36 +62,6 @@ class GroupsActivity : BaseActivity() {
         //groupsRecyclerView.adapter = adapter
     }
 
-    /*override fun onStart() {
-        super.onStart()
-        /*if(NEW_GROUP!= null) {
-            var currentName = CURRENT_USER_NAME
-            var currentSecName = CURRENT_USER_SECNAME
-            var groupName = NEW_GROUP
-            GROUP_LIST.add(GroupModel(groupName!!, 0, "${currentName} ${currentSecName}"))
-            NEW_GROUP = null
-        }*/
-        //adapter.notifyItemInserted(GROUP_LIST.size - 1)
-        adapter.notifyDataSetChanged()
-        Log.d("TAG", " FINAL ${GROUP_LIST.size}")
-    }*/
-
-    /*override fun onResume() {
-        super.onResume()
-        /*Log.d("TAG1", "${GROUP_LIST.size}")
-        if(NEW_GROUP!= null) {
-            getCurrentUserName()
-            getCurrentUserSecName()
-            var currentName = CURRENT_USER_NAME
-            var currentSecName = CURRENT_USER_SECNAME
-            var groupName = NEW_GROUP
-            GROUP_LIST.add(GroupModel(groupName!!, 0, "${currentName} ${currentSecName}"))
-        }
-        adapter.notifyItemInserted(GROUP_LIST.size - 1)
-        adapter.notifyDataSetChanged()
-        Log.d("TAG", " FINAL ${GROUP_LIST.size}")*/
-    }*/
-
     private fun init() {
         createNewGroupButton = findViewById(R.id.create_new_group_button)
         groupsRecyclerView = findViewById(R.id.groupsRecyclerView)

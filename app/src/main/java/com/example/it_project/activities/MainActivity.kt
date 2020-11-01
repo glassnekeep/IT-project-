@@ -196,6 +196,7 @@ class MainActivity : BaseActivity() {
                             RegisterActivity::class.java,
                             true
                         )
+                        4 -> invokeNewActivity(this@MainActivity, HistoryActivity::class.java, true)
                         5 -> invokeNewActivity(this@MainActivity, GroupsActivity::class.java, true)
                         6 -> {var fragmentManager = this@MainActivity.supportFragmentManager
                         //val transaction = fragmentManager.beginTransaction()
@@ -275,11 +276,7 @@ class MainActivity : BaseActivity() {
                             val manager = supportFragmentManager
                             dialogFragment.show(fragmentManager, "MyFirstDialog")
                         }
-                        3 -> invokeNewActivity(
-                            this@MainActivity,
-                            RegisterActivity::class.java,
-                            true
-                        )
+                        3 -> invokeNewActivity(this@MainActivity, HistoryActivity::class.java, true)
                         6 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
                             SettingsActivity::class.java,

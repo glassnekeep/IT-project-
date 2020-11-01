@@ -58,11 +58,17 @@ fun createTestAttendanceByUserInTestNode(testName: String, privacy: String, time
 }
 
 fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subject: String, testCreator: String, time: String, total: TotalModel, tableList: ArrayList<TableModel>) {
-    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("answerInfo").setValue(tableList)
+    /*DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("answerInfo").setValue(tableList)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("privacy").setValue(privacy)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("subject").setValue(subject)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child(NODE_TEST_INFO).child("testCreator").setValue(testCreator)
-    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("total").setValue(total)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(testName).child(time).child("total").setValue(total)*/
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child("answerInfo").setValue(tableList)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("privacy").setValue(privacy)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("subject").setValue(subject)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("testCreator").setValue(testCreator)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("testName").setValue(testName)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child("total").setValue(total)
 }
 
 fun setCurrentUser(user: User?) {
