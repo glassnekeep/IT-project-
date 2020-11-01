@@ -2,13 +2,16 @@ package com.example.it_project.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
+import com.example.it_project.activities.TestResultsActivity
 import com.example.it_project.holders.HistoryHolder
 import com.example.it_project.holders.TestHolder
 import com.example.it_project.models.HistoryModel
@@ -25,6 +28,16 @@ class HistoryAdapter (var mContext: Context,
 
     override fun onBindViewHolder(holder: HistoryHolder, position: Int) {
         val model: HistoryModel = historyList[position]
+        holder.itemView.setOnClickListener {
+            var intent = Intent(mActivity, TestResultsActivity::class.java)
+            intent.putExtra("list", model.tableList)
+            intent.putExtra("testName", model.testName)
+            intent.putExtra("privacy", model.privacy)
+            intent.putExtra("testCreator", model.testCreator)
+            intent.putExtra("fromHistory", true)
+            mActivity.startActivity(intent)
+        }
+        //val model: HistoryModel = historyList[position]
         holder.testName.text = model.testName
         holder.testCreator.text = model.testCreator
         holder.testPrivacy.text = model.privacy

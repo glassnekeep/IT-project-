@@ -44,6 +44,7 @@ class TestAdapter(var mContext: Context,
             intent.putExtra("testCreator", testsList[position].creatorName)
             intent.putExtra("time", testsList[position].time)
             mActivity.startActivity(intent)
+            mActivity.finish()
         }
 
         val model: TestModel = testsFilterList[position]

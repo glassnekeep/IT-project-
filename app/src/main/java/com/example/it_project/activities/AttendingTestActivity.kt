@@ -594,6 +594,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
             intent.putExtra("testCreator", testCreator)
+            intent.putExtra("fromHistory", false)
             startActivity(intent)
             var score: Int = 0
             var userScore: String = ""
@@ -645,6 +646,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
             intent.putExtra("testCreator", testCreator)
+            intent.putExtra("fromHistory", false)
             startActivity(intent)
             var score: Int = 0
             var userScore: String = ""

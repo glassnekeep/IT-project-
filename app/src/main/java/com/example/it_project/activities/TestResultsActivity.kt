@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -43,6 +44,8 @@ class TestResultsActivity : BaseActivity() {
 
     private lateinit var finish: Button
 
+    private var fromHistory: Boolean? = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_test_results)
@@ -56,9 +59,11 @@ class TestResultsActivity : BaseActivity() {
             tableList = extras.getParcelableArrayList<TableModel>("list")
             testName = extras.getString("testName")
             privacy = extras.getString("privacy")
+            fromHistory = extras.getBoolean("fromHistory")
             //testCreator = extras.getString("testCreator")
             Log.d("table", tableList?.size.toString())
         }
+        if(fromHistory == true) {enableUpButton()}
         adapter = TableAdapter(context, activity, tableList!!)
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = adapter
@@ -103,5 +108,16 @@ class TestResultsActivity : BaseActivity() {
         totalScore = findViewById(R.id.totalScore)
         grade = findViewById(R.id.grade)
         finish = findViewById(R.id.button_finish_test)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                startActivity(Intent(activity, HistoryActivity::class.java))
+                this.finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
