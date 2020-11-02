@@ -126,14 +126,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answer2.setOnCheckedChangeListener { compoundButton, isChecked ->
             if(isChecked) {
                 isChosen = true
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer2.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)
                 }
                 Log.d("chosen.sie", chosenAnswerList.size.toString())
             }
             else {
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer2.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.remove(chosenAnswer)
                 }
@@ -143,14 +143,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answer3.setOnCheckedChangeListener { compoundButton, isChecked ->
             if(isChecked) {
                 isChosen = true
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer3.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)
                 }
                 Log.d("chosen.sie", chosenAnswerList.size.toString())
             }
             else {
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer3.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.remove(chosenAnswer)
                 }
@@ -160,14 +160,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answer4.setOnCheckedChangeListener { compoundButton, isChecked ->
             if(isChecked) {
                 isChosen = true
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer4.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)
                 }
                 Log.d("chosen.sie", chosenAnswerList.size.toString())
             }
             else {
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer4.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.remove(chosenAnswer)
                 }
@@ -177,14 +177,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answer5.setOnCheckedChangeListener { compoundButton, isChecked ->
             if(isChecked) {
                 isChosen = true
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer5.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)
                 }
                 Log.d("chosen.sie", chosenAnswerList.size.toString())
             }
             else {
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer5.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.remove(chosenAnswer)
                 }
@@ -194,14 +194,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answer6.setOnCheckedChangeListener { compoundButton, isChecked ->
             if(isChecked) {
                 isChosen = true
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer6.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)
                 }
                 Log.d("chosen.sie", chosenAnswerList.size.toString())
             }
             else {
-                chosenAnswer = answer1.text.toString()
+                chosenAnswer = answer6.text.toString()
                 if(chosenAnswer != null) {
                     chosenAnswerList.remove(chosenAnswer)
                 }
@@ -209,6 +209,7 @@ class ManyAnswersQuestionTestFragment : Fragment() {
             }
         }
         rootView.buttonSaveOneAnswer.setOnClickListener {
+            //if(chosenAnswerList.size > 0) {chosenAnswerList.clear()}
             if(isChosen) {
                 //if(chosenAnswer != null) {
                     //chosenAnswerList.add(chosenAnswer!!)

@@ -13,6 +13,7 @@ class HistoryHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
     var testPrivacy: TextView
     var perCent: TextView
     var grade: TextView
+    var time: TextView
 
     init {
         container = itemView.findViewById(R.id.historyContainer)
@@ -21,5 +22,6 @@ class HistoryHolder (itemView: View): RecyclerView.ViewHolder(itemView) {
         testPrivacy = itemView.findViewById(R.id.testPrivacy)
         perCent = itemView.findViewById(R.id.perCent)
         grade = itemView.findViewById(R.id.grade)
+        time = itemView.findViewById(R.id.timeFinish)
     }
 }

@@ -63,7 +63,10 @@ class TestResultsActivity : BaseActivity() {
             //testCreator = extras.getString("testCreator")
             Log.d("table", tableList?.size.toString())
         }
-        if(fromHistory == true) {enableUpButton()}
+        if(fromHistory == true) {
+            enableUpButton()
+            finish.text = "Ок"
+        }
         adapter = TableAdapter(context, activity, tableList!!)
         tableRecyclerView.layoutManager = LinearLayoutManager(this)
         tableRecyclerView.adapter = adapter
@@ -91,9 +94,15 @@ class TestResultsActivity : BaseActivity() {
         }
 
         finish.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java)
-            startActivity(intent)
-            activity.finish()
+            if(fromHistory == true) {
+                val intent = Intent(context, HistoryActivity::class.java)
+                startActivity(intent)
+                activity.finish()
+            } else {
+                val intent = Intent(context, MainActivity::class.java)
+                startActivity(intent)
+                activity.finish()
+            }
         }
     }
 

@@ -124,6 +124,7 @@ class OneAnswerQuestionTestFragment : Fragment() {
         }
 
         rootView.buttonSaveOneAnswer.setOnClickListener {
+            //if(chosenAnswerList.size > 0) {chosenAnswerList.clear()}
             if(isChosen) {
                 if(chosenAnswer != null) {
                     chosenAnswerList.add(chosenAnswer!!)

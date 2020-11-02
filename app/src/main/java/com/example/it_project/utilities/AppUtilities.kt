@@ -68,6 +68,7 @@ fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subj
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("subject").setValue(subject)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("testCreator").setValue(testCreator)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("testName").setValue(testName)
+    DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("time").setValue(time)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child("total").setValue(total)
 }
 

@@ -38,11 +38,11 @@ class TestAdapter(var mContext: Context,
     override fun onBindViewHolder(holder: TestHolder, position: Int) {
         holder.itemView.setOnClickListener {
             var intent = Intent(mActivity, AttendingTestActivity::class.java)
-            intent.putExtra("privacy", testsList[position].privacy)
-            intent.putExtra("testName", testsList[position].testName)
-            intent.putExtra("subject", testsList[position].subject)
-            intent.putExtra("testCreator", testsList[position].creatorName)
-            intent.putExtra("time", testsList[position].time)
+            intent.putExtra("privacy", testsFilterList[position].privacy)
+            intent.putExtra("testName", testsFilterList[position].testName)
+            intent.putExtra("subject", testsFilterList[position].subject)
+            intent.putExtra("testCreator", testsFilterList[position].creatorName)
+            intent.putExtra("time", testsFilterList[position].time)
             mActivity.startActivity(intent)
             mActivity.finish()
         }
