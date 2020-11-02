@@ -204,6 +204,7 @@ class MainActivity : BaseActivity() {
                             val dialogFragment = CreateGroupFragment()
                             val manager = supportFragmentManager
                             dialogFragment.show(fragmentManager, "MyFirstDialog")}
+                        7 -> invokeNewActivity(this@MainActivity, StatisticsActivity::class.java, true)
                         8 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
                             SettingsActivity::class.java,
@@ -277,6 +278,7 @@ class MainActivity : BaseActivity() {
                             dialogFragment.show(fragmentManager, "MyFirstDialog")
                         }
                         3 -> invokeNewActivity(this@MainActivity, HistoryActivity::class.java, true)
+                        5 -> invokeNewActivity(this@MainActivity, StatisticsActivity::class.java, true)
                         6 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
                             SettingsActivity::class.java,
@@ -348,4 +350,6 @@ class MainActivity : BaseActivity() {
             backPressed = System.currentTimeMillis()
         }
     }
+
+    //TODO при написании верных ответов при выполнении и создании тестов учитываются пробелы. Нужно это пофиксить. Еще нужно проверять, чтобы верный ответ совпадал с одним из вариантом, и чтобы варианты были разные.
 }

@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".activities.HistoryActivity"></activity>
+        <activity android:name=".activities.StatisticsActivity"></activity>
+        <activity android:name=".activities.HistoryActivity" />
         <activity android:name=".activities.TestResultsActivity" />
         <activity android:name=".activities.AttendingTestActivity" />
         <activity android:name=".activities.ParticipantsActivity" />
@@ -18,7 +19,6 @@
         <activity android:name=".activities.CreateOneAnswerQuestionActivity" />
         <activity android:name=".activities.CreateComparisonQuestionActivity" />
         <activity android:name=".activities.CreateManyAnswersActivity" />
-        <activity android:name=".activities.CreateOneAnswerActivity" />
         <activity android:name=".activities.CreateTerminAnswerActivity" />
         <activity android:name=".activities.CreateTestActivity" />
         <activity android:name=".activities.SettingsActivity" />
