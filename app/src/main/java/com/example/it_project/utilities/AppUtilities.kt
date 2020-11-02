@@ -2,6 +2,7 @@ package com.example.it_project.utilities
 
 import android.app.Activity
 import android.content.Context
+import android.renderscript.Sampler
 import android.util.Log
 import android.widget.Toast
 import com.example.it_project.*
@@ -54,7 +55,13 @@ fun createTestAttendanceByUserInTestNode(testName: String, privacy: String, time
     } else {
         DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("answerInfo").setValue(tableList)
         DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_SOLUTIONS).child(CURRENT_UID).child(time).child("total").setValue(total)
+        getPrivateTestAverage(testName)
+        //TODO Не забудь проверить как эта штука работает!!!
     }
+}
+
+fun deleteParticipantFromGroup(groupName: String, id: String) {
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("participants").child(id).removeValue()
 }
 
 fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subject: String, testCreator: String, time: String, total: TotalModel, tableList: ArrayList<TableModel>) {
@@ -70,6 +77,35 @@ fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subj
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("testName").setValue(testName)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child(NODE_TEST_INFO).child("time").setValue(time)
     DATABASE_ROOT_USER.child(NODE_TEST_ATTENDANCE).child(time).child(testName).child("total").setValue(total)
+}
+
+fun getPrivateTestAverage(testName: String) {
+    var number = 0
+    var grade = 0
+    var score = 0
+    val averageListener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            for(user: DataSnapshot in snapshot.children) {
+                for(attempt in user.children) {
+                    number++
+                    var currentGrade = attempt.child("total").child("grade").getValue(String::class.java)
+                    var currentScore = attempt.child("total").child("totalScore").getValue(String::class.java)
+                    currentScore = currentScore?.substringBefore('%')
+                    grade = grade + currentGrade!!.toInt()
+                    score = score + currentScore!!.toInt()
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("solutions").addListenerForSingleValueEvent(averageListener)
+    if(number != 0) {
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageScore").setValue("${(score/number).toString()}%}")
+        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${(grade/number).toString()}%")
+    }
 }
 
 fun setCurrentUser(user: User?) {

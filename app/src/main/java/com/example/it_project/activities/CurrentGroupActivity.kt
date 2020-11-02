@@ -18,6 +18,7 @@ class CurrentGroupActivity : BaseActivity() {
 
     private lateinit var groupId: TextView
     private lateinit var participantsLayout: LinearLayout
+    private var groupName: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,9 +26,13 @@ class CurrentGroupActivity : BaseActivity() {
         initToolbar(true)
         init()
         enableUpButton()
-        if(ADAPTER_GROUP_NAME != null){
-            setToolbarTitle(ADAPTER_GROUP_NAME!!)
-            var IDListener = object: ValueEventListener {
+        val extras: Bundle? = intent.extras
+        if(extras != null) { groupName = extras.getString("groupName")!!}
+        setToolbarTitle(groupName)
+        getGroupId()
+        //if(ADAPTER_GROUP_NAME != null){
+            //setToolbarTitle(ADAPTER_GROUP_NAME!!)
+            /*var IDListener = object: ValueEventListener {
                 var ID: String? = null
                 override fun onDataChange(snapshot: DataSnapshot) {
                     ID = snapshot.getValue(String::class.java)
@@ -39,8 +44,8 @@ class CurrentGroupActivity : BaseActivity() {
                 }
             }
             var groupName = ADAPTER_GROUP_NAME
-            DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addValueEventListener(IDListener)
-        }
+            DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addValueEventListener(IDListener)*/
+        //}
 
         var clipboardManager: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 
@@ -53,13 +58,29 @@ class CurrentGroupActivity : BaseActivity() {
 
         participantsLayout.setOnClickListener {
             var intent: Intent = Intent(this, ParticipantsActivity::class.java)
+            intent.putExtra("groupName", groupName)
             startActivity(intent)
+            this.finish()
         }
     }
 
     private fun init() {
         groupId = findViewById(R.id.groupId)
         participantsLayout = findViewById(R.id.participantsLayout)
+    }
+
+    private fun getGroupId() {
+        var IDListener = object: ValueEventListener {
+            var Id: String? = null
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Id = snapshot.getValue(String::class.java)
+                groupId.text = Id
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addValueEventListener(IDListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -81,5 +102,6 @@ class CurrentGroupActivity : BaseActivity() {
     private fun intent() {
         var intent = Intent(this@CurrentGroupActivity, GroupsActivity::class.java)
         startActivity(intent)
+        this.finish()
     }
 }

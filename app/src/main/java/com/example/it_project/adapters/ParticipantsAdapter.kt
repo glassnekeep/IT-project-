@@ -2,17 +2,24 @@ package com.example.it_project.adapters
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.holders.ParticipantsHolder
 import com.example.it_project.R
+import com.example.it_project.activities.MainActivity
 import com.example.it_project.models.ParticipantModel
+import com.example.it_project.utilities.deleteParticipantFromGroup
 import java.util.ArrayList
 
-class ParticipantsAdapter(var mContext: Context, var mActivity: Activity, var participantList: ArrayList<ParticipantModel>): RecyclerView.Adapter<ParticipantsHolder>(), View.OnClickListener{
+class ParticipantsAdapter(var mContext: Context,
+                          var mActivity: Activity,
+                          var groupName: String,
+                          var participantList: ArrayList<ParticipantModel>): RecyclerView.Adapter<ParticipantsHolder>(), View.OnClickListener{
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ParticipantsHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(R.layout.item_recycler_participant, parent, false)
@@ -21,12 +28,10 @@ class ParticipantsAdapter(var mContext: Context, var mActivity: Activity, var pa
 
     override fun onBindViewHolder(holder: ParticipantsHolder, position: Int) {
         val model: ParticipantModel = participantList[position]
-        holder.itemView.setOnClickListener {
-            //ADAPTER_GROUP_NAME = holder.itemView.groupName.text.toString()
-            //var adapterGroupName = ADAPTER_GROUP_NAME
-            //getAdapterGroupID(adapterGroupName!!)
-            //var intent: Intent = Intent(mActivity, CurrentGroupActivity::class.java)
-            //mActivity.startActivity(intent)
+        holder.delete.setOnClickListener {
+            //mActivity.openQuitDialog(model.userID)
+            deleteParticipantFromGroup(groupName, model.userID)
+            notifyDataSetChanged()
         }
         holder.userName.text = "${model.userName}"
         holder.userID.text = "${model.userID}"
@@ -39,5 +44,22 @@ class ParticipantsAdapter(var mContext: Context, var mActivity: Activity, var pa
 
     override fun onClick(p0: View?) {
 
+    }
+
+    private fun openQuitDialog(id: String) {
+        var quitDialog = AlertDialog.Builder(
+            mContext
+        )
+        quitDialog.setTitle("Вы уверены, что хотите удалить данного пользвователя из группы?")
+
+        quitDialog.setPositiveButton("Да"
+        ) { dialog, which ->
+            deleteParticipantFromGroup(groupName, id)
+        }
+
+        quitDialog.setNegativeButton("Нет"
+        ) { dialog, which ->
+        }
+        quitDialog.show()
     }
 }

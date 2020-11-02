@@ -36,6 +36,7 @@ class GroupAdapter(var mContext: Context,
                 initParticipantList(CURRENT_GROUP_NAME!!)
             }
             var intent: Intent = Intent(mActivity, CurrentGroupActivity::class.java)
+            intent.putExtra("groupName", model.groupName)
             mActivity.startActivity(intent)
         }
         holder.groupName.text = "${model.groupName}"

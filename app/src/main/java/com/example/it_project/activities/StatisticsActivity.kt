@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
+import android.widget.Button
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -28,6 +29,8 @@ import kotlinx.coroutines.launch
 class StatisticsActivity : BaseActivity() {
 
     private lateinit var context: Context
+
+    private lateinit var compare: Button
 
     private lateinit var statisticRecyclerView: RecyclerView
 
@@ -59,7 +62,21 @@ class StatisticsActivity : BaseActivity() {
         Log.d("subjectList.size", subjectList.size.toString())
         Log.d("rawDataList.size", rawDataList.size.toString())
         Log.d("listData.size", listData.size.toString())
-        adapter.notifyDataSetChanged()
+        //adapter.notifyDataSetChanged()
+        searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                adapter.filter.filter(query)
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                adapter.filter.filter(newText)
+                return false
+            }
+        })
+        compare.setOnClickListener {
+            var searchText = searchView.query.toString()
+        }
     }
 
     private fun init() {
@@ -73,6 +90,7 @@ class StatisticsActivity : BaseActivity() {
         adapter = StatisticsAdapter(context, activity, listData)
         statisticRecyclerView.layoutManager = LinearLayoutManager(this)
         statisticRecyclerView.adapter = adapter
+        compare = findViewById(R.id.button_compare)
     }
 
     private fun getDataFromDb() {

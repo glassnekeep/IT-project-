@@ -8,6 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import com.example.it_project.Communicator
+import com.example.it_project.CommunicatorParticipant
 import com.example.it_project.R
 import com.example.it_project.activities.ParticipantsActivity
 import com.example.it_project.models.ParticipantModel
@@ -25,17 +27,22 @@ import kotlinx.android.synthetic.main.fragment_new_participant.*
 
 class NewParticipantFragment : AppCompatDialogFragment() {
 
+    //private lateinit var communicator: CommunicatorParticipant
+    private var groupName: String? = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initFirebase()
+        groupName = arguments?.getString("groupName")
+        //communicator = activity as CommunicatorParticipant
     }
 
     override fun onStart() {
         super.onStart()
         button_commit_add_participant.setOnClickListener {
             NEW_PARTICIPANT_ID = edit_text_participant_id.text.toString()
-            var newParticipantID = NEW_PARTICIPANT_ID
-            var currentGroupName = CURRENT_GROUP_NAME
+            var newParticipantID = edit_text_participant_id.text.toString()
+            var currentGroupName = groupName
             if((newParticipantID != null) && (currentGroupName != null)) {
                 val idCheckListener = object: ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
@@ -49,6 +56,7 @@ class NewParticipantFragment : AppCompatDialogFragment() {
                             intentWithExtras.putExtra("name", name!!)
                             intentWithExtras.putExtra("secName", secName)
                             intentWithExtras.putExtra("id", newParticipantID)
+                            intentWithExtras.putExtra("groupName", groupName)
                             context?.startActivity(intentWithExtras)
                         }
                         else {
@@ -64,14 +72,23 @@ class NewParticipantFragment : AppCompatDialogFragment() {
             }
             //val intentParticipantsActivity = Intent(activity, ParticipantsActivity::class.java)
             //startActivity(intentParticipantsActivity)
+            //fragmentManager?.beginTransaction()?.remove(this@NewParticipantFragment)?.commit()
+            //if(groupName != null) {
+              //  communicator.passData(groupName!!)
+            //}
         }
 
         button_exit_add_participant.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@NewParticipantFragment)?.commit()
+            //if(groupName != null) {
+              //  communicator.passData(groupName!!)
+            //}
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_new_participant, container, false)
     }
+
+    //TODO тут тоже могут быть пробелы. Нужно стркоовыми методами обработать эти потенциальные пробелы
 }
