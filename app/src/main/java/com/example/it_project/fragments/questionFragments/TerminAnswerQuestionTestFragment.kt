@@ -91,6 +91,7 @@ class TerminAnswerQuestionTestFragment : Fragment() {
             }
         }
         rootView.buttonSaveOneAnswer.setOnClickListener {
+            if(chosenAnswerList.size>0) {chosenAnswerList.clear()}
             when(answerNumber) {
                 "1" -> {
                     if(!answer1.text.isEmpty()) {

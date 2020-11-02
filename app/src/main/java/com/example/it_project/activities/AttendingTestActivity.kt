@@ -305,6 +305,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                 }
                 if (tableData[position - 1].chosenAnswer == tableData[position - 1].correctAnswer) {
                     tableData[position - 1].isCorrect = "1"
+                } else {
+                    tableData[position-1].isCorrect = "0"
                 }
                 //tableData[position-1].chosenAnswer = arrayList
             }
@@ -312,13 +314,14 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             if (position == listData.size + 1) {
                 if (position in 1..listData.size) {
                     if ((listData[position - 1].type == "Termin") && (listData[position - 1].answerNumber.toInt() > 1)) {
-                        tableData[position - 1].chosenAnswer =
-                            arrayList.joinToString(separator = ", ")
+                        tableData[position - 1].chosenAnswer = arrayList.joinToString(separator = ", ")
                     } else {
                         tableData[position - 1].chosenAnswer = arrayList.joinToString()
                     }
                     if (tableData[position - 1].chosenAnswer == tableData[position - 1].correctAnswer) {
                         tableData[position - 1].isCorrect = "1"
+                    } else {
+                        tableData[position - 1].isCorrect = "0"
                     }
                     //tableData[position-1].chosenAnswer = arrayList
                 }
@@ -424,7 +427,11 @@ class AttendingTestActivity : BaseActivity(), Communicator {
 
 
         }*/
-        if(!arrayList.isEmpty()){Log.d("ArrayList[0]", arrayList[0])}
+        if(!arrayList.isEmpty()){
+            for(i in arrayList) {
+                Log.d("ArrayList", i)
+            }
+        }
         observePosition()
     }
 
@@ -742,6 +749,13 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             day = day + (hour / 24)
             hour = hour % 24
             timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day/10}${day%10}/${month/10}${month%10}/${year/1000}${year/100}${year/10}${year%10}"*/
+            val intent = Intent(this, TestResultsActivity::class.java)
+            intent.putExtra("list", tableData)
+            intent.putExtra("testName", testName)
+            intent.putExtra("privacy", privacy)
+            intent.putExtra("testCreator", testCreator)
+            intent.putExtra("fromHistory", false)
+            startActivity(intent)
             getCurrentTime()
             var score: Int = 0
             var userScore: String = ""
