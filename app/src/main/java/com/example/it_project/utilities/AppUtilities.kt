@@ -80,11 +80,11 @@ fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subj
 }
 
 fun getPrivateTestAverage(testName: String) {
-    var number = 0
-    var grade = 0
-    var score = 0
     val averageListener = object: ValueEventListener {
         override fun onDataChange(snapshot: DataSnapshot) {
+            var number = 0
+            var grade = 0
+            var score = 0
             for(user: DataSnapshot in snapshot.children) {
                 for(attempt in user.children) {
                     number++
@@ -95,6 +95,10 @@ fun getPrivateTestAverage(testName: String) {
                     score = score + currentScore!!.toInt()
                 }
             }
+            if(number != 0) {
+                DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageScore").setValue("${(score/number).toString()}%")
+                DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
+            }
         }
 
         override fun onCancelled(error: DatabaseError) {
@@ -102,10 +106,6 @@ fun getPrivateTestAverage(testName: String) {
         }
     }
     DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("solutions").addListenerForSingleValueEvent(averageListener)
-    if(number != 0) {
-        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageScore").setValue("${(score/number).toString()}%}")
-        DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${(grade/number).toString()}%")
-    }
 }
 
 fun setCurrentUser(user: User?) {
@@ -151,6 +151,7 @@ fun addNewParticipantToList(newParticipant: ParticipantModel) {
 
 fun addParticipantToGroup(participant: ParticipantModel, participantID: String, groupName: String) {
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_PARTICIPANTS).child(participantID).child(NODE_PARTICIPANT_INFO).setValue(participant)
+    REF_DATABASE_ROOT.child(NODE_USERS).child(participantID).child("in groups").child(groupName).setValue(groupName)
 }
 
 fun showToast(context: Context?, message: String?) {

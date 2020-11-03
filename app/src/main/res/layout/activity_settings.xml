@@ -20,7 +20,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/baseline_portrait_black_18dp"
+            android:src="@drawable/ic_baseline_person_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -76,6 +76,9 @@ class StatisticsActivity : BaseActivity() {
         })
         compare.setOnClickListener {
             var searchText = searchView.query.toString()
+            val intent = Intent(this, ChartsActivity::class.java)
+            intent.putExtra("subject", searchText)
+            startActivity(intent)
         }
     }
 
