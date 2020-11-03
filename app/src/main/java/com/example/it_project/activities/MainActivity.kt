@@ -82,8 +82,8 @@ class MainActivity : BaseActivity() {
 
             }
         }
-
         DATABASE_ROOT_USER.child("admin").addValueEventListener(adminListener)
+        Log.d("ADMIN_STATUS", ADMIN_STATUS!!)
         getDataFromDb()
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {

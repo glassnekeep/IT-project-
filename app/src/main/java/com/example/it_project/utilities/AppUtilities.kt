@@ -279,10 +279,20 @@ fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: Stri
     DATABASE_ROOT_GROUP_IDS.child(id!!).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
-    DATABASE_ROOT_USER.child("groups").child(groupName).child(NODE_ID).setValue(idName)
-    DATABASE_ROOT_USER.child("groups").child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
+    DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child(NODE_ID).setValue(idName)
+    DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
     //TODO в GroupsActivity должны браться данные из DATABASE_ROOT_USER, потому что у каждого админа свой список групп
     //TODO кроме того, тесты должны получаться для добавления в группу тоже из DATABASE_ROOT_USER
+}
+
+fun addNewTestToGroup(groupName: String, testName: String, subject: String, privacy: String, id: String, time: String) {
+    var testCreator: User? = null
+    testCreator = CURRENT_USER
+    var creatorName = "${testCreator?.name} ${testCreator?.secName}"
+    var testInfo: TestInfoModel = TestInfoModel(subject, privacy, creatorName, time)
+    DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_ID).setValue(id)
+    DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_NAME).setValue(testName)
+    DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
 }
 
 fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -12,59 +12,37 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/imagePerson"
+    <View
+        android:id="@+id/separator"
         app:layout_constraintTop_toBottomOf="@id/toolbarTop"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_baseline_person_24" />
-
-    <TextView
-        android:id="@+id/participantsText"
-        android:layout_width="247dp"
-        android:layout_height="80dp"
-        app:layout_constraintStart_toEndOf="@id/imagePerson"
-        app:layout_constraintTop_toTopOf="@id/imagePerson"
-        android:paddingTop="15dp"
-        android:text="Участники"
-        android:textSize="36dp" />
-
-    <View
-        android:id="@+id/separator1"
-        app:layout_constraintTop_toTopOf="@id/participantsText"
-        app:layout_constraintStart_toEndOf="@id/participantsText"
-        android:layout_width="5dp"
-        android:background="@color/gray"
-        android:layout_height="80dp" />
-
-    <ImageButton
-        android:id="@+id/new_participant"
-        app:layout_constraintTop_toTopOf="@id/participantsText"
-        app:layout_constraintStart_toEndOf="@id/separator1"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:src="@drawable/ic_baseline_add_24_variant2"
-        android:background="@drawable/custom_button_variant4" />
-
-    <View
-        android:id="@+id/separator2"
-        app:layout_constraintTop_toBottomOf="@id/new_participant"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_below="@id/toolbarTop"
         android:layout_width="match_parent"
         android:background="@color/gray"
-        android:layout_height="5dp" />
+        android:layout_height="2dp" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        app:layout_constraintTop_toBottomOf="@+id/separator2"
+        app:layout_constraintTop_toBottomOf="@+id/separator"
+        android:layout_below="@id/separator"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="590dp" >
+        android:layout_height="wrap_content" >
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list_of_participants"
             android:layout_width="match_parent"
-            android:layout_height="590dp" />
+            android:layout_height="wrap_content" />
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/buttonAddParticipant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginRight="40dp"
+        android:src="@drawable/ic_baseline_question_add_24" />
+
+</RelativeLayout>

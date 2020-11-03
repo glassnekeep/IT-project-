@@ -1,16 +1,13 @@
 package com.example.it_project.activities
 
 import android.app.Activity
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.content.Context
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.FragmentManager
+import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
@@ -18,60 +15,34 @@ import com.example.it_project.adapters.CreateNewTestInGroupAdapter
 import com.example.it_project.adapters.TestAdapter
 import com.example.it_project.models.TestInfoModel
 import com.example.it_project.models.TestModel
-import com.example.it_project.utilities.invokeNewActivity
 import com.example.it_project.values.*
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 
-class CurrentGroupActivity : BaseActivity() {
+class NewTestInGroupActivity : BaseActivity() {
 
-    private lateinit var groupId: TextView
-    private lateinit var participantsLayout: LinearLayout
-    private lateinit var addNewTestToGroup: FloatingActionButton
-    private var groupName: String = ""
-
+    private lateinit var adapter: CreateNewTestInGroupAdapter
+    private lateinit var activity: Activity
+    private lateinit var context: Context
+    //private var toolbar: Toolbar? = null
     private lateinit var testsRecyclerView: RecyclerView
     private lateinit var searchView: SearchView
     private lateinit var listData: ArrayList<TestModel>
-    private lateinit var adapter: TestAdapter
-    private lateinit var activity: Activity
-    private lateinit var context: Context
+
+    private var groupName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_current_group)
-        initToolbar(true)
+        setContentView(R.layout.activity_new_test_ingroup)
         init()
+        initToolbar(true)
         enableUpButton()
         val extras: Bundle? = intent.extras
         if(extras != null) {groupName = extras.getString("groupName")!!}
-        setToolbarTitle(groupName)
-        getGroupId()
+        setToolbarTitle("Новый тест для группы ${groupName}")
+        adapter = CreateNewTestInGroupAdapter(context, activity, groupName, listData)
         getDataFromDb()
-
-        var clipboardManager: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-
-        groupId.setOnClickListener {
-            var text = groupId.text.toString()
-            var clipData = ClipData.newPlainText("text", text)
-            clipboardManager.setPrimaryClip(clipData)
-        }
-
-        addNewTestToGroup.setOnClickListener {
-            val intent = Intent(this, NewTestInGroupActivity::class.java)
-            intent.putExtra("groupName", groupName)
-            startActivity(intent)
-            this.finish()
-        }
-
-        participantsLayout.setOnClickListener {
-            var intent: Intent = Intent(this, ParticipantsActivity::class.java)
-            intent.putExtra("groupName", groupName)
-            startActivity(intent)
-            this.finish()
-        }
 
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
@@ -87,36 +58,12 @@ class CurrentGroupActivity : BaseActivity() {
         testsRecyclerView.layoutManager = LinearLayoutManager(this)
         testsRecyclerView.adapter = adapter
     }
-
-    override fun onRestart() {
-        super.onRestart()
-        getGroupId()
-    }
-
     private fun init() {
-        groupId = findViewById(R.id.groupId)
-        participantsLayout = findViewById(R.id.participantsLayout)
-        addNewTestToGroup = findViewById(R.id.buttonAddGroupTest)
+        listData = ArrayList()
         context = applicationContext
         activity = this
-        listData = ArrayList()
+        testsRecyclerView = findViewById(R.id.list_tests)
         searchView = findViewById(R.id.searchView)
-        testsRecyclerView = findViewById(R.id.list_of_group_tests)
-        adapter = TestAdapter(context, activity, listData)
-    }
-
-    private fun getGroupId() {
-        var IDListener = object: ValueEventListener {
-            var Id: String? = null
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Id = snapshot.getValue(String::class.java)
-                groupId.text = Id
-            }
-            override fun onCancelled(error: DatabaseError) {
-
-            }
-        }
-        DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addListenerForSingleValueEvent(IDListener)
     }
 
     private fun getDataFromDb() {
@@ -144,14 +91,15 @@ class CurrentGroupActivity : BaseActivity() {
 
             }
         }
-        DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests").addListenerForSingleValueEvent(publicTestListener)
+        DATABASE_ROOT_USER.child("tests").child("private tests").addListenerForSingleValueEvent(publicTestListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
-                intent()
-                PARTICIPANT_LIST = ArrayList()
+                val intent = Intent(this, CurrentGroupActivity::class.java)
+                intent.putExtra("groupName", groupName)
+                startActivity(intent)
                 return true
             }
         }
@@ -159,13 +107,9 @@ class CurrentGroupActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        intent()
-        PARTICIPANT_LIST = ArrayList()
-    }
-
-    private fun intent() {
-        var intent = Intent(this@CurrentGroupActivity, GroupsActivity::class.java)
+        val intent = Intent(this, CurrentGroupActivity::class.java)
+        intent.putExtra("groupName", groupName)
         startActivity(intent)
-        this.finish()
     }
+    //TODO Нужно, чтобы при отказе проходить тест, возвращало не в MainActivity, а в CurrentGroupActivity
 }

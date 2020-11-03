@@ -1,9 +1,11 @@
 package com.example.it_project.activities
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import com.example.it_project.utilities.ActivityUtilities
 import com.example.it_project.R
+import com.example.it_project.values.ADMIN_STATUS
 
 class AboutDevActivity : BaseActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -12,6 +14,7 @@ class AboutDevActivity : BaseActivity()  {
         initToolbar(true)
         setToolbarTitle("О приложении")
         enableUpButton()
+        Log.d("ADMIN_STATUS", ADMIN_STATUS!!)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

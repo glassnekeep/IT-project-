@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.renderscript.Sampler
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import androidx.appcompat.app.AlertDialog
@@ -33,7 +34,7 @@ import com.google.firebase.database.ValueEventListener
 
 class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
 
-    private lateinit var addParticipantButton: ImageButton
+    private lateinit var addParticipantButton: FloatingActionButton
 
     private lateinit var context: Context
 
@@ -66,34 +67,26 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
             val transaction = this.supportFragmentManager.beginTransaction()
             dialogFragment.arguments = bundle
             dialogFragment.show(manager, "Dialog")
-            //dialogFragment.show(manager, "MyDialog")
         }
-        //participantsRecyclerView.layoutManager = LinearLayoutManager(this)
-        //participantsRecyclerView.adapter = adapter
         val extras: Bundle? = intent.extras
         if(extras != null) {groupName = extras.getString("groupName")}
         adapter = ParticipantsAdapter(context, activity, groupName!!, listData)
         participantsRecyclerView.layoutManager = LinearLayoutManager(this)
         participantsRecyclerView.adapter = adapter
-        //val extras: Bundle? = intent.extras
-        //if(extras != null) {
-            //var name = extras.getString("name")
-            //var secName = extras.getString("secName")
-            //var id = extras.getString("id")
-            //var newParticipant = ParticipantModel("${name} ${secName}", id!!)
-            //PARTICIPANT_LIST.add(newParticipant)
-            //adapter.notifyItemInserted(GROUP_LIST.size - 1)
-            //adapter.notifyDataSetChanged()
-        //}
         getDataFromDb()
     }
 
     private fun init() {
-        addParticipantButton = findViewById(R.id.new_participant)
+        addParticipantButton = findViewById(R.id.buttonAddParticipant)
         participantsRecyclerView = findViewById(R.id.list_of_participants)
         context = applicationContext
         activity = this
         listData = ArrayList()
+        if(ADMIN_STATUS == "admin") {
+            addParticipantButton.visibility = View.VISIBLE
+        } else {
+            addParticipantButton.visibility = View.GONE
+        }
         //adapter = ParticipantsAdapter(context, activity, listData)
     }
 
@@ -138,25 +131,4 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
         intent.putExtra("groupName", groupName)
         startActivity(intent)
     }
-
-   // override fun passData(gropName: String) {
-        //groupName = gropName
-    //}
-
-    /*fun openQuitDialog(id: String) {
-        var quitDialog = AlertDialog.Builder(
-            context
-        )
-        quitDialog.setTitle("Вы уверены, что хотите удалить данного пользвователя из группы?")
-
-        quitDialog.setPositiveButton("Да"
-        ) { dialog, which ->
-            deleteParticipantFromGroup(groupName, id)
-        }
-
-        quitDialog.setNegativeButton("Нет"
-        ) { dialog, which ->
-        }
-        quitDialog.show()
-    }*/
 }
