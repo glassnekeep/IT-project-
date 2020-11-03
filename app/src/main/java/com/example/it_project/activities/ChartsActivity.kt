@@ -14,6 +14,7 @@ import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -142,7 +143,11 @@ class ChartsActivity : BaseActivity() {
                             }
                         }
                     }
-                    var model = AverageModel(neededTest, score.toString(), grade.toString())
+                    var strGrade = (grade.toFloat()/number).toString()
+                    if(strGrade.length > 4) {
+                        strGrade = strGrade.substring(0,4)
+                    }
+                    var model = AverageModel(neededTest, (score/number).toString(), strGrade)
                     userList.add(model)
                     Log.d("USERLIST", userList.size.toString())
                 }
@@ -162,11 +167,13 @@ class ChartsActivity : BaseActivity() {
         for(i in 0..userList.size - 1) {
             var score = userList[i].averageScore.toInt()
             var name = userList[i].testName
-            entries.add(BarEntry(score.toFloat(), i.toFloat()))
+            entries.add(BarEntry(score.toFloat(), i))
             labels.add(name)
         }
         var dataset: BarDataSet = BarDataSet(entries, "Tests")
-        var barData: BarData = BarData(dataset)
+        //dataset.setColors(ColorTemplate.LIBERTY_COLORS)
+        dataset.color = resources.getColor(R.color.red)
+        var barData: BarData = BarData(labels, dataset)
         chart.data = barData
         chart.invalidate()
     }

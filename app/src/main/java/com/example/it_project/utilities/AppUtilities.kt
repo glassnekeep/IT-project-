@@ -97,7 +97,10 @@ fun getPrivateTestAverage(testName: String) {
             }
             if(number != 0) {
                 DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageScore").setValue("${(score/number).toString()}%")
-                DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
+                if((grade.toFloat()/number).toString().length > 4) {
+                    DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
+                }
+                //DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
             }
         }
 

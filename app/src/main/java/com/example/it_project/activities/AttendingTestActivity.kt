@@ -797,6 +797,6 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         hour = hour + 3
         day = day + (hour / 24)
         hour = hour % 24
-        timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day/10}${day%10}|${month/10}${month%10}|${year}"
+        timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day}|${month}|${year}"
     }
 }
