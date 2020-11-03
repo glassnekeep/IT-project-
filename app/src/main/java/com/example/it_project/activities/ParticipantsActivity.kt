@@ -120,7 +120,10 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
         when (item.itemId) {
             android.R.id.home -> {
                 //ActivityUtilities.getInstance()
-                invokeNewActivity(this@ParticipantsActivity, CurrentGroupActivity::class.java, true)
+                //invokeNewActivity(this@ParticipantsActivity, CurrentGroupActivity::class.java, true)
+                val intent = Intent(this, CurrentGroupActivity::class.java)
+                intent.putExtra("groupName", groupName)
+                startActivity(intent)
                 //PARTICIPANT_LIST = ArrayList()
                 return true
             }
@@ -129,8 +132,11 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
     }
 
     override fun onBackPressed() {
-        invokeNewActivity(this, CurrentGroupActivity::class.java, true)
+        //invokeNewActivity(this, CurrentGroupActivity::class.java, true)
         //PARTICIPANT_LIST = ArrayList()
+        val intent = Intent(this, CurrentGroupActivity::class.java)
+        intent.putExtra("groupName", groupName)
+        startActivity(intent)
     }
 
    // override fun passData(gropName: String) {

@@ -29,7 +29,7 @@ class NewParticipantFragment : AppCompatDialogFragment() {
 
     //private lateinit var communicator: CommunicatorParticipant
     private var groupName: String? = ""
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initFirebase()

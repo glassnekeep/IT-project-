@@ -30,7 +30,18 @@ class ParticipantsAdapter(var mContext: Context,
         val model: ParticipantModel = participantList[position]
         holder.delete.setOnClickListener {
             //mActivity.openQuitDialog(model.userID)
-            deleteParticipantFromGroup(groupName, model.userID)
+            val dialog = AlertDialog.Builder(mActivity)
+                .setTitle("Удаление участника группы")
+                .setMessage("Вы уверены что хотите удалить учатника группы?")
+                .setPositiveButton("Да") {dialog, which ->
+                    deleteParticipantFromGroup(groupName, model.userID)
+                }
+                .setNegativeButton("Нет") { dialog, which ->
+
+                }
+                //.show()
+            dialog.show()
+            //deleteParticipantFromGroup(groupName, model.userID)
             notifyDataSetChanged()
         }
         holder.userName.text = "${model.userName}"

@@ -258,11 +258,17 @@ fun createTestWithName(testName: String, subject: String, privacy: String, id: S
         DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_ID).setValue(id)
         DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_TEST_NAME).setValue(testName)
         DATABASE_ROOT_NEW_PUBLIC_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PUBLIC).child(testName).child(NODE_ID).setValue(id)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PUBLIC).child(testName).child(NODE_TEST_NAME).setValue(testName)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PUBLIC).child(testName).child(NODE_TEST_INFO).setValue(testInfo)
     }
     else {
         DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_ID).setValue(id)
         DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_TEST_NAME).setValue(testName)
         DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PRIVATE).child(testName).child(NODE_ID).setValue(id)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PRIVATE).child(testName).child(NODE_TEST_NAME).setValue(testName)
+        DATABASE_ROOT_USER.child("tests").child(NODE_TEST_PRIVATE).child(testName).child(NODE_TEST_INFO).setValue(testInfo)
     }
 }
 
@@ -273,6 +279,10 @@ fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: Stri
     DATABASE_ROOT_GROUP_IDS.child(id!!).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
+    DATABASE_ROOT_USER.child("groups").child(groupName).child(NODE_ID).setValue(idName)
+    DATABASE_ROOT_USER.child("groups").child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
+    //TODO в GroupsActivity должны браться данные из DATABASE_ROOT_USER, потому что у каждого админа свой список групп
+    //TODO кроме того, тесты должны получаться для добавления в группу тоже из DATABASE_ROOT_USER
 }
 
 fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {

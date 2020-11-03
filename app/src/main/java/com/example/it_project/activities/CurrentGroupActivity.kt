@@ -64,6 +64,11 @@ class CurrentGroupActivity : BaseActivity() {
         }
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        getGroupId()
+    }
+
     private fun init() {
         groupId = findViewById(R.id.groupId)
         participantsLayout = findViewById(R.id.participantsLayout)
@@ -80,7 +85,7 @@ class CurrentGroupActivity : BaseActivity() {
 
             }
         }
-        DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addValueEventListener(IDListener)
+        DATABASE_ROOT_NEW_GROUP.child(groupName!!).child(NODE_ID).child("id").addListenerForSingleValueEvent(IDListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
