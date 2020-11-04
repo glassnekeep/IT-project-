@@ -28,37 +28,37 @@
                 android:id="@+id/answerRadioButton1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 1" />
             <RadioButton
                 android:id="@+id/answerRadioButton2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 2" />
             <RadioButton
                 android:id="@+id/answerRadioButton3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 3" />
             <RadioButton
                 android:id="@+id/answerRadioButton4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 4" />
             <RadioButton
                 android:id="@+id/answerRadioButton5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 5" />
             <RadioButton
                 android:id="@+id/answerRadioButton6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/biggerRadioButton"
+                android:textSize="24dp"
                 android:text="Ответ 6" />
         </RadioGroup>
 

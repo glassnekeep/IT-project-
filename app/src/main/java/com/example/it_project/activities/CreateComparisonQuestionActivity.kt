@@ -7,6 +7,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.R
 import com.example.it_project.utilities.createQuestionInTest
@@ -89,38 +90,73 @@ class CreateComparisonQuestionActivity : BaseActivity() {
             openQuitDialog()
         }
         createQuestionButton.setOnClickListener {
-            arrayOfFirstParts = ArrayList()
-            arrayOfSecondParts = ArrayList()
-            arrayOfFirstParts.add(firstPart1.text.toString().trim())
-            arrayOfFirstParts.add(firstPart2.text.toString().trim())
-            arrayOfSecondParts.add(secondPart1.text.toString().trim())
-            arrayOfSecondParts.add(secondPart2.text.toString().trim())
-            if(secondPart3.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart3.text.toString().trim())
-                arrayOfSecondParts.add(secondPart3.text.toString().trim())
+            if(((firstPart6.visibility == View.GONE)||(!firstPart6.text.toString().trim().isEmpty()))
+                &&((firstPart5.visibility == View.GONE)||(!firstPart5.text.toString().trim().isEmpty()))
+                &&((firstPart4.visibility == View.GONE)||(!firstPart4.text.toString().trim().isEmpty()))
+                &&((firstPart3.visibility == View.GONE)||(!firstPart3.text.toString().trim().isEmpty()))
+                &&((secondPart6.visibility == View.GONE)||(!secondPart6.text.toString().trim().isEmpty()))
+                &&((secondPart5.visibility == View.GONE)||(!secondPart5.text.toString().trim().isEmpty()))
+                &&((secondPart4.visibility == View.GONE)||(!secondPart4.text.toString().trim().isEmpty()))
+                &&((secondPart3.visibility == View.GONE)||(!secondPart3.text.toString().trim().isEmpty()))
+                &&(!firstPart2.text.toString().trim().isEmpty())
+                &&(!firstPart1.text.toString().trim().isEmpty())
+                &&(!secondPart2.text.toString().trim().isEmpty())
+                &&(!secondPart1.text.toString().trim().isEmpty())
+                &&(!correctAnswer.text.toString().trim().isEmpty())) {
+                arrayOfFirstParts = ArrayList()
+                arrayOfSecondParts = ArrayList()
+                arrayOfFirstParts.add(firstPart1.text.toString().trim())
+                arrayOfFirstParts.add(firstPart2.text.toString().trim())
+                arrayOfSecondParts.add(secondPart1.text.toString().trim())
+                arrayOfSecondParts.add(secondPart2.text.toString().trim())
+                if(secondPart3.visibility != View.GONE) {
+                    arrayOfFirstParts.add(firstPart3.text.toString().trim())
+                    arrayOfSecondParts.add(secondPart3.text.toString().trim())
+                }
+                if(secondPart4.visibility != View.GONE) {
+                    arrayOfFirstParts.add(firstPart4.text.toString().trim())
+                    arrayOfSecondParts.add(secondPart4.text.toString().trim())
+                }
+                if(secondPart5.visibility != View.GONE) {
+                    arrayOfFirstParts.add(firstPart5.text.toString().trim())
+                    arrayOfSecondParts.add(secondPart5.text.toString().trim())
+                }
+                if(secondPart6.visibility != View.GONE) {
+                    arrayOfFirstParts.add(firstPart6.text.toString().trim())
+                    arrayOfSecondParts.add(secondPart6.text.toString().trim())
+                }
+                val questionName = extras?.getString("QuestionName")
+                val answerNumber = extras?.getString("AnswerNumber")
+                //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
+                var correctAnswerList = ArrayList<String>()
+                var correct = correctAnswer.text.toString().trim()
+                if(correct.length == answerNumber?.toInt()) {
+                    var variant = "ABCDEF"
+                    var contains = true
+                    for(i in 0..correct.length-1) {
+                        if(variant.contains(correct[i])) {
+
+                        } else {
+                            contains = false
+                        }
+                    }
+                    if(contains) {
+                        correctAnswerList.add(correctAnswer.text.toString().trim())
+                        createComparisonQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Comparison", answerNumber!!, correctAnswerList), arrayOfFirstParts, arrayOfSecondParts, CURRENT_TEST_PRIVACY!!)
+                        //createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+                        val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
+                        intent.putExtra("NewQuestionName", questionName)
+                        startActivity(intent)
+                        this.finish()
+                    } else {
+                        Toast.makeText(this, "Вы использовали не подходящую букву!", Toast.LENGTH_SHORT).show()
+                    }
+                } else {
+                    Toast.makeText(this, "Длина ответа не соотвествует количеству вопросов!", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                Toast.makeText(this, "Не все поля заполнены!", Toast.LENGTH_SHORT).show()
             }
-            if(secondPart4.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart4.text.toString().trim())
-                arrayOfSecondParts.add(secondPart4.text.toString().trim())
-            }
-            if(secondPart5.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart5.text.toString().trim())
-                arrayOfSecondParts.add(secondPart5.text.toString().trim())
-            }
-            if(secondPart6.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart6.text.toString().trim())
-                arrayOfSecondParts.add(secondPart6.text.toString().trim())
-            }
-            val questionName = extras?.getString("QuestionName")
-            val answerNumber = extras?.getString("AnswerNumber")
-            //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            var correctAnswerList = ArrayList<String>()
-            correctAnswerList.add(correctAnswer.text.toString().trim())
-            createComparisonQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Comparison", answerNumber!!, correctAnswerList), arrayOfFirstParts, arrayOfSecondParts, CURRENT_TEST_PRIVACY!!)
-            //createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
-            val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
-            intent.putExtra("NewQuestionName", questionName)
-            startActivity(intent)
         }
         enableUpButton()
     }

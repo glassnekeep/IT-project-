@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
 import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
 import com.example.it_project.R
@@ -79,21 +80,31 @@ class CreateTerminAnswerActivity : BaseActivity() {
         }
 
         createQuestionButton.setOnClickListener {
-            arrayOfAnswers = ArrayList()
-            arrayOfAnswers.add(answer1.text.toString().trim())
-            //arrayOfAnswers.add(answer2.text.toString())
-            if(answer2.visibility != View.GONE) {arrayOfAnswers.add(answer2.text.toString().trim())}
-            if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString().trim())}
-            if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString().trim())}
-            if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString().trim())}
-            if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString().trim())}
-            val questionName = extras?.getString("QuestionName")
-            val answerNumber = extras?.getString("AnswerNumber")
-            //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Termin", answerNumber!!, arrayOfAnswers), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
-            val intent = Intent(this@CreateTerminAnswerActivity, CreateTestActivity::class.java)
-            intent.putExtra("NewQuestionName", questionName)
-            startActivity(intent)
+            if(((answer6.visibility == View.GONE)||(!answer6.text.toString().trim().isEmpty()))
+                &&((answer5.visibility == View.GONE)||(!answer5.text.toString().trim().isEmpty()))
+                &&((answer4.visibility == View.GONE)||(!answer4.text.toString().trim().isEmpty()))
+                &&((answer3.visibility == View.GONE)||(!answer3.text.toString().trim().isEmpty()))
+                &&((answer2.visibility == View.GONE))||(!answer2.text.toString().trim().isEmpty())
+                &&(!answer1.text.toString().trim().isEmpty())) {
+                    arrayOfAnswers = ArrayList()
+                    arrayOfAnswers.add(answer1.text.toString().trim())
+                    //arrayOfAnswers.add(answer2.text.toString())
+                    if(answer2.visibility != View.GONE) {arrayOfAnswers.add(answer2.text.toString().trim())}
+                    if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString().trim())}
+                    if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString().trim())}
+                    if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString().trim())}
+                    if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString().trim())}
+                    val questionName = extras?.getString("QuestionName")
+                    val answerNumber = extras?.getString("AnswerNumber")
+                    //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
+                    createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Termin", answerNumber!!, arrayOfAnswers), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+                    val intent = Intent(this@CreateTerminAnswerActivity, CreateTestActivity::class.java)
+                    intent.putExtra("NewQuestionName", questionName)
+                    startActivity(intent)
+                    this.finish()
+            } else {
+                Toast.makeText(this, "Не все поля заполнены!", Toast.LENGTH_SHORT).show()
+            }
         }
         enableUpButton()
     }

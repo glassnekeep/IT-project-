@@ -21,37 +21,37 @@
             android:id="@+id/checkBox1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 1" />
         <CheckBox
             android:id="@+id/checkBox2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 2" />
         <CheckBox
             android:id="@+id/checkBox3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 3" />
         <CheckBox
             android:id="@+id/checkBox4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 4" />
         <CheckBox
             android:id="@+id/checkBox5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 5" />
         <CheckBox
             android:id="@+id/checkBox6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/biggerRadioButton"
+            android:textSize="24dp"
             android:text="Ответ 6" />
 
         <TextView
