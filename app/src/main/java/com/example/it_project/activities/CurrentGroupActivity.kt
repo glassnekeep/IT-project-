@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
@@ -51,6 +52,9 @@ class CurrentGroupActivity : BaseActivity() {
         setToolbarTitle(groupName)
         getGroupId()
         getDataFromDb()
+        if(ADMIN_STATUS != "admin") {
+            addNewTestToGroup.visibility = View.GONE
+        }
 
         var clipboardManager: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
 

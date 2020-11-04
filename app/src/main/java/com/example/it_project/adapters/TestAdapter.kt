@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
@@ -18,6 +19,7 @@ import com.example.it_project.holders.TestHolder
 import com.example.it_project.models.GroupModel
 import com.example.it_project.models.TestInfoModel
 import com.example.it_project.models.TestModel
+import com.example.it_project.utilities.deleteParticipantFromGroup
 import java.util.*
 
 class TestAdapter(var mContext: Context,
@@ -37,14 +39,24 @@ class TestAdapter(var mContext: Context,
 
     override fun onBindViewHolder(holder: TestHolder, position: Int) {
         holder.itemView.setOnClickListener {
-            var intent = Intent(mActivity, AttendingTestActivity::class.java)
-            intent.putExtra("privacy", testsFilterList[position].privacy)
-            intent.putExtra("testName", testsFilterList[position].testName)
-            intent.putExtra("subject", testsFilterList[position].subject)
-            intent.putExtra("testCreator", testsFilterList[position].creatorName)
-            intent.putExtra("time", testsFilterList[position].time)
-            mActivity.startActivity(intent)
-            mActivity.finish()
+            val dialog = AlertDialog.Builder(mActivity)
+                .setTitle("Подтверждение")
+                .setMessage("Вы уверены, что хотите пройти данный тест?")
+                .setPositiveButton("Да") {dialog, which ->
+                    var intent = Intent(mActivity, AttendingTestActivity::class.java)
+                    intent.putExtra("privacy", testsFilterList[position].privacy)
+                    intent.putExtra("testName", testsFilterList[position].testName)
+                    intent.putExtra("subject", testsFilterList[position].subject)
+                    intent.putExtra("testCreator", testsFilterList[position].creatorName)
+                    intent.putExtra("time", testsFilterList[position].time)
+                    mActivity.startActivity(intent)
+                    mActivity.finish()
+                }
+                .setNegativeButton("Нет") { dialog, which ->
+
+                }
+            //.show()
+            dialog.show()
         }
 
         val model: TestModel = testsFilterList[position]

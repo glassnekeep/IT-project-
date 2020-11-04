@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.ActionMode
 import android.view.MenuItem
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentManager
@@ -51,6 +52,9 @@ class GroupsActivity : BaseActivity() {
         initFirebase()
         enableUpButton()
         getDataFromDb()
+        if(ADMIN_STATUS != "admin") {
+            createNewGroupButton.visibility = View.GONE
+        }
         fragmentManager = this@GroupsActivity.supportFragmentManager
         createNewGroupButton.setOnClickListener {
             val dialogFragment = CreateGroupFragment()

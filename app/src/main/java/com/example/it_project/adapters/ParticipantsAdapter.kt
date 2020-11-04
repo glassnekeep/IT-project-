@@ -14,6 +14,7 @@ import com.example.it_project.R
 import com.example.it_project.activities.MainActivity
 import com.example.it_project.models.ParticipantModel
 import com.example.it_project.utilities.deleteParticipantFromGroup
+import com.example.it_project.values.ADMIN_STATUS
 import java.util.ArrayList
 
 class ParticipantsAdapter(var mContext: Context,
@@ -28,11 +29,14 @@ class ParticipantsAdapter(var mContext: Context,
 
     override fun onBindViewHolder(holder: ParticipantsHolder, position: Int) {
         val model: ParticipantModel = participantList[position]
+        if(ADMIN_STATUS != "admin") {
+            holder.delete.visibility = View.GONE
+        }
         holder.delete.setOnClickListener {
             //mActivity.openQuitDialog(model.userID)
             val dialog = AlertDialog.Builder(mActivity)
                 .setTitle("Удаление участника группы")
-                .setMessage("Вы уверены что хотите удалить учатника группы?")
+                .setMessage("Вы уверены, что хотите удалить учатника группы?")
                 .setPositiveButton("Да") {dialog, which ->
                     deleteParticipantFromGroup(groupName, model.userID)
                 }
