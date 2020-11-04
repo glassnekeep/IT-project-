@@ -31,13 +31,13 @@ class CreateTestNameFragment : AppCompatDialogFragment() {
     override fun onResume() {
         super.onResume()
         button_commit_create_test_name.setOnClickListener {
-            CURRENT_TEST_NAME = edit_text_test_name.text.toString()
-            var testName = edit_text_test_name.text.toString()
+            CURRENT_TEST_NAME = edit_text_test_name.text.toString().trim()
+            var testName = edit_text_test_name.text.toString().trim()
             var subject = spinner_subject.selectedItem.toString()
             var privacy = spinner_privacy.selectedItem.toString()
-            var time = edit_text_time.text.toString()
+            var time = edit_text_time.text.toString().trim()
             val intentCreateTest = Intent(activity, CreateTestActivity::class.java)
-            intentCreateTest.putExtra("TestName", edit_text_test_name.text.toString())
+            intentCreateTest.putExtra("TestName", edit_text_test_name.text.toString().trim())
             startActivity(intentCreateTest)
             fragmentManager?.beginTransaction()?.remove(this@CreateTestNameFragment)?.commit()
             CURRENT_TEST_ID = createTestIDWithName(testName)

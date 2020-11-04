@@ -91,32 +91,32 @@ class CreateComparisonQuestionActivity : BaseActivity() {
         createQuestionButton.setOnClickListener {
             arrayOfFirstParts = ArrayList()
             arrayOfSecondParts = ArrayList()
-            arrayOfFirstParts.add(firstPart1.text.toString())
-            arrayOfFirstParts.add(firstPart2.text.toString())
-            arrayOfSecondParts.add(secondPart1.text.toString())
-            arrayOfSecondParts.add(secondPart2.text.toString())
+            arrayOfFirstParts.add(firstPart1.text.toString().trim())
+            arrayOfFirstParts.add(firstPart2.text.toString().trim())
+            arrayOfSecondParts.add(secondPart1.text.toString().trim())
+            arrayOfSecondParts.add(secondPart2.text.toString().trim())
             if(secondPart3.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart3.text.toString())
-                arrayOfSecondParts.add(secondPart3.text.toString())
+                arrayOfFirstParts.add(firstPart3.text.toString().trim())
+                arrayOfSecondParts.add(secondPart3.text.toString().trim())
             }
             if(secondPart4.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart4.text.toString())
-                arrayOfSecondParts.add(secondPart4.text.toString())
+                arrayOfFirstParts.add(firstPart4.text.toString().trim())
+                arrayOfSecondParts.add(secondPart4.text.toString().trim())
             }
             if(secondPart5.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart5.text.toString())
-                arrayOfSecondParts.add(secondPart5.text.toString())
+                arrayOfFirstParts.add(firstPart5.text.toString().trim())
+                arrayOfSecondParts.add(secondPart5.text.toString().trim())
             }
             if(secondPart6.visibility != View.GONE) {
-                arrayOfFirstParts.add(firstPart6.text.toString())
-                arrayOfSecondParts.add(secondPart6.text.toString())
+                arrayOfFirstParts.add(firstPart6.text.toString().trim())
+                arrayOfSecondParts.add(secondPart6.text.toString().trim())
             }
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
             var correctAnswerList = ArrayList<String>()
-            correctAnswerList.add(correctAnswer.text.toString())
-            createComparisonQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfFirstParts, arrayOfSecondParts, CURRENT_TEST_PRIVACY!!)
+            correctAnswerList.add(correctAnswer.text.toString().trim())
+            createComparisonQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Comparison", answerNumber!!, correctAnswerList), arrayOfFirstParts, arrayOfSecondParts, CURRENT_TEST_PRIVACY!!)
             //createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Comparison", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateComparisonQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)

@@ -190,7 +190,7 @@ class ComparisonAnswerQuestionTestFragment : Fragment() {
             rootView.buttonSaveOneAnswer.setOnClickListener {
                 //if(chosenAnswerList.size > 0) {chosenAnswerList.clear()}
                 if(!rootView.question_answer.text.isEmpty()) {
-                    chosenAnswer = rootView.question_answer.text.toString()
+                    chosenAnswer = rootView.question_answer.text.toString().trim()
                     if(chosenAnswer!!.length == (answerNumber!!.toInt()/*/2*/)) {
                         chosenAnswerList.add(chosenAnswer!!)
                         communicator.passData(chosenAnswerList)

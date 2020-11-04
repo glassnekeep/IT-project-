@@ -51,11 +51,11 @@ class NewQuestionFragment : AppCompatDialogFragment() {
                     "Несколько вариантов ответа" -> intent =
                         Intent(activity, CreateManyAnswersActivity::class.java)
                 }
-                intent.putExtra("AnswerNumber", spinner_answer_number.selectedItem.toString())
-                intent.putExtra("QuestionName", edit_text_question_name.text.toString())
+                intent.putExtra("AnswerNumber", spinner_answer_number.selectedItem.toString().trim())
+                intent.putExtra("QuestionName", edit_text_question_name.text.toString().trim())
                 intent.putExtra("TestThisName", TEST_NAME)
                 //val intent = Intent(activity, MainActivity::class.java)
-                NEW_QUESTION = edit_text_question_name.text.toString()
+                NEW_QUESTION = edit_text_question_name.text.toString().trim()
                 startActivity(intent)
                 fragmentManager?.beginTransaction()?.remove(this@NewQuestionFragment)?.commit()
             }

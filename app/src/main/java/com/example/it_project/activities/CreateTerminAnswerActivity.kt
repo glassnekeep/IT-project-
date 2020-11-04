@@ -80,17 +80,17 @@ class CreateTerminAnswerActivity : BaseActivity() {
 
         createQuestionButton.setOnClickListener {
             arrayOfAnswers = ArrayList()
-            arrayOfAnswers.add(answer1.text.toString())
+            arrayOfAnswers.add(answer1.text.toString().trim())
             //arrayOfAnswers.add(answer2.text.toString())
-            if(answer2.visibility != View.GONE) {arrayOfAnswers.add(answer2.text.toString())}
-            if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString())}
-            if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString())}
-            if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString())}
-            if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString())}
+            if(answer2.visibility != View.GONE) {arrayOfAnswers.add(answer2.text.toString().trim())}
+            if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString().trim())}
+            if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString().trim())}
+            if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString().trim())}
+            if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString().trim())}
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "Termin", answerNumber!!, arrayOfAnswers), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "Termin", answerNumber!!, arrayOfAnswers), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateTerminAnswerActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)

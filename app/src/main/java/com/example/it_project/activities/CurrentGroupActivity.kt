@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -57,6 +58,7 @@ class CurrentGroupActivity : BaseActivity() {
             var text = groupId.text.toString()
             var clipData = ClipData.newPlainText("text", text)
             clipboardManager.setPrimaryClip(clipData)
+            Toast.makeText(context, "Скопировано в буфер обмена", Toast.LENGTH_SHORT).show()
         }
 
         addNewTestToGroup.setOnClickListener {

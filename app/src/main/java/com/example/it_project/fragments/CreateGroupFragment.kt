@@ -33,13 +33,13 @@ class CreateGroupFragment : AppCompatDialogFragment() {
     override fun onStart() {
         super.onStart()
         button_commit_create_group_name.setOnClickListener {
-            NEW_GROUP = edit_text_group_name.text.toString()
+            NEW_GROUP = edit_text_group_name.text.toString().trim()
             val intentCreateGroup = Intent(activity, GroupsActivity::class.java)
-            intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString())
+            intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString().trim())
             startActivity(intentCreateGroup)
             //activity?.finish()
             fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
-            var groupName = edit_text_group_name.text.toString()
+            var groupName = edit_text_group_name.text.toString().trim()
             val creatorNameListener = object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     USER = snapshot.getValue(User::class.java)

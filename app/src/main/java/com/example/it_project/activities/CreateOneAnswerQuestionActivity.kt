@@ -73,18 +73,18 @@ class CreateOneAnswerQuestionActivity : BaseActivity() {
 
         createQuestionButton.setOnClickListener {
             arrayOfAnswers = ArrayList()
-            arrayOfAnswers.add(answer1.text.toString())
-            arrayOfAnswers.add(answer2.text.toString())
-            if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString())}
-            if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString())}
-            if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString())}
-            if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString())}
+            arrayOfAnswers.add(answer1.text.toString().trim())
+            arrayOfAnswers.add(answer2.text.toString().trim())
+            if(answer3.visibility != View.GONE) {arrayOfAnswers.add(answer3.text.toString().trim())}
+            if(answer4.visibility != View.GONE) {arrayOfAnswers.add(answer4.text.toString().trim())}
+            if(answer5.visibility != View.GONE) {arrayOfAnswers.add(answer5.text.toString().trim())}
+            if(answer6.visibility != View.GONE) {arrayOfAnswers.add(answer6.text.toString().trim())}
             val questionName = extras?.getString("QuestionName")
             val answerNumber = extras?.getString("AnswerNumber")
             //createQuestionInTest(extras?.getString("TestThisName")!!, QuestionModel(questionName!!, "Comparison", answerNumber!!), arrayOfAnswers)
             var correctAnswerList = ArrayList<String>()
-            correctAnswerList.add(correctAnswer.text.toString())
-            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!, "One Answer", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
+            correctAnswerList.add(correctAnswer.text.toString().trim())
+            createQuestionInTest(CURRENT_TEST_NAME!!, QuestionModel(questionName!!.trim(), "One Answer", answerNumber!!, correctAnswerList), arrayOfAnswers, CURRENT_TEST_PRIVACY!!)
             val intent = Intent(this@CreateOneAnswerQuestionActivity, CreateTestActivity::class.java)
             intent.putExtra("NewQuestionName", questionName)
             startActivity(intent)

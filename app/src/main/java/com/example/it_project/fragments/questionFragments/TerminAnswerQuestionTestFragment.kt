@@ -108,7 +108,7 @@ class TerminAnswerQuestionTestFragment : Fragment() {
             when(answerNumber) {
                 "1" -> {
                     if(!answer1.text.isEmpty()) {
-                        chosenAnswerList.add(answer1.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
@@ -117,8 +117,8 @@ class TerminAnswerQuestionTestFragment : Fragment() {
                 "2" -> {
                     if((!answer1.text.isEmpty())
                         &&(!answer2.text.isEmpty())) {
-                        chosenAnswerList.add(answer1.text.toString())
-                        chosenAnswerList.add(answer2.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
+                        chosenAnswerList.add(answer2.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
@@ -128,9 +128,9 @@ class TerminAnswerQuestionTestFragment : Fragment() {
                     if((!answer1.text.isEmpty())
                         &&(!answer2.text.isEmpty())
                         &&(!answer3.text.isEmpty())) {
-                        chosenAnswerList.add(answer1.text.toString())
-                        chosenAnswerList.add(answer2.text.toString())
-                        chosenAnswerList.add(answer3.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
+                        chosenAnswerList.add(answer2.text.toString().trim())
+                        chosenAnswerList.add(answer3.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
@@ -141,10 +141,10 @@ class TerminAnswerQuestionTestFragment : Fragment() {
                         &&(!answer2.text.isEmpty())
                         &&(!answer3.text.isEmpty())
                         &&(!answer4.text.isEmpty())) {
-                        chosenAnswerList.add(answer1.text.toString())
-                        chosenAnswerList.add(answer2.text.toString())
-                        chosenAnswerList.add(answer3.text.toString())
-                        chosenAnswerList.add(answer4.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
+                        chosenAnswerList.add(answer2.text.toString().trim())
+                        chosenAnswerList.add(answer3.text.toString().trim())
+                        chosenAnswerList.add(answer4.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
@@ -156,11 +156,11 @@ class TerminAnswerQuestionTestFragment : Fragment() {
                         &&(!answer3.text.isEmpty())
                         &&(!answer4.text.isEmpty())
                         &&(!answer5.text.isEmpty())) {
-                        chosenAnswerList.add(answer1.text.toString())
-                        chosenAnswerList.add(answer2.text.toString())
-                        chosenAnswerList.add(answer3.text.toString())
-                        chosenAnswerList.add(answer4.text.toString())
-                        chosenAnswerList.add(answer5.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
+                        chosenAnswerList.add(answer2.text.toString().trim())
+                        chosenAnswerList.add(answer3.text.toString().trim())
+                        chosenAnswerList.add(answer4.text.toString().trim())
+                        chosenAnswerList.add(answer5.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
@@ -173,12 +173,12 @@ class TerminAnswerQuestionTestFragment : Fragment() {
                         &&(!answer4.text.isEmpty())
                         &&(!answer5.text.isEmpty())
                         &&(!answer6.text.isEmpty())) {
-                        chosenAnswerList.add(answer1.text.toString())
-                        chosenAnswerList.add(answer2.text.toString())
-                        chosenAnswerList.add(answer3.text.toString())
-                        chosenAnswerList.add(answer4.text.toString())
-                        chosenAnswerList.add(answer5.text.toString())
-                        chosenAnswerList.add(answer6.text.toString())
+                        chosenAnswerList.add(answer1.text.toString().trim())
+                        chosenAnswerList.add(answer2.text.toString().trim())
+                        chosenAnswerList.add(answer3.text.toString().trim())
+                        chosenAnswerList.add(answer4.text.toString().trim())
+                        chosenAnswerList.add(answer5.text.toString().trim())
+                        chosenAnswerList.add(answer6.text.toString().trim())
                         communicator.passData(chosenAnswerList)
                     } else {
                         Toast.makeText(context, "Не все поля ответов заполнены", Toast.LENGTH_SHORT).show()
