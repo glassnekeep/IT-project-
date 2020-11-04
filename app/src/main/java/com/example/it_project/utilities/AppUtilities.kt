@@ -157,6 +157,18 @@ fun addNewParticipantToList(newParticipant: ParticipantModel) {
 fun addParticipantToGroup(participant: ParticipantModel, participantID: String, groupName: String) {
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_PARTICIPANTS).child(participantID).child(NODE_PARTICIPANT_INFO).setValue(participant)
     REF_DATABASE_ROOT.child(NODE_USERS).child(participantID).child("in groups").child(groupName).setValue(groupName)
+    val listener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var numberUsers = snapshot.getValue(Int::class.java)
+            numberUsers = numberUsers!! + 1
+            DATABASE_ROOT_NEW_GROUP.child(groupName).child("group info").child("numberUsers").setValue(numberUsers)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("group info").child("numberUsers").addListenerForSingleValueEvent(listener)
 }
 
 fun showToast(context: Context?, message: String?) {

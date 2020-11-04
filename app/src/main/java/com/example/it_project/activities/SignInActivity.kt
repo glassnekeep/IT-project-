@@ -35,7 +35,7 @@ class SignInActivity : BaseActivity() {
 
         initToolbar(true)
         setToolbarTitle("Вход в аккаунт")
-        enableUpButton()
+        //enableUpButton()
 
         auth = FirebaseAuth.getInstance()
     }
@@ -44,7 +44,7 @@ class SignInActivity : BaseActivity() {
         super.onStart()
         val user: FirebaseUser? = auth.currentUser
         if (user != null && user.isEmailVerified) {
-            Toast.makeText(this, "User not null", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Выполнен вход", Toast.LENGTH_SHORT).show()
             var intentToMain = Intent(this@SignInActivity, MainActivity::class.java)
             startActivity(intentToMain)
             this@SignInActivity.finish()
