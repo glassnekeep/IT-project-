@@ -216,6 +216,9 @@ class ChartsActivity : BaseActivity() {
         dataSets.add(lineDataSet2)
         var lineData1 = LineData(dataSets)
         //var barData2 = BarData(labels, dataset2)
+        var lineAxis = line.xAxis
+        lineAxis.valueFormatter = formatter
+        lineAxis.granularity = 1f
         var chartAxis = chart.xAxis
         chartAxis.valueFormatter = formatter
         chartAxis.granularity = 1f
