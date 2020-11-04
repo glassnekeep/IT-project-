@@ -17,6 +17,7 @@ import com.example.it_project.adapters.StatisticsAdapter
 import com.example.it_project.models.HistoryModel
 import com.example.it_project.models.RawStatisticsModel
 import com.example.it_project.models.StatisticsModel
+import com.example.it_project.utilities.initFirebase
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -51,6 +52,7 @@ class StatisticsActivity : BaseActivity() {
         setContentView(R.layout.activity_statistics)
         initToolbar(true)
         init()
+        initFirebase()
         enableUpButton()
         setToolbarTitle("Статистика")
         fillSubjectList()

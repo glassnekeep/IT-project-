@@ -1,5 +1,7 @@
 package com.example.it_project.activities
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
@@ -8,6 +10,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.it_project.*
 import com.example.it_project.models.User
 import com.example.it_project.utilities.initFirebase
+import com.example.it_project.values.CURRENT_UID
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.example.it_project.values.USER
 import com.google.firebase.auth.FirebaseAuth
@@ -24,16 +27,13 @@ class SettingsActivity : BaseActivity() {
     private lateinit var textViewEmail: TextView
     private lateinit var settingsTextViewEmail: TextView
     private lateinit var settingsTextViewUserName: TextView
+    private lateinit var id: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
         init()
         initFirebase()
-        textViewName = findViewById(R.id.settings_full_name)
-        textViewEmail = findViewById(R.id.status_email)
-        settingsTextViewEmail = findViewById(R.id.settings_email)
-        settingsTextViewUserName = findViewById(R.id.settings_username)
         val dataListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 USER = snapshot.getValue(User::class.java)
@@ -47,6 +47,13 @@ class SettingsActivity : BaseActivity() {
             }
         }
         DATABASE_ROOT_USER.addValueEventListener(dataListener)
+        id.text = CURRENT_UID
+        /*id.setOnClickListener {
+            var clipboardManager: ClipboardManager = getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+            var text = id.text.toString()
+            var clipData = ClipData.newPlainText("text", text)
+            clipboardManager.setPrimaryClip(clipData)
+        }*/
         exitButton.setOnClickListener {
             openQuitDialog()
         }
@@ -55,6 +62,11 @@ class SettingsActivity : BaseActivity() {
     private fun init() {
         exitButton = findViewById(R.id.exit_button)
         auth = FirebaseAuth.getInstance()
+        id = findViewById(R.id.settings_id)
+        textViewName = findViewById(R.id.settings_full_name)
+        textViewEmail = findViewById(R.id.status_email)
+        settingsTextViewEmail = findViewById(R.id.settings_email)
+        settingsTextViewUserName = findViewById(R.id.settings_username)
     }
 
     override fun onBackPressed() {

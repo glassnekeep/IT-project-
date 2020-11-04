@@ -144,7 +144,7 @@ class CurrentGroupActivity : BaseActivity() {
 
             }
         }
-        DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests").addListenerForSingleValueEvent(publicTestListener)
+        DATABASE_ROOT_NEW_GROUP.child(groupName).child("tests").addListenerForSingleValueEvent(publicTestListener)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

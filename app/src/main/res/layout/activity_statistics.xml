@@ -137,7 +137,7 @@
         android:shadowColor="#E3BFE3"
         android:shadowDx="0"
         android:shadowDy="0"
-        android:text=""
+        android:text="График"
         android:textAllCaps="false"
         android:textSize="16dp" />
 </RelativeLayout>

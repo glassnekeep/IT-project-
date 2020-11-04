@@ -74,6 +74,10 @@ class AttendingTestActivity : BaseActivity(), Communicator {
 
     private var timeFinish: String = ""
 
+    private var isFinished: Boolean = false
+
+    private var savedList: ArrayList<Boolean> = ArrayList()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_attending_test)
@@ -140,6 +144,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         //Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentComparison.arguments = bundle
@@ -155,6 +160,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentTerminAnswer.arguments = bundle
@@ -177,6 +183,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentOneAnswer.arguments = bundle
@@ -192,6 +199,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentOneAnswer.arguments = bundle
@@ -217,6 +225,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         //Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentComparison.arguments = bundle
@@ -232,6 +241,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentTerminAnswer.arguments = bundle
@@ -254,6 +264,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentOneAnswer.arguments = bundle
@@ -269,6 +280,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         bundle.putStringArrayList("answerList", listData[position-1].answerList)
                         bundle.putString("answerNumber", listData[position-1].answerNumber)
                         bundle.putString("questionName", "${position}. ${listData[position-1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentOneAnswer.arguments = bundle
@@ -298,6 +310,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         }
         if((position <= listData.size)/*&&(position != 0)*/) {
             if (position in 1..listData.size) {
+                savedList[position-1] = true
                 if ((listData[position - 1].type == "Termin") && (listData[position - 1].answerNumber.toInt() > 1)) {
                     tableData[position - 1].chosenAnswer = arrayList.joinToString(separator = ", ")
                 } else {
@@ -337,10 +350,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         //listData.reverse()
                         bundle.putStringArrayList("answerList", listData[position - 1].answerList)
                         bundle.putString("answerNumber", listData[position - 1].answerNumber)
-                        bundle.putString(
-                            "questionName",
-                            "${position}. ${listData[position - 1].name}"
-                        )
+                        bundle.putString("questionName", "${position}. ${listData[position - 1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         //Log.d("listData[position-2]", listData[position-1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentComparison.arguments = bundle
@@ -355,10 +366,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         //listData.reverse()
                         bundle.putStringArrayList("answerList", listData[position - 1].answerList)
                         bundle.putString("answerNumber", listData[position - 1].answerNumber)
-                        bundle.putString(
-                            "questionName",
-                            "${position}. ${listData[position - 1].name}"
-                        )
+                        bundle.putString("questionName", "${position}. ${listData[position - 1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position - 1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentTerminAnswer.arguments = bundle
@@ -373,10 +382,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         //listData.reverse()
                         bundle.putStringArrayList("answerList", listData[position - 1].answerList)
                         bundle.putString("answerNumber", listData[position - 1].answerNumber)
-                        bundle.putString(
-                            "questionName",
-                            "${position}. ${listData[position - 1].name}"
-                        )
+                        bundle.putString("questionName", "${position}. ${listData[position - 1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position - 1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentOneAnswer.arguments = bundle
@@ -396,10 +403,8 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         //listData.reverse()
                         bundle.putStringArrayList("answerList", listData[position - 1].answerList)
                         bundle.putString("answerNumber", listData[position - 1].answerNumber)
-                        bundle.putString(
-                            "questionName",
-                            "${position}. ${listData[position - 1].name}"
-                        )
+                        bundle.putString("questionName", "${position}. ${listData[position - 1].name}")
+                        bundle.putBoolean("saved", savedList[position-1])
                         Log.d("listData[position-2]", listData[position - 1].answerList[0])
                         val transaction = this.supportFragmentManager.beginTransaction()
                         fragmentManyAnswers.arguments = bundle
@@ -518,6 +523,9 @@ class AttendingTestActivity : BaseActivity(), Communicator {
                         }
                     }
                 }
+                for(i in 0..listData.size-1) {
+                    savedList.add(false)
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -597,6 +605,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         finishTestDialog.setPositiveButton("Да!") {
             dialog, which ->
             val intent = Intent(this, TestResultsActivity::class.java)
+            isFinished = true
             intent.putExtra("list", tableData)
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
@@ -649,6 +658,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         finishTestDialog.setPositiveButton("Да!") {
                 dialog, which ->
             val intent = Intent(this, TestResultsActivity::class.java)
+            isFinished = true
             intent.putExtra("list", tableData)
             intent.putExtra("testName", testName)
             intent.putExtra("privacy", privacy)
@@ -736,7 +746,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         } else if ((hours == 0)&&(minutes < 5)) {
             currentTime.setTextColor(resources.getColor(R.color.superRed))
         }
-        if(usedTime == 0) {
+        if((usedTime == 0)&&(isFinished == false)) {
             openTimeOutDialog()
             /*var calendar = Calendar.getInstance()
             var year = calendar.get(Calendar.YEAR)
@@ -794,7 +804,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         var hour = calendar.get(Calendar.HOUR_OF_DAY)
         var minute = calendar.get(Calendar.MINUTE)
         var second = calendar.get(Calendar.SECOND)
-        hour = hour + 3
+        hour = hour// + 3
         day = day + (hour / 24)
         hour = hour % 24
         timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day}|${month}|${year}"

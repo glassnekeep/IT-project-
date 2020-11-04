@@ -211,29 +211,38 @@
             android:layout_height="wrap_content" >
             <EditText
                 android:id="@+id/question_answer"
-                android:layout_width="250dp"
+                android:layout_width="220dp"
                 android:layout_height="40dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:paddingStart="10dp"
                 android:hint="Правильный ответ"
                 android:background="@drawable/edit_text_background_answer"/>
-            <Button
-                android:id="@+id/buttonSaveOneAnswer"
-                style="@style/Button.Positive.Variant"
-                android:layout_width="120dp"
-                android:layout_height="40dp"
+            <TextView
+                android:id="@+id/saved"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
-                android:shadowColor="#E3BFE3"
-                android:shadowDx="0"
-                android:shadowDy="0"
-                android:text="Сохранить"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16dp" />
+                android:textSize="14dp"
+                android:text=""
+                android:textColor="#20CD0D"
+                android:gravity="center"
+                android:layout_width="140dp"
+                android:layout_height="40dp" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/buttonSaveOneAnswer"
+            style="@style/Button.Positive.Variant"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:shadowColor="#E3BFE3"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:text="Сохранить"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp" />
     </LinearLayout>
 
 </FrameLayout>

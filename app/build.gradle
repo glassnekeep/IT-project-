@@ -53,6 +53,6 @@ dependencies {
 
     //ChartsView library from github
 
-    implementation 'com.github.PhilJay:MPAndroidChart:v1.7.4'
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
 }

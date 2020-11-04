@@ -31,6 +31,8 @@ class OneAnswerQuestionTestFragment : Fragment() {
 
     private lateinit var communicator: Communicator
 
+    private var saved: Boolean? = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -63,6 +65,14 @@ class OneAnswerQuestionTestFragment : Fragment() {
         answerList = arguments?.getStringArrayList("answerList")
         //Log.d("answerList", answerList!!.size.toString())
         questionName = arguments?.getString("questionName")
+
+        saved = arguments?.getBoolean("saved")
+        if(saved!!) {
+            rootView.saved.text = "Сохранено"
+        } else {
+            rootView.saved.text = "Не сохранено"
+            rootView.saved.setTextColor(resources.getColor(R.color.superRed))
+        }
         if(questionName != null) {question.text = questionName}
         for(answers in answerList!!) {
             Log.d("answerPosition", answers)

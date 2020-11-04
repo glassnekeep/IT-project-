@@ -3,6 +3,7 @@ package com.example.it_project.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.renderscript.Sampler
 import android.util.Log
 import android.view.MenuItem
 import com.example.it_project.R
@@ -11,9 +12,12 @@ import com.example.it_project.utilities.initFirebase
 import com.example.it_project.values.DATABASE_ROOT_NEW_PRIVATE_TEST
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.github.mikephil.charting.charts.BarChart
-import com.github.mikephil.charting.data.BarData
-import com.github.mikephil.charting.data.BarDataSet
-import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.YAxis
+import com.github.mikephil.charting.data.*
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -30,6 +34,8 @@ class ChartsActivity : BaseActivity() {
 
     private lateinit var chart: BarChart
 
+    private lateinit var line: LineChart
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_charts)
@@ -37,6 +43,7 @@ class ChartsActivity : BaseActivity() {
         initToolbar(true)
         enableUpButton()
         initFirebase()
+        setToolbarTitle("Графики")
         val extras: Bundle? = intent.extras
         if(extras != null) {subject = extras.getString("subject")}
         getTestList()
@@ -70,6 +77,7 @@ class ChartsActivity : BaseActivity() {
         userList = ArrayList()
 
         chart = findViewById(R.id.barChart)
+        line = findViewById(R.id.lineChart)
     }
 
     private fun getTestList() {
@@ -108,7 +116,7 @@ class ChartsActivity : BaseActivity() {
                     var currentTestName = testName.child("test name").getValue(String::class.java)
                     for(neededTest in testList) {
                         if(neededTest == currentTestName) {
-                            var score = testName.child("average").child("averageScore").getValue(String::class.java)
+                            var score = testName.child("average").child("averageScore").getValue(String::class.java)?.substringBefore('%')
                             var grade = testName.child("average").child("averageGrade").getValue(String::class.java)
                             var model = AverageModel(currentTestName, score!!, grade!!)
                             averageList.add(model)
@@ -116,6 +124,8 @@ class ChartsActivity : BaseActivity() {
                         }
                     }
                 }
+                invalidate()
+                Log.d("BOTH", "${averageList.size} ${userList.size}")
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -151,7 +161,7 @@ class ChartsActivity : BaseActivity() {
                     userList.add(model)
                     Log.d("USERLIST", userList.size.toString())
                 }
-                invalidate()
+                //invalidate()
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -162,19 +172,63 @@ class ChartsActivity : BaseActivity() {
     }
 
     private fun invalidate() {
-        var entries: ArrayList<BarEntry> = ArrayList()
+        var barEntries1: ArrayList<BarEntry> = ArrayList()
+        var lineEntries1: ArrayList<Entry> = ArrayList()
         var labels: ArrayList<String> = ArrayList()
         for(i in 0..userList.size - 1) {
             var score = userList[i].averageScore.toInt()
             var name = userList[i].testName
-            entries.add(BarEntry(score.toFloat(), i))
+            //entries1.add(BarEntry(score.toFloat(), i)) //TODO старый вариант при версии 1.7.4
+            barEntries1.add(BarEntry(i.toFloat(), score.toFloat()))
+            lineEntries1.add(Entry(i.toFloat(), score.toFloat()))
             labels.add(name)
+            //labels.add(i.toString())
         }
-        var dataset: BarDataSet = BarDataSet(entries, "Tests")
-        //dataset.setColors(ColorTemplate.LIBERTY_COLORS)
-        dataset.color = resources.getColor(R.color.red)
-        var barData: BarData = BarData(labels, dataset)
-        chart.data = barData
+        var formatter = object: ValueFormatter() {
+            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                return labels[value.toInt()]
+            }
+        }
+        var barEntries2: ArrayList<BarEntry> = ArrayList()
+        var lineEntries2: ArrayList<Entry> = ArrayList()
+        for(j in 0..averageList.size - 1) {
+            var score = averageList[j].averageScore.toInt()
+            var name = averageList[j].testName
+            barEntries2.add(BarEntry(j.toFloat(), score.toFloat()))
+            lineEntries2.add(Entry(j.toFloat(), score.toFloat()))
+        }
+        var barDataset1: BarDataSet = BarDataSet(barEntries1, "Tests1")
+        var barDataset2: BarDataSet = BarDataSet(barEntries2, "Tests2")
+        var lineDataSet1: LineDataSet = LineDataSet(lineEntries1, "Test1")
+        lineDataSet1.axisDependency = YAxis.AxisDependency.LEFT
+        var lineDataSet2: LineDataSet = LineDataSet(lineEntries2, "Test2")
+        lineDataSet2.axisDependency = YAxis.AxisDependency.LEFT
+        //var dataset1 = chart.data.getDataSetByIndex(0)
+        //var dataset2 = chart.data.getDataSetByIndex(1)
+        barDataset1.color = resources.getColor(R.color.red)
+        barDataset2.color = resources.getColor(R.color.blue)
+        lineDataSet1.color = resources.getColor(R.color.red)
+        lineDataSet2.color = resources.getColor(R.color.blue)
+        //var barData: BarData = BarData(labels, dataset)
+        var barData1 = BarData(barDataset1, barDataset2)
+        var dataSets: ArrayList<ILineDataSet> = ArrayList()
+        dataSets.add(lineDataSet1)
+        dataSets.add(lineDataSet2)
+        var lineData1 = LineData(dataSets)
+        //var barData2 = BarData(labels, dataset2)
+        var chartAxis = chart.xAxis
+        chartAxis.valueFormatter = formatter
+        chartAxis.granularity = 1f
+        //axis.setCenterAxisLabels(true)
+        barData1.barWidth = 0.2f
+        line.data = lineData1
+        chart.data = barData1
+        var barSpace = 0.04f
+        var groupSpace = 0.5f
+        chart.groupBars(-0.5f, groupSpace, barSpace)
+        //chart.notifyDataSetChanged()
+        //chart.data = barData2
+        line.invalidate()
         chart.invalidate()
     }
 

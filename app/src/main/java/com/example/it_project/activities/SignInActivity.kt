@@ -49,6 +49,7 @@ class SignInActivity : BaseActivity() {
             startActivity(intentToMain)
             this@SignInActivity.finish()
         } else {
+            user?.sendEmailVerification()
             Toast.makeText(this, "Подтвердите Email", Toast.LENGTH_SHORT).show()
         }
 

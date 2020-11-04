@@ -9,7 +9,11 @@ import android.view.ViewGroup
 import android.widget.*
 import com.example.it_project.Communicator
 import com.example.it_project.R
+import kotlinx.android.synthetic.main.fragment_comparison_answer_question_test.view.*
+import kotlinx.android.synthetic.main.fragment_many_answers_question_test.view.*
 import kotlinx.android.synthetic.main.fragment_one_answer_question_test.view.*
+import kotlinx.android.synthetic.main.fragment_one_answer_question_test.view.buttonSaveOneAnswer
+import kotlinx.android.synthetic.main.fragment_one_answer_question_test.view.saved
 
 class ManyAnswersQuestionTestFragment : Fragment() {
 
@@ -23,6 +27,8 @@ class ManyAnswersQuestionTestFragment : Fragment() {
     private lateinit var question: TextView
 
     private lateinit var communicator: Communicator
+
+    private var saved: Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,6 +61,14 @@ class ManyAnswersQuestionTestFragment : Fragment() {
         answerList = arguments?.getStringArrayList("answerList")
         //Log.d("answerList", answerList!!.size.toString())
         questionName = arguments?.getString("questionName")
+
+        saved = arguments?.getBoolean("saved")
+        if(saved!!) {
+            rootView.saved.text = "Сохранено"
+        } else {
+            rootView.saved.text = "Не сохранено"
+            rootView.saved.setTextColor(resources.getColor(R.color.superRed))
+        }
         if(questionName != null) {question.text = questionName}
         for(answers in answerList!!) {
             Log.d("answerPosition", answers)

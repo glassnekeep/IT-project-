@@ -99,6 +99,8 @@ fun getPrivateTestAverage(testName: String) {
                 DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageScore").setValue("${(score/number).toString()}%")
                 if((grade.toFloat()/number).toString().length > 4) {
                     DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
+                } else {
+                    DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString())}")
                 }
                 //DATABASE_ROOT_NEW_PRIVATE_TEST.child(testName).child("average").child("averageGrade").setValue("${((grade.toFloat()/number).toString()).substring(0,4)}")
             }
@@ -297,6 +299,9 @@ fun addNewTestToGroup(groupName: String, testName: String, subject: String, priv
     DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_ID).setValue(id)
     DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_NAME).setValue(testName)
     DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_ID).setValue(id)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_NAME).setValue(testName)
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("tests")/*.child(privacy)*/.child(testName).child(NODE_TEST_INFO).setValue(testInfo)
 }
 
 fun setGroupInfo(groupName: String, numberUsers: Int, creatorName: String) {

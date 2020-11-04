@@ -20,7 +20,7 @@
             android:layout_width="55dp"
             android:layout_height="55dp"
             android:layout_marginStart="16dp"
-            android:src="@drawable/ic_baseline_person_24"
+            android:src="@drawable/ic_baseline_person_white_24"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -78,7 +78,7 @@
         app:layout_constraintTop_toBottomOf="@id/settings_header_bloc" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_btn_change_number_phone"
+        android:id="@+id/settings_email_layout"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
@@ -96,10 +96,10 @@
             android:textColor="@color/black"
             android:text="glassnekeep@gmail.com"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/settings_btn_change_number_phone" />
+            app:layout_constraintTop_toTopOf="@id/settings_email_layout" />
 
         <TextView
-            android:id="@+id/settings_label_phone_number"
+            android:id="@+id/settings_email_hint"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -108,23 +108,9 @@
             android:textColor="@color/gray"
             android:clickable="true"
             android:focusable="true"
-            android:text="Нажмите, чтобы изменить почту"
+            android:text="Email пользователя"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/settings_email" />
-
-        <TextView
-            android:id="@+id/settings_lable_passsword"
-            android:layout_width="match_parent"
-            android:layout_marginTop="10dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:textSize="14sp"
-            android:textColor="@color/gray"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="Нажмите, чтобы изменить пароль"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_label_phone_number" />
 
         <View
             android:layout_width="match_parent"
@@ -135,17 +121,17 @@
             android:layout_height="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_lable_passsword" />
+            app:layout_constraintTop_toBottomOf="@id/settings_email_hint" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_btn_change_username"
+        android:id="@+id/settings_userName_layout"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_btn_change_number_phone">
+        app:layout_constraintTop_toBottomOf="@id/settings_email_layout">
 
         <TextView
             android:id="@+id/settings_username"
@@ -157,10 +143,10 @@
             android:textColor="@color/black"
             android:text="Kirill Legkodukh"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/settings_btn_change_username" />
+            app:layout_constraintTop_toTopOf="@id/settings_userName_layout" />
 
         <TextView
-            android:id="@+id/settings_label_username"
+            android:id="@+id/settings_userName_hint"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
@@ -180,41 +166,42 @@
             android:layout_height="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_label_username" />
+            app:layout_constraintTop_toBottomOf="@id/settings_userName_hint" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/settings_btn_change_bio"
+        android:id="@+id/settings_id_layout"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/settings_btn_change_username">
+        app:layout_constraintTop_toBottomOf="@id/settings_userName_layout">
 
         <TextView
-            android:id="@+id/settings_bio"
+            android:id="@+id/settings_id"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textSize="16sp"
             android:textColor="@color/black"
-            android:text="О себе"
+            android:textIsSelectable="true"
+            android:text="ID"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/settings_btn_change_bio" />
+            app:layout_constraintTop_toTopOf="@id/settings_id_layout" />
 
         <TextView
-            android:id="@+id/settings_label_bio"
+            android:id="@+id/settings_id_hint"
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:textSize="14sp"
             android:textColor="@color/gray"
-            android:text="Напишите немного о себе"
+            android:text="Id пользователя"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_bio" />
+            app:layout_constraintTop_toBottomOf="@id/settings_id" />
 
         <View
             android:layout_width="match_parent"
@@ -225,7 +212,7 @@
             android:layout_height="1dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/settings_label_bio" />
+            app:layout_constraintTop_toBottomOf="@id/settings_id_hint" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

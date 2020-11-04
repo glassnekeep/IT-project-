@@ -278,6 +278,7 @@ class MainActivity : BaseActivity() {
                             dialogFragment.show(fragmentManager, "MyFirstDialog")
                         }
                         3 -> invokeNewActivity(this@MainActivity, HistoryActivity::class.java, true)
+                        4 -> invokeNewActivity(this@MainActivity, GroupsActivity::class.java, true)
                         5 -> invokeNewActivity(this@MainActivity, StatisticsActivity::class.java, true)
                         6 -> ActivityUtilities.getInstance().invokeNewActivity(
                             this@MainActivity,
