@@ -2,12 +2,16 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/containerLayout"
     android:layout_width="match_parent"
-    android:layout_height="80dp"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="12dp"
+    app:contentPadding="6dp"
+    app:cardBackgroundColor="@color/colorAccent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="match_parent"
+        android:padding="10dp">
         <LinearLayout
             android:id="@+id/linearLayout1"
             android:layout_width="wrap_content"
@@ -46,6 +50,6 @@
             android:src="@drawable/ic_baseline_delete_24"
             android:clickable="true"
             android:focusable="true"
-            android:background="@color/white" />
+            android:background="#79C8DC"/>
     </RelativeLayout>
 </androidx.cardview.widget.CardView>
