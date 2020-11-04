@@ -90,6 +90,9 @@ class TestAdapter(var mContext: Context,
                         if(row.testName.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
                             resultList.add(row)
                         }
+                        if(row.testName.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(Locale.ROOT))) {
+                            resultList.add(row)
+                        }
                     }
                     testsFilterList = resultList
                     Log.d("RESULT", testsFilterList.size.toString())

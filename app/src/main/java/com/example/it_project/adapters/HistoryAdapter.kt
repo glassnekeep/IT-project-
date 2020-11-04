@@ -77,6 +77,14 @@ class HistoryAdapter (var mContext: Context,
                                 Locale.ROOT))) {
                             resultList.add(row)
                         }
+                        if(row.testName.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(
+                                Locale.ROOT))) {
+                            resultList.add(row)
+                        }
+                        if(row.testCreator.toLowerCase(Locale.ROOT).contains(charSearch.toLowerCase(
+                                Locale.ROOT))) {
+                            resultList.add(row)
+                        }
                     }
                     historyFilterList = resultList
                     Log.d("RESULT", historyFilterList.size.toString())
