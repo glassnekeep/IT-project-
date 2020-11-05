@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +19,7 @@ import com.example.it_project.models.HistoryModel
 import com.example.it_project.models.RawStatisticsModel
 import com.example.it_project.models.StatisticsModel
 import com.example.it_project.utilities.initFirebase
+import com.example.it_project.utilities.showToast
 import com.example.it_project.values.DATABASE_ROOT_USER
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -31,7 +33,7 @@ class StatisticsActivity : BaseActivity() {
 
     private lateinit var context: Context
 
-    private lateinit var compare: Button
+    private lateinit var charts: Button
 
     private lateinit var statisticRecyclerView: RecyclerView
 
@@ -76,11 +78,15 @@ class StatisticsActivity : BaseActivity() {
                 return false
             }
         })
-        compare.setOnClickListener {
-            var searchText = searchView.query.toString()
-            val intent = Intent(this, ChartsActivity::class.java)
-            intent.putExtra("subject", searchText)
-            startActivity(intent)
+        charts.setOnClickListener {
+            var searchText = searchView.query.toString().trim()
+            if(subjectList.contains(searchText.capitalize())) {
+                val intent = Intent(this, ChartsActivity::class.java)
+                intent.putExtra("subject", searchText.capitalize())
+                startActivity(intent)
+            } else {
+                showToast(context, "Введите название предмета")
+            }
         }
     }
 
@@ -95,7 +101,7 @@ class StatisticsActivity : BaseActivity() {
         adapter = StatisticsAdapter(context, activity, listData)
         statisticRecyclerView.layoutManager = LinearLayoutManager(this)
         statisticRecyclerView.adapter = adapter
-        compare = findViewById(R.id.button_compare)
+        charts = findViewById(R.id.button_charts)
     }
 
     private fun getDataFromDb() {

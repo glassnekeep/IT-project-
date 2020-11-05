@@ -36,6 +36,19 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/separator"
-        android:layout_alignParentBottom="true" />
+        android:layout_above="@id/button_compare" />
+    <Button
+        android:id="@+id/button_compare"
+        style="@style/Button.Test"
+        android:layout_weight="0"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:shadowColor="#E3BFE3"
+        android:shadowDx="0"
+        android:shadowDy="0"
+        android:text="Сравнить"
+        android:textAllCaps="false"
+        android:textSize="16dp" />
 
 </RelativeLayout>

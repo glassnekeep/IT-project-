@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="12dp"
+    android:layout_margin="3dp"
     app:contentPadding="6dp"
     app:cardBackgroundColor="@color/colorAccent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
@@ -38,6 +39,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
+                android:textIsSelectable="true"
                 android:textColor="@color/gray"
                 android:textSize="16dp"
                 android:text="ID участника" />

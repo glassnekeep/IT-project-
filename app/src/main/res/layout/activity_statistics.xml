@@ -126,7 +126,7 @@
         android:layout_height="wrap_content" />
     </LinearLayout>
     <Button
-        android:id="@+id/button_compare"
+        android:id="@+id/button_charts"
         style="@style/Button.Test"
         android:layout_weight="0"
         android:layout_alignParentBottom="true"

@@ -6,6 +6,7 @@
     app:cardCornerRadius="12dp"
     app:contentPadding="6dp"
     app:cardBackgroundColor="@color/colorAccent"
+    android:layout_margin="3dp"
     android:layout_height="wrap_content">
 
     <RelativeLayout
@@ -18,8 +19,7 @@
             app:layout_constraintStart_toStartOf="parent"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:paddingTop="10dp"
-            android:paddingStart="20dp"
+            android:paddingStart="5dp"
             android:text="Название группы"
             android:textSize="32dp" />
 
@@ -27,11 +27,11 @@
             android:id="@+id/groupCreator"
             app:layout_constraintTop_toBottomOf="@id/groupName"
             app:layout_constraintStart_toStartOf="@id/groupName"
+            android:paddingStart="5dp"
             android:layout_marginTop="10dp"
             android:layout_below="@id/groupName"
             android:layout_width="300dp"
             android:layout_height="30dp"
-            android:paddingStart="20dp"
             android:textSize="24dp"
             android:text="Имя создателя группы" />
 
@@ -42,10 +42,10 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="30dp"
             android:layout_toEndOf="@id/groupCreator"
+            android:paddingStart="5dp"
             android:layout_below="@id/groupName"
             android:layout_width="50dp"
             android:layout_height="30dp"
-            android:paddingStart="20dp"
             android:textSize="24dp"
             android:text="Кол-во" />
     </RelativeLayout>

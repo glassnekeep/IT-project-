@@ -62,6 +62,18 @@ fun createTestAttendanceByUserInTestNode(testName: String, privacy: String, time
 
 fun deleteParticipantFromGroup(groupName: String, id: String) {
     DATABASE_ROOT_NEW_GROUP.child(groupName).child("participants").child(id).removeValue()
+    val listener = object: ValueEventListener {
+        override fun onDataChange(snapshot: DataSnapshot) {
+            var numberUsers = snapshot.getValue(Int::class.java)
+            numberUsers = numberUsers!! - 1
+            DATABASE_ROOT_NEW_GROUP.child(groupName).child("group info").child("numberUsers").setValue(numberUsers)
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+
+        }
+    }
+    DATABASE_ROOT_NEW_GROUP.child(groupName).child("group info").child("numberUsers").addListenerForSingleValueEvent(listener)
 }
 
 fun createTestAttendanceByUserInUserNode(testName: String, privacy: String, subject: String, testCreator: String, time: String, total: TotalModel, tableList: ArrayList<TableModel>) {
