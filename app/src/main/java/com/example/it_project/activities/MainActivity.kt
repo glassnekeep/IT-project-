@@ -71,6 +71,7 @@ class MainActivity : BaseActivity() {
 
         toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
+        setToolbarTitle("ОСЭТ")
 
         val adminListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

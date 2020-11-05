@@ -45,7 +45,7 @@
 
             <TextView
                 android:id="@+id/testId"
-                android:layout_width="300dp"
+                android:layout_width="340dp"
                 android:layout_height="wrap_content"
                 android:textSize="10dp"
                 android:text="Id теста" />

@@ -61,10 +61,11 @@ class ChartsActivity : BaseActivity() {
         Log.d("testList", testList.size.toString())
         getAverageList()
         Log.d("averageList", averageList.size.toString())
-        getUserList()
+        //getUserList()
         Log.d("userList", userList.size.toString())
 
         compare.setOnClickListener {
+            /*getAverageList()
             var barData1 = BarData(barDataset1, barDataset2)
             var dataSets: ArrayList<ILineDataSet> = ArrayList()
             dataSets.add(lineDataSet1)
@@ -76,7 +77,8 @@ class ChartsActivity : BaseActivity() {
             var groupSpace = 0.5f
             chart.groupBars(-0.5f, groupSpace, barSpace)
             chart.invalidate()
-            line.invalidate()
+            line.invalidate()*/
+            invalidate2()
         }
 
     }
@@ -119,6 +121,7 @@ class ChartsActivity : BaseActivity() {
         DATABASE_ROOT_USER.child("test attendance").addListenerForSingleValueEvent(testListListener)
     }
     private fun getAverageList() {
+        getUserList()
         val averageListener = object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(averageList.size > 0) {averageList.clear()}
@@ -243,6 +246,73 @@ class ChartsActivity : BaseActivity() {
         //chart.groupBars(-0.5f, groupSpace, barSpace)
         //chart.notifyDataSetChanged()
         //chart.data = barData2
+        line.invalidate()
+        chart.invalidate()
+    }
+
+    private fun invalidate2() {
+        barDataset1.clear()
+        barDataset2.clear()
+        lineDataSet1.clear()
+        lineDataSet2.clear()
+        for(i in 0..userList.size - 1) {
+            var score = userList[i].averageScore.toInt()
+            var grade = userList[i].averageGrade.toFloat()
+            var name = userList[i].testName
+            //entries1.add(BarEntry(score.toFloat(), i)) //TODO старый вариант при версии 1.7.4
+            barEntries1.add(BarEntry(i.toFloat(), grade.toFloat()))
+            lineEntries1.add(Entry(i.toFloat(), score.toFloat()))
+            labels.add(name)
+            //labels.add(i.toString())
+        }
+        var formatter = object: ValueFormatter() {
+            override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+                return labels[value.toInt()]
+            }
+        }
+        var barEntries2: ArrayList<BarEntry> = ArrayList()
+        var lineEntries2: ArrayList<Entry> = ArrayList()
+        for(j in 0..averageList.size - 1) {
+            var score = averageList[j].averageScore.toInt()
+            var grade = averageList[j].averageGrade.toFloat()
+            var name = averageList[j].testName
+            barEntries2.add(BarEntry(j.toFloat(), grade.toFloat()))
+            lineEntries2.add(Entry(j.toFloat(), score.toFloat()))
+        }
+        barDataset1 = BarDataSet(barEntries1, "Моя средняя оценка")
+        barDataset2= BarDataSet(barEntries2, "Средняя оценка")
+        lineDataSet1 = LineDataSet(lineEntries1, "Мой средний процент")
+        lineDataSet1.axisDependency = YAxis.AxisDependency.LEFT
+        lineDataSet2 = LineDataSet(lineEntries2, "Средний процент")
+        lineDataSet2.axisDependency = YAxis.AxisDependency.LEFT
+        //var dataset1 = chart.data.getDataSetByIndex(0)
+        //var dataset2 = chart.data.getDataSetByIndex(1)
+        barDataset1.color = resources.getColor(R.color.red)
+        barDataset2.color = resources.getColor(R.color.blue)
+        lineDataSet1.color = resources.getColor(R.color.red)
+        lineDataSet2.color = resources.getColor(R.color.blue)
+        //var barData: BarData = BarData(labels, dataset)
+        var barData1 = BarData(barDataset1, barDataset2)
+        var dataSets: ArrayList<ILineDataSet> = ArrayList()
+        dataSets.add(lineDataSet1)
+        dataSets.add(lineDataSet2)
+        var lineData1 = LineData(dataSets)
+        //var barData2 = BarData(labels, dataset2)
+        var lineAxis = line.xAxis
+        lineAxis.valueFormatter = formatter
+        lineAxis.granularity = 1f
+        var chartAxis = chart.xAxis
+        chartAxis.valueFormatter = formatter
+        chartAxis.granularity = 1f
+        //axis.setCenterAxisLabels(true)
+        barData1.barWidth = 0.2f
+        line.data = lineData1
+        chart.data = barData1
+        var barSpace = 0.04f
+        var groupSpace = 0.5f
+        chart.groupBars(-0.5f, groupSpace, barSpace)
+        chart.notifyDataSetChanged()
+        chart.data = barData1
         line.invalidate()
         chart.invalidate()
     }
