@@ -90,10 +90,10 @@ class CreateComparisonQuestionActivity : BaseActivity() {
             openQuitDialog()
         }
         createQuestionButton.setOnClickListener {
-            if(((firstPart6.visibility == View.GONE)||(!firstPart6.text.toString().trim().isEmpty()))
-                &&((firstPart5.visibility == View.GONE)||(!firstPart5.text.toString().trim().isEmpty()))
-                &&((firstPart4.visibility == View.GONE)||(!firstPart4.text.toString().trim().isEmpty()))
-                &&((firstPart3.visibility == View.GONE)||(!firstPart3.text.toString().trim().isEmpty()))
+            if(((layout6.visibility == View.GONE)||(!firstPart6.text.toString().trim().isEmpty()))
+                &&((layout5.visibility == View.GONE)||(!firstPart5.text.toString().trim().isEmpty()))
+                &&((layout4.visibility == View.GONE)||(!firstPart4.text.toString().trim().isEmpty()))
+                &&((layout3.visibility == View.GONE)||(!firstPart3.text.toString().trim().isEmpty()))
                 &&((secondPart6.visibility == View.GONE)||(!secondPart6.text.toString().trim().isEmpty()))
                 &&((secondPart5.visibility == View.GONE)||(!secondPart5.text.toString().trim().isEmpty()))
                 &&((secondPart4.visibility == View.GONE)||(!secondPart4.text.toString().trim().isEmpty()))
