@@ -28,6 +28,9 @@ import com.mikepenz.materialdrawer.DrawerBuilder
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : BaseActivity() {
 
@@ -85,7 +88,10 @@ class MainActivity : BaseActivity() {
         }
         DATABASE_ROOT_USER.child("admin").addValueEventListener(adminListener)
         Log.d("ADMIN_STATUS", ADMIN_STATUS!!)
-        getDataFromDb()
+        CoroutineScope(Dispatchers.IO).launch {
+            getDataFromDb()
+        }
+        //getDataFromDb()
         searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 adapter.filter.filter(query)

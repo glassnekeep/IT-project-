@@ -10,9 +10,7 @@ import android.widget.EditText
 import android.widget.Toast
 import com.example.it_project.*
 import com.example.it_project.utilities.*
-import com.example.it_project.values.CURRENT_UID
-import com.example.it_project.values.REF_DATABASE_ROOT
-import com.example.it_project.values.administrator
+import com.example.it_project.values.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -32,6 +30,7 @@ class RegisterActivity : BaseActivity() {
     private lateinit var registrationPassword: EditText
     private lateinit var registrationFirstName: EditText
     private lateinit var registrationSecondName: EditText
+    private var emailList = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,6 +40,7 @@ class RegisterActivity : BaseActivity() {
         enableUpButton()
         init()
         initFirebase()
+        fillList()
 
 
 
@@ -51,77 +51,68 @@ class RegisterActivity : BaseActivity() {
             (!TextUtils.isEmpty(registrationFirstName.text.toString())) &&
             (!TextUtils.isEmpty(registrationSecondName.text.toString()))
         ) {
-            auth.createUserWithEmailAndPassword(
-                registrationEmail.text.toString(),
-                registrationPassword.text.toString()
-            )
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        val user = auth.currentUser
-                        user?.sendEmailVerification()
-                            ?.addOnCompleteListener { task ->
-                                if (task.isSuccessful) {
-                                    /*val user1 = auth.currentUser
-                                    user1?.sendEmailVerification()
-                                        ?.addOnCompleteListener { task ->
-                                            if(task.isSuccessful) {
-
-                                            }
-                                        }*/
-                                    //var id: String? = database.key
-                                    var name: String = registrationFirstName.text.toString()
-                                    var secName: String = registrationSecondName.text.toString()
-                                    var email: String = registrationEmail.text.toString()
-                                    var code = adminCode.text.toString()
-
-                                    //var userInfo: User = User(name, secName, email)
-                                    //if (!TextUtils.isEmpty(name) && !TextUtils.isEmpty(secName) && !TextUtils.isEmpty(email)) {
-                                        //database.push().setValue(userInfo)
-                                        //database.child("users").child(id!!).setValue(userInfo)
-                                        CURRENT_UID = FirebaseAuth.getInstance().uid.toString()
-                                        if(!TextUtils.isEmpty(code)) {var trueCode: String? = null
-                                            val codeListener = object: ValueEventListener {
-                                                override fun onDataChange(snapshot: DataSnapshot) {
-                                                    trueCode = snapshot.getValue(Long::class.java).toString()
-                                                    administrator = snapshot.getValue(Long::class.java)
-                                                    if(code == trueCode) {
-                                                        adminStatus = "admin"
-                                                        createUserInDatabase(name, secName, email, adminStatus)
-                                                        invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
-                                                        showToast(this@RegisterActivity, "Аккаунт создан")
-                                                    }
-                                                    else {
-                                                        Toast.makeText(this@RegisterActivity, "Код преподавателя неверен", Toast.LENGTH_SHORT).show()
-                                                        val currentUser = FirebaseAuth.getInstance().currentUser
-                                                        user.delete().addOnCompleteListener { task ->
-                                                            if(task.isSuccessful) {
-                                                                Log.d("TAG", "Account deleted")
+            if(!emailList.contains(registrationEmail.text.toString())) {
+                if(registrationPassword.text.toString().length > 5) {
+                    auth.createUserWithEmailAndPassword(
+                        registrationEmail.text.toString(),
+                        registrationPassword.text.toString()
+                    )
+                        .addOnCompleteListener(this) { task ->
+                            if (task.isSuccessful) {
+                                val user = auth.currentUser
+                                user?.sendEmailVerification()
+                                    ?.addOnCompleteListener { task ->
+                                        if (task.isSuccessful) {
+                                            var name: String = registrationFirstName.text.toString()
+                                            var secName: String = registrationSecondName.text.toString()
+                                            var email: String = registrationEmail.text.toString()
+                                            var code = adminCode.text.toString()
+                                            CURRENT_UID = FirebaseAuth.getInstance().uid.toString()
+                                            if(!TextUtils.isEmpty(code)) {var trueCode: String? = null
+                                                val codeListener = object: ValueEventListener {
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        trueCode = snapshot.getValue(Long::class.java).toString()
+                                                        administrator = snapshot.getValue(Long::class.java)
+                                                        if(code == trueCode) {
+                                                            adminStatus = "admin"
+                                                            createUserInDatabase(name, secName, email, adminStatus)
+                                                            invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
+                                                            showToast(this@RegisterActivity, "Аккаунт создан")
+                                                        }
+                                                        else {
+                                                            Toast.makeText(this@RegisterActivity, "Код преподавателя неверен", Toast.LENGTH_SHORT).show()
+                                                            val currentUser = FirebaseAuth.getInstance().currentUser
+                                                            user.delete().addOnCompleteListener { task ->
+                                                                if(task.isSuccessful) {
+                                                                    Log.d("TAG", "Account deleted")
+                                                                }
                                                             }
                                                         }
                                                     }
-                                                }
-                                                override fun onCancelled(error: DatabaseError) {
+                                                    override fun onCancelled(error: DatabaseError) {
 
+                                                    }
                                                 }
+                                                REF_DATABASE_ROOT.child("CURRENT_ADMIN_KEY").addValueEventListener(codeListener)
                                             }
-                                            REF_DATABASE_ROOT.child("CURRENT_ADMIN_KEY").addValueEventListener(codeListener)
+                                            else {
+                                                createUserInDatabase(name, secName, email, adminStatus)
+                                                invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
+                                                Toast.makeText(this, "Аккаунт создан", Toast.LENGTH_SHORT).show()
+                                            }
                                         }
-                                        else {
-                                            createUserInDatabase(name, secName, email, adminStatus)
-                                            invokeNewActivity(this@RegisterActivity, SignInActivity::class.java, true)
-                                            Toast.makeText(this, "Аккаунт создан", Toast.LENGTH_SHORT).show()
-                                        }
-                                        //createUserInDatabase(name, secName, email, false)
-                                        //Toast.makeText(this, "Аккаунт создан", Toast.LENGTH_SHORT).show()
-                                    //} else {
-                                    //    Toast.makeText(this, "Не все поля заполнены", Toast.LENGTH_SHORT).show()
-                                    //}
-                                }
+                                    }
+                            } else {
+                                Toast.makeText(baseContext, "Sign Up failed. Try again after some time.", Toast.LENGTH_SHORT).show()
                             }
-                    } else {
-                        Toast.makeText(baseContext, "Sign Up failed. Try again after some time.", Toast.LENGTH_SHORT).show()
-                    }
+                        }
+                } else {
+                    Toast.makeText(this, "Пароль должен быть длиной не менее 6 символов", Toast.LENGTH_SHORT).show()
                 }
+            } else {
+                Toast.makeText(this, "Пользователь с таким email уже зарегистрирован", Toast.LENGTH_SHORT).show()
+            }
+            //TODO поместить в блок процесс аутентификации
         } else {
             Toast.makeText(applicationContext, "Не все поля заполнены", Toast.LENGTH_SHORT).show()
         }
@@ -137,6 +128,23 @@ class RegisterActivity : BaseActivity() {
         auth = FirebaseAuth.getInstance()
         adminCode = findViewById(R.id.teacherCode)
         //database = FirebaseDatabase.getInstance().getReference(USER_KEY)
+    }
+
+    private fun fillList() {
+        val listener = object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for(id in snapshot.children) {
+                    var name = id.child("email").getValue(String::class.java)
+                    if(name != null) {
+                        emailList.add(name)
+                    }
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+        }
+        REF_DATABASE_ROOT.child(NODE_USERS).addListenerForSingleValueEvent(listener)
     }
 
 
