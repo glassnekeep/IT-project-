@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.it_project.R
 import com.example.it_project.adapters.CategoryAdapter
 import com.example.it_project.adapters.TestAdapter
+import com.example.it_project.fragments.AttendPrivateTestFragment
 import com.example.it_project.fragments.CreateGroupFragment
 import com.example.it_project.fragments.CreateTestNameFragment
 import com.example.it_project.models.TestInfoModel
@@ -191,11 +192,14 @@ class MainActivity : BaseActivity() {
                             //CreateTestActivity::class.java,
                             //true
                         }
-                        3 -> ActivityUtilities.getInstance().invokeNewActivity(
-                            this@MainActivity,
-                            RegisterActivity::class.java,
-                            true
-                        )
+                        3 -> {
+                            var fragmentManager = this@MainActivity.supportFragmentManager
+                            //val transaction = fragmentManager.beginTransaction()
+                            //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
+                            val dialogFragment = AttendPrivateTestFragment()
+                            val manager = supportFragmentManager
+                            dialogFragment.show(fragmentManager, "MyFirstDialog")
+                        }
                         4 -> invokeNewActivity(this@MainActivity, HistoryActivity::class.java, true)
                         5 -> invokeNewActivity(this@MainActivity, GroupsActivity::class.java, true)
                         6 -> {var fragmentManager = this@MainActivity.supportFragmentManager
@@ -270,10 +274,11 @@ class MainActivity : BaseActivity() {
                             AboutDevActivity::class.java,
                             true
                         )
-                        2 -> {var fragmentManager = this@MainActivity.supportFragmentManager
+                        2 -> {
+                            var fragmentManager = this@MainActivity.supportFragmentManager
                             //val transaction = fragmentManager.beginTransaction()
                             //transaction.add(R.id.frameLayout, NewQuestionFragment()).commit()
-                            val dialogFragment = CreateTestNameFragment()
+                            val dialogFragment = AttendPrivateTestFragment()
                             val manager = supportFragmentManager
                             dialogFragment.show(fragmentManager, "MyFirstDialog")
                         }

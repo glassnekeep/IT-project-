@@ -40,7 +40,7 @@ class NewParticipantFragment : AppCompatDialogFragment() {
     override fun onStart() {
         super.onStart()
         button_commit_add_participant.setOnClickListener {
-            NEW_PARTICIPANT_ID = edit_text_participant_id.text.toString().trim()
+            //NEW_PARTICIPANT_ID = edit_text_participant_id.text.toString().trim()
             var newParticipantID = edit_text_participant_id.text.toString().trim()
             var currentGroupName = groupName
             if((newParticipantID != null) && (currentGroupName != null)) {
@@ -80,9 +80,6 @@ class NewParticipantFragment : AppCompatDialogFragment() {
 
         button_exit_add_participant.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@NewParticipantFragment)?.commit()
-            //if(groupName != null) {
-              //  communicator.passData(groupName!!)
-            //}
         }
     }
 
