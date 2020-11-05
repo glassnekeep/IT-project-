@@ -67,6 +67,7 @@ fun deleteParticipantFromGroup(groupName: String, id: String) {
             var numberUsers = snapshot.getValue(Int::class.java)
             numberUsers = numberUsers!! - 1
             DATABASE_ROOT_NEW_GROUP.child(groupName).child("group info").child("numberUsers").setValue(numberUsers)
+            DATABASE_ROOT_USER.child(id).child("in groups").child(groupName).removeValue()
         }
 
         override fun onCancelled(error: DatabaseError) {

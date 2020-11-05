@@ -18,9 +18,9 @@
     <color name="transparent_black">#99000000</color>
     <color name="transparent_white">#AAFFFFFF</color>
     <color name="yellow">#d0d001</color>
-    <color name="green">#00BF9A</color>
+    <color name="green">#7CB342</color>
     <color name="blue">#1976D2</color>
-    <color name="orange">#FF8A65</color>
+    <color name="orange">#FB8C00</color>
     <color name="gray">#8FA2AA</color>
     <color name="purple">#7B1FA2</color>
     <color name="imgPlaceholder">#ffffff</color>
@@ -42,6 +42,8 @@
     <color name="colorDivider">#BDBDBD</color>
 
     <color name="superRed">#DC0E0A</color>
+
+    <color name="superGreen">#4F9707</color>
 
     <!--More colors-->
     <color name="colorEditTextLight">#F1F1F1</color>

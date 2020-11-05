@@ -95,30 +95,7 @@ class AttendingTestActivity : BaseActivity(), Communicator {
             usedTime = time.toInt()*60
             setToolbarTitle(extras.getString("testName").toString())
         }
-        //var calendar = Calendar.getInstance()
-        //val year = calendar.get(Calendar.YEAR)
-        //val month = calendar.get(Calendar.MONTH)
-        //val day = calendar.get(Calendar.DAY_OF_MONTH)
-        //val hour = calendar.get(Calendar.HOUR_OF_DAY)
-        //val minute = calendar.get(Calendar.MINUTE)
-        //currentTime =
         getDataFromDb()
-        //hours = (usedTime / (60*60))
-        //minutes = ((usedTime / 60) % 60)
-        //seconds = (usedTime % 60)
-
-        //currentTime.text = ("${hours}:${minutes}:${seconds}")
-
-        //updateTime()
-
-        /*handler.post(object: Runnable {
-            override fun run() {
-                handler.postDelayed(this, 1000)
-                updateTime()
-            }
-        })*/
-
-        //getDataFromDb()
         if(position == 0) {
             val fragmentStart = StartFragment()
             val bundle = Bundle()
@@ -741,24 +718,13 @@ class AttendingTestActivity : BaseActivity(), Communicator {
         minutes = ((usedTime / 60) % 60)
         seconds = (usedTime % 60)
         currentTime.text = ("Осталось ${hours} часов ${minutes} минут(ы) ${seconds} секунд(ы)")
-        if((hours == 0) && (minutes < 10)) {
+        if((hours == 0) && (minutes in 5..10)) {
             currentTime.setTextColor(resources.getColor(R.color.orange))
         } else if ((hours == 0)&&(minutes < 5)) {
             currentTime.setTextColor(resources.getColor(R.color.superRed))
         }
         if((usedTime == 0)&&(isFinished == false)) {
             openTimeOutDialog()
-            /*var calendar = Calendar.getInstance()
-            var year = calendar.get(Calendar.YEAR)
-            var month = calendar.get(Calendar.MONTH)
-            var day = calendar.get(Calendar.DAY_OF_MONTH)
-            var hour = calendar.get(Calendar.HOUR_OF_DAY)
-            var minute = calendar.get(Calendar.MINUTE)
-            var second = calendar.get(Calendar.SECOND)
-            hour = hour + 3
-            day = day + (hour / 24)
-            hour = hour % 24
-            timeFinish = "${hour/10}${hour%10}:${minute/10}${minute%10}:${second/10}${second%10} ${day/10}${day%10}/${month/10}${month%10}/${year/1000}${year/100}${year/10}${year%10}"*/
             val intent = Intent(this, TestResultsActivity::class.java)
             intent.putExtra("list", tableData)
             intent.putExtra("testName", testName)

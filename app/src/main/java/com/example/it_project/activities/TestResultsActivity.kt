@@ -85,11 +85,26 @@ class TestResultsActivity : BaseActivity() {
         var totalRerc = (score*100/tableList!!.size)
         totalScore.text = (score*100/tableList!!.size).toString() + "%"
         when(totalRerc) {
-            in 0..19 -> {grade.text = "1"}
-            in 20..39 -> {grade.text = "2"}
-            in 40..59 -> {grade.text = "3"}
-            in 60..79 -> {grade.text = "4"}
-            in 80..100 -> {grade.text = "5"}
+            in 0..19 -> {
+                grade.text = "1"
+                grade.setTextColor(resources.getColor(R.color.superRed))
+            }
+            in 20..39 -> {
+                grade.text = "2"
+                grade.setTextColor(resources.getColor(R.color.red))
+            }
+            in 40..59 -> {
+                grade.text = "3"
+                grade.setTextColor(resources.getColor(R.color.orange))
+            }
+            in 60..79 -> {
+                grade.text = "4"
+                grade.setTextColor(resources.getColor(R.color.green))
+            }
+            in 80..100 -> {
+                grade.text = "5"
+                grade.setTextColor(resources.getColor(R.color.superGreen))
+            }
             else -> {grade.text = "Error"}
         }
 

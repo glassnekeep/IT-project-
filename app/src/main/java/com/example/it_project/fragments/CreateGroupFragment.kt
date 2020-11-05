@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialogFragment
 import com.example.it_project.R
 import com.example.it_project.activities.CreateTestActivity
@@ -33,27 +34,35 @@ class CreateGroupFragment : AppCompatDialogFragment() {
     override fun onStart() {
         super.onStart()
         button_commit_create_group_name.setOnClickListener {
-            NEW_GROUP = edit_text_group_name.text.toString().trim()
-            val intentCreateGroup = Intent(activity, GroupsActivity::class.java)
-            intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString().trim())
-            startActivity(intentCreateGroup)
-            //activity?.finish()
-            fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
+            //NEW_GROUP = edit_text_group_name.text.toString().trim()
             var groupName = edit_text_group_name.text.toString().trim()
             val creatorNameListener = object: ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    USER = snapshot.getValue(User::class.java)
-                    var name = USER?.name
-                    var secName = USER?.secName
-                    var creatorName = "${name} ${secName}"
-                    createGroupIDWithName(groupName, 0, creatorName)
+                    var groupList = ArrayList<String>()
+                    for(group in snapshot.child("groups").children) {
+                        groupList.add(group.child("group info").child("groupName").getValue(String::class.java)!!)
+                    }
+                    if(!groupList.contains(groupName)) {
+                        USER = snapshot.child("users").child(CURRENT_UID).getValue(User::class.java)
+                        var name = USER?.name
+                        var secName = USER?.secName
+                        var creatorName = "${name} ${secName}"
+                        createGroupIDWithName(groupName, 0, creatorName)
+                        val intentCreateGroup = Intent(activity, GroupsActivity::class.java)
+                        intentCreateGroup.putExtra("GroupName", edit_text_group_name.text.toString().trim())
+                        startActivity(intentCreateGroup)
+                        //activity?.finish()
+                        fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
+                    } else {
+                        Toast.makeText(context, "Уже есть группа с таким названием", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
 
                 }
             }
-            DATABASE_ROOT_USER.addValueEventListener(creatorNameListener)
+           REF_DATABASE_ROOT.addListenerForSingleValueEvent(creatorNameListener)
         }
         button_exit_create_group_name.setOnClickListener {
             fragmentManager?.beginTransaction()?.remove(this@CreateGroupFragment)?.commit()
