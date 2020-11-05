@@ -117,6 +117,7 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
                 val intent = Intent(this, CurrentGroupActivity::class.java)
                 intent.putExtra("groupName", groupName)
                 startActivity(intent)
+                this.finish()
                 //PARTICIPANT_LIST = ArrayList()
                 return true
             }
@@ -130,5 +131,6 @@ class ParticipantsActivity : BaseActivity() /*CommunicatorParticipant*/ {
         val intent = Intent(this, CurrentGroupActivity::class.java)
         intent.putExtra("groupName", groupName)
         startActivity(intent)
+        this.finish()
     }
 }

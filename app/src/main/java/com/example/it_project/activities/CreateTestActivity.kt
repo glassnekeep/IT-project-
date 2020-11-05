@@ -54,7 +54,11 @@ class CreateTestActivity : BaseActivity() {
         }
 
         commit.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            if(listData.size > 1) {
+                startActivity(Intent(this, MainActivity::class.java))
+            } else {
+                Toast.makeText(this, "Должно быть минимум 2 вопроса!", Toast.LENGTH_SHORT).show()
+            }
         }
         }
 

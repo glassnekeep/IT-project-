@@ -81,7 +81,6 @@ class SignInActivity : BaseActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 initFirebase()
-                                sleep(1000)
                                 val intentMain = Intent(this, MainActivity::class.java)
                                 startActivity(intentMain)
                                 this@SignInActivity.finish()
