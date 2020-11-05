@@ -61,7 +61,7 @@ class AttendPrivateTestFragment : AppCompatDialogFragment() {
                                         intent.putExtra("privacy", test.child("test info").child("privacy").getValue(String::class.java))
                                         intent.putExtra("testName", test.child("test name").getValue(String::class.java))
                                         intent.putExtra("subject", test.child("test info").child("subject").getValue(String::class.java))
-                                        intent.putExtra("testCreator", test.child("test info").child("testCreator").getValue(String::class.java))
+                                        intent.putExtra("testCreator", test.child("test info").child("creatorName").getValue(String::class.java))
                                         intent.putExtra("time", test.child("test info").child("time").getValue(String::class.java))
                                         activity?.startActivity(intent)
                                         activity?.finish()

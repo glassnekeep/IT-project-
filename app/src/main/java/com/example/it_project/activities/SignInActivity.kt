@@ -14,6 +14,10 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.lang.Thread.sleep
 
 
 class SignInActivity : BaseActivity() {
@@ -58,9 +62,14 @@ class SignInActivity : BaseActivity() {
                     signInEmail.text.toString()
                 ) && !TextUtils.isEmpty(signInPassword.text.toString())
             ) {
+                //CoroutineScope(Dispatchers.IO).launch {
+                    //getDataFromDb()
+                    //initFirebase()
+                //}
                 auth.signInWithEmailAndPassword(
                     signInEmail.text.toString(),
                     signInPassword.text.toString()
+
                 ).addOnCompleteListener(this,
                     OnCompleteListener<AuthResult?> { task ->
                         if (task.isSuccessful) {
@@ -72,6 +81,7 @@ class SignInActivity : BaseActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                                 initFirebase()
+                                sleep(1000)
                                 val intentMain = Intent(this, MainActivity::class.java)
                                 startActivity(intentMain)
                                 this@SignInActivity.finish()

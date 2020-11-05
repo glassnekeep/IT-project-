@@ -312,6 +312,7 @@ fun createGroupIDWithName(groupName: String, numberUsers: Int, creatorName: Stri
     DATABASE_ROOT_NEW_GROUP.child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
     DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child(NODE_ID).setValue(idName)
     DATABASE_ROOT_USER.child(NODE_GROUP).child(groupName).child(NODE_GROUP_INFO).setValue(newGroup)
+    DATABASE_ROOT_USER.child("in groups").child(groupName).setValue(groupName)
     //TODO в GroupsActivity должны браться данные из DATABASE_ROOT_USER, потому что у каждого админа свой список групп
     //TODO кроме того, тесты должны получаться для добавления в группу тоже из DATABASE_ROOT_USER
 }

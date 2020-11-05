@@ -1,6 +1,7 @@
 package com.example.it_project.activities
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -88,7 +89,7 @@ class MainActivity : BaseActivity() {
             }
         }
         DATABASE_ROOT_USER.child("admin").addValueEventListener(adminListener)
-        Log.d("ADMIN_STATUS", ADMIN_STATUS!!)
+        //Log.d("ADMIN_STATUS", ADMIN_STATUS!!)
         CoroutineScope(Dispatchers.IO).launch {
             getDataFromDb()
         }
