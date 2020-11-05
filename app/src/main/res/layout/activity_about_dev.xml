@@ -13,18 +13,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
-    <ImageView
-        android:id="@+id/imgDev"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="@dimen/materialize_toolbar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:background="@mipmap/ic_launcher"
-        app:srcCompat="@drawable/ic_launcher_foreground" />
 
     <TextView
         android:id="@+id/tvDevTitle"
@@ -34,10 +22,12 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Система автоматического электронного тестирования"
-        android:textSize="14sp"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgDev" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarTop" />
 
     <TextView
         android:id="@+id/tvDevSubtitle"
@@ -46,8 +36,10 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Позволяет проходить и проводить тесты"
+        android:text="Данное приложение позволяет создавать тесты по различным предметным дисциплинам для их дальнейшего прохождения. Также оно даёт возможность создавать закрытые группы пользователей."
         android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDevTitle"/>
@@ -60,7 +52,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:gravity="center"
-        android:text="Messaga нет"
+        android:text=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvDevSubtitle"/>
